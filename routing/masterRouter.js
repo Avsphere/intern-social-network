@@ -15,6 +15,11 @@ router.get('/', (req, res) => {
   }
 });
 
+router.get('/account', checkAuthenticated, function(req, res) {
+  let profileData = req.user.profile;
+  res.render('account', { user : profileData });
+})
+
 
 router.get('/login',
   passport.authenticate('azuread-openidconnect', { failureRedirect: '/' }),

@@ -452,6 +452,18 @@ eval("var g;\n\n// This works in non-strict mode\ng = (function() {\n\treturn th
 
 /***/ }),
 
+/***/ "./src/account.js":
+/*!************************!*\
+  !*** ./src/account.js ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nvar Account = exports.Account = function () {\n  function Account() {\n    _classCallCheck(this, Account);\n  }\n\n  _createClass(Account, [{\n    key: \"helloworld\",\n    value: function helloworld() {\n      console.log(\"Hello world from account\");\n    }\n  }]);\n\n  return Account;\n}();\n\n//# sourceURL=webpack:///./src/account.js?");
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
@@ -460,7 +472,7 @@ eval("var g;\n\n// This works in non-strict mode\ng = (function() {\n\treturn th
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nvar Index = exports.Index = function () {\n  function Index() {\n    _classCallCheck(this, Index);\n  }\n\n  _createClass(Index, null, [{\n    key: \"init\",\n    value: function init() {}\n  }]);\n\n  return Index;\n}();\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nvar Index = exports.Index = function () {\n  function Index() {\n    _classCallCheck(this, Index);\n  }\n\n  _createClass(Index, [{\n    key: \"helloworld\",\n    value: function helloworld() {\n      console.log(\"Hello world\");\n    }\n  }, {\n    key: \"handles\",\n    value: function handles() {}\n  }]);\n\n  return Index;\n}();\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ }),
 
@@ -472,7 +484,7 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nvar _jquery = __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\");\n\nvar _jquery2 = _interopRequireDefault(_jquery);\n\n__webpack_require__(/*! bootstrap */ \"./node_modules/bootstrap/dist/js/bootstrap.js\");\n\nvar _index = __webpack_require__(/*! ./index.js */ \"./src/index.js\");\n\nvar _requestRunner = __webpack_require__(/*! ./requestRunner.js */ \"./src/requestRunner.js\");\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n(0, _jquery2.default)(function () {});\n\n//# sourceURL=webpack:///./src/main.js?");
+eval("\n\nvar _jquery = __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\");\n\nvar _jquery2 = _interopRequireDefault(_jquery);\n\n__webpack_require__(/*! bootstrap */ \"./node_modules/bootstrap/dist/js/bootstrap.js\");\n\nvar _index = __webpack_require__(/*! ./index.js */ \"./src/index.js\");\n\nvar _requestRunner = __webpack_require__(/*! ./requestRunner.js */ \"./src/requestRunner.js\");\n\nvar _account = __webpack_require__(/*! ./account.js */ \"./src/account.js\");\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n(0, _jquery2.default)(function () {\n  if (window.location.pathname.includes('account')) {\n    var acc = new _account.Account();\n    acc.helloworld();\n  }\n});\n\n//# sourceURL=webpack:///./src/main.js?");
 
 /***/ }),
 

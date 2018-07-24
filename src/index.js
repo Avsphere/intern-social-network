@@ -1,4 +1,10 @@
 export class Index {
-  static init() {
+
+  helloworld() {
+    console.log("Hello world");
+  }
+
+  handles() {
+
   }
 }

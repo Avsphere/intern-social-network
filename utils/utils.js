@@ -1,5 +1,7 @@
 const request = require('superagent');
 const User = require('../models/user');
+const passport = require('passport')
+
 
 function getUserData(accessToken) {
   return new Promise( (resolve, reject) => {
@@ -11,6 +13,15 @@ function getUserData(accessToken) {
        else { reject(err) };
      });
   })
+}
+
+function checkAuthenticated(req, res , next) {
+  //where req.isAuthenticated is passports implementation of : if ( req.user ... )
+  if ( req.isAuthenticated() ) {
+    next()
+  } else {
+    res.redirect('/');
+  }
 }
 
 function findUserByUPN( upn ) {
@@ -52,6 +63,8 @@ function getProfilePhoto(accessToken) {
      });
   })
 }
+
+exports.checkAuthenticated = checkAuthenticated;
 exports.getUserData = getUserData;
 exports.findUserByUPN = findUserByUPN;
 exports.createNewUser = createNewUser;

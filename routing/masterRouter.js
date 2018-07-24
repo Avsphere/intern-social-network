@@ -39,7 +39,6 @@ router.get('/token',
           if ( foundUser ) {
             return new Promise( (resolve,reject) => { resolve(foundUser); })
           } else {
-            console.log("Creating new user");
             return utils.createNewUser( req.user.profile )
           }
       }).then( (user) => {

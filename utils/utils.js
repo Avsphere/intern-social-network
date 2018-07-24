@@ -35,7 +35,6 @@ function createNewUser( profileData ) {
     u.save( function(err, newUser) {
       if ( err ) { console.error(err); reject(err); }
       else {
-        console.log("User created")
         resolve(newUser);
       }
     })
@@ -55,6 +54,5 @@ function getProfilePhoto(accessToken) {
 }
 exports.getUserData = getUserData;
 exports.findUserByUPN = findUserByUPN;
-exports.dummy = dummy;
 exports.createNewUser = createNewUser;
 exports.getProfilePhoto = getProfilePhoto;

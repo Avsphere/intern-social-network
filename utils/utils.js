@@ -15,6 +15,15 @@ function getUserData(accessToken) {
   })
 }
 
+function createProjects( formProjects ) {
+  let projects = formProjects.map( (p) => {
+    p.ownedBy = userId;
+    let newProject = new Project(p);
+    newProject.save( );
+    return new Project(p);
+  })
+}
+
 function checkAuthenticated(req, res , next) {
   //where req.isAuthenticated is passports implementation of : if ( req.user ... )
   if ( req.isAuthenticated() ) {

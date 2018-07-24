@@ -1,26 +1,28 @@
 extends layout
 
 block content
-  h1 Account Page
-  .formWrapper(style="margin-left:3%; max-width:50%;" )
-    form( autocomplete="off" )
-      .form-group
-        label(for='displayName') Display Name
-        input#displayName.form-control(type='text', aria-describedby='emailHelp', placeholder=user.displayName, disabled )
-      .form-group
-        label(for='exampleInputPassword1') UPN
-        input#upn.form-control(type='text', placeholder=user.upn disabled)
-      .form-group
-        label(for='displayName') Department
-        input#department.form-control(type='text', aria-describedby='emailHelp', placeholder=user.department, disabled )
-      .form-group
-        label(for='displayName') Job Title
-        input#jobTitle.form-control(type='text', aria-describedby='emailHelp', placeholder=user.jobTitle, disabled )
-      .form-group
-        label(for='exampleInputPassword1') Team
-        input#team.form-control(type='password', placeholder=user.team)
-      .form-group
-        label(for='exampleInputPassword1') Org
-        input#org.form-control(type='password', placeholder=user.org)
-      button.btn.btn-primary(onClick="") Add new project
-      button.btn.btn-primary(type='submit') Submit
+  div.Account
+    div.Account__title Account Page
+    div.formWrapper(style="margin-left:3%; max-width:50%;" )
+      form( autocomplete="off" )
+        .form-group
+          label(for='displayName') Display Name
+          input#displayName.form-control(type='text', aria-describedby='emailHelp', placeholder=user.displayName, disabled )
+        .form-group
+          label(for='exampleInputPassword1') UPN
+          input#upn.form-control(type='text', placeholder=user.upn disabled)
+        .form-group
+          label(for='displayName') Department
+          input#department.form-control(type='text', aria-describedby='emailHelp', placeholder=user.department, disabled )
+        .form-group
+          label(for='displayName') Job Title
+          input#jobTitle.form-control(type='text', aria-describedby='emailHelp', placeholder=user.jobTitle, disabled )
+        .form-group
+          label(for='exampleInputPassword1') Team
+          input#team.form-control(type='text', placeholder=user.team)
+        .form-group
+          label(for='exampleInputPassword1') Org
+          input#org.form-control(type='text', placeholder=user.org)
+    div#projectSection
+    button.btn.btn-primary#addProjectHtml Add new project
+    button.btn.btn-primary(type='submit') Submit

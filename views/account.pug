@@ -2,7 +2,7 @@ extends layout
 
 block content
   div.Account
-    div.Account__title Account Page
+    div.Account__title#titleHeader(data-account-id= user._id) Account Page
     div.formWrapper(style="margin-left:3%; max-width:50%;" )
       form( autocomplete="off" )
         .form-group
@@ -25,4 +25,5 @@ block content
           input#org.form-control(type='text', placeholder=user.org)
     div#projectSection
     button.btn.btn-primary#addProjectHtml Add new project
-    button.btn.btn-primary(type='submit') Submit
+      button.btn.btn-primary#submitForm(type='submit') Submit
+

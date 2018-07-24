@@ -9,6 +9,7 @@
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
     "build": "webpack",
+    "dev" : "webpack && node ./bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

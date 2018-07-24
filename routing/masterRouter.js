@@ -3,7 +3,7 @@ const router = express.Router();
 const passport = require('passport')
 const path = require('path')
 const utils = require('../utils/utils.js');
-
+const User = require('../models/user');
 
 
 router.get('/', (req, res) => {
@@ -82,9 +82,20 @@ router.get('/disconnect', (req, res) => {
 
 
 router.post('/updateUser', (req, res) => {
-  let userId = req.body.data.userId;
+  let userId = req.body.userId,
+      modifiedUserData = req.body.formData;
+  User.findById( userId, function(err, user) {
+    if ( !err ) {
+      user.team = modifiedUserData.team;
+      user.org = modifiedUserData.org;
+      let projectIds = utils.createProjects( modifiedUserData.projects );
+
+      user.projects = projectIds
+      res.send( user );
+    } else { console.log("Problem in update user!"); }
+  })
   console.log( "Got post:" , req.body);
-  res.send({ success : true })
+  res.send({ success : req.body })
 })
 
 

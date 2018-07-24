@@ -19,9 +19,9 @@ router.get('/', (req, res) => {
 
 router.get('/account', utils.checkAuthenticated, function(req, res) {
   let profileData = req.user.profile;
-  res.render('account', {
-    user: profileData
-  });
+  if (!profileData.team) { profileData.team = 'Enter Team Name' }
+  if (!profileData.org) { profileData.org = 'Enter Org Name' }
+  res.render('account', { user: profileData });
 })
 
 

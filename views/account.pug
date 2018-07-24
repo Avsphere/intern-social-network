@@ -1,0 +1,8 @@
+extends layout
+
+block content
+  h1 Check your user information and input your projects to get started!
+  div
+    p.ms-font-xl Use the button below to connect to Microsoft Graph.
+    button#connect_button.ms-Button(onclick="window.location.href='login'")
+      span.ms-Button-label Connect to Microsoft Graph

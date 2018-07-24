@@ -19,6 +19,10 @@ mongoose.connect(process.env.DB_CONN, { useNewUrlParser: true }).then(
   () => { console.log("Connected to database!") },
   err => { console.log("ERROR - Database connection failed")}
 )
+
+require('./passport.js')(passport);
+
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -26,22 +30,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({
-  secret: process.env.SESS_SECRET,
-  resave: true,
-  saveUninitialized: true,
-  cookie: { secure: false }
-}))
-
-require('./passport.js')(passport);
+  secret: '12345QWERTY-SECRET',
+  name: 'graphNodeCookie',
+  resave: false,
+  saveUninitialized: false,
+  //cookie: {secure: true} // For development only
+}));
 app.use(passport.initialize() );
 app.use(passport.session() )
 
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', require('./routing/masterRouter') );
-
-
-
 
 
 

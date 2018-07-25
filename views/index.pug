@@ -1,84 +1,95 @@
 extends layout
 
 block content
-  main.container-fluid(role='main')
-    #detailModal.modal(tabindex='-1', role='dialog', aria-hidden='true')
-      .modal-dialog.modal-dialog-centered(role='document', style='max-width:800px')
-        .modal-content
-          .modal-header
-            h1.modal-title Modal title
-            button.close(type='button', data-dismiss='modal', aria-label='Close')
-              span(aria-hidden='true') ×
-          .modal-body(style='overflow-y:scroll;')
-          .modal-footer
-            button#downloadJson.btn.btn-primary(type='button')
-              | Download JSON 
-              i.fas.fa-download
-            button.btn.btn-secondary(type='button', data-dismiss='modal') Close
-    // Container for all search things
-    section.jumbotron.text-center
-      .container
-        h1.jumbotron-heading Find that team yo
-        p.lead.text-muted
-          | Shopping is hard. Team shopping is even harder. This apps seeks to alleviate potential pain by peer sourcing the shopping process
-        input.form-control(type='text', placeholder='Les find that project', aria-label='search')
-      .row
-        .col
-          .concept-tag-container.container(style="margin-top:2%")
-            h2 Find by concepts
-            .blog-tags(style="margin-top:3%; margin-left:33%")
-              ul
-                li.searchBadge
-                  a(href='#') Identity
-                li.searchBadge
-                  a(href='#') Web Design
-                li.searchBadge
-                  a(href='#') IoT
-                li.searchBadge
-                  a(href='#') Cloud
-                li.searchBadge
-                  a(href='#') AI
-                li.searchBadge
-                  a(href='#') Intune
-                li.searchBadge
-                  a(href='#') Outlook
-                li.searchBadge
-                  a(href='#') Sharepoint
-        .col
-          .concept-tag-container.container(style="margin-top:2%")
-            h2 Find by stack
-            .blog-tags(style="margin-top:3%; margin-left:33%")
-              ul
-                li.searchBadge
-                  a(href='#') PowerShell
-                li.searchBadge
-                  a(href='#') Javascript
-                li.searchBadge
-                  a(href='#') C#
-                li.searchBadge
-                  a(href='#') Mongo
+  div.Browse
+    div.Browse__container
+      div.Browse__msg
+        div.Browse__msg__header Browse Projects
+        div.Browse__msg__text Start seaching for projects now. 
+      div.Browse__search
+        div.Browse__search__searchbar Searchbar here
+        div.Browse__search__conceptTags concept tags here
+        div.Browse__search__stackTags stack tags here
+    div.Browse__projects Projects here
+
+  //- main.container-fluid(role='main')
+  //-   #detailModal.modal(tabindex='-1', role='dialog', aria-hidden='true')
+  //-     .modal-dialog.modal-dialog-centered(role='document', style='max-width:800px')
+  //-       .modal-content
+  //-         .modal-header
+  //-           h1.modal-title Modal title
+  //-           button.close(type='button', data-dismiss='modal', aria-label='Close')
+  //-             span(aria-hidden='true') ×
+  //-         .modal-body(style='overflow-y:scroll;')
+  //-         .modal-footer
+  //-           button#downloadJson.btn.btn-primary(type='button')
+  //-             | Download JSON 
+  //-             i.fas.fa-download
+  //-           button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+  //-   // Container for all search things
+  //-   section.jumbotron.text-center
+  //-     .container
+  //-       h1.jumbotron-heading Find that team yo
+  //-       p.lead.text-muted
+  //-         | Shopping is hard. Team shopping is even harder. This apps seeks to alleviate potential pain by peer sourcing the shopping process
+  //-       input.form-control(type='text', placeholder='Les find that project', aria-label='search')
+  //-     .row
+  //-       .col
+  //-         .concept-tag-container.container(style="margin-top:2%")
+  //-           h2 Find by concepts
+  //-           .blog-tags(style="margin-top:3%; margin-left:33%")
+  //-             ul
+  //-               li.searchBadge
+  //-                 a(href='#') Identity
+  //-               li.searchBadge
+  //-                 a(href='#') Web Design
+  //-               li.searchBadge
+  //-                 a(href='#') IoT
+  //-               li.searchBadge
+  //-                 a(href='#') Cloud
+  //-               li.searchBadge
+  //-                 a(href='#') AI
+  //-               li.searchBadge
+  //-                 a(href='#') Intune
+  //-               li.searchBadge
+  //-                 a(href='#') Outlook
+  //-               li.searchBadge
+  //-                 a(href='#') Sharepoint
+  //-       .col
+  //-         .concept-tag-container.container(style="margin-top:2%")
+  //-           h2 Find by stack
+  //-           .blog-tags(style="margin-top:3%; margin-left:33%")
+  //-             ul
+  //-               li.searchBadge
+  //-                 a(href='#') PowerShell
+  //-               li.searchBadge
+  //-                 a(href='#') Javascript
+  //-               li.searchBadge
+  //-                 a(href='#') C#
+  //-               li.searchBadge
+  //-                 a(href='#') Mongo
         
-    .container
-      .projectTable
-      //- .row
-      //-   .col
-      //-     .card
-      //-       .table
-      //-         h6.category.text-org Identity
-      //-         h4.card-caption
-      //-           a(href='#') AD FS Help Diagnostics
-      //-         h6.category.text-gray
-      //-           | This project aims to create a UI for the existing PowerShell loren ipsum etc etc etc testing for multiple lines to see how this looks idk why multilines have to be so complicated
-      //-         .blog-tags
-      //-           ul
-      //-             li
-      //-               a(href='#') css
-      //-             li
-      //-               a(href='#') web design
-      //-             li
-      //-               a(href='#') codepen
-      //-             li
-      //-               a(href='https://twitter.com/russbeye') twitter
-      //-         .ftr
-      //-           .author
-      //-             h6.category.text-name Hannah Fowler
+  //-   .container
+  //-     .projectTable
+  //-     .row
+  //-       .col
+  //-         .card
+  //-           .table
+  //-             h6.category.text-org Identity
+  //-             h4.card-caption
+  //-               a(href='#') AD FS Help Diagnostics
+  //-             h6.category.text-gray
+  //-               | This project aims to create a UI for the existing PowerShell loren ipsum etc etc etc testing for multiple lines to see how this looks idk why multilines have to be so complicated
+  //-             .blog-tags
+  //-               ul
+  //-                 li
+  //-                   a(href='#') css
+  //-                 li
+  //-                   a(href='#') web design
+  //-                 li
+  //-                   a(href='#') codepen
+  //-                 li
+  //-                   a(href='https://twitter.com/russbeye') twitter
+  //-             .ftr
+  //-               .author
+  //-                 h6.category.text-name Hannah Fowler

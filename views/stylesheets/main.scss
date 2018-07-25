@@ -3,8 +3,8 @@
 ******************/
 $blueTheme: #00a1f1;
 $whiteTheme: #ffffff;
-$font1: 'Roboto', sans-serif;
-$font2: 'Open Sans', arial, sans-serif;
+$font1: 'Open Sans', arial, sans-serif;
+$font2: 'Roboto', sans-serif;
 
 /******************
 ** Navbar Styles **
@@ -78,9 +78,42 @@ $font2: 'Open Sans', arial, sans-serif;
   color: $whiteTheme;
 }
 
-/***********************
-** Browse Page Styles **
-***********************/
+/*******************************
+** Browse (Index) Page Styles **
+*******************************/
+.Browse {
+  height: 100%;
+  width: 100%;
+}
+.Browse__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  height: 400px;
+  width: 100%;
+  margin-top: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+
+  background: $blueTheme;
+}
+.Browse__msg {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  color: $whiteTheme;
+}
+.Browse__msg__header {
+  font-size: 64px;
+  font-family: $font1;
+}
+.Browse__msg__text {
+  font-size: 24px;
+}
 
 /************************
   ** Account Page Styles **

@@ -7,8 +7,9 @@ import { Account } from './account.js'
 $(function() {
   if ( window.location.pathname.includes('account') ) {
     let acc = new Account();
-
-  } else if ( window.location.pathname.includes('blogTest') ) {
-
+  } else if ( window.location.pathname.includes('/') ) {
+    let ind = new Index();
+    ind.helloworld();
+  } else {
   }
 })

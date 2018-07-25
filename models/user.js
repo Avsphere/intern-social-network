@@ -11,7 +11,17 @@ const userSchema = mongoose.Schema({
   projects : [{ type: mongoose.Schema.Types.ObjectId, required: true }]
 })
 
-
+const dummyData = {
+  'displayName': 'Ivraj Seerha',
+  'firstName': 'Ivraj',
+  'surname': 'Seerha',
+  'upn': 't-ivseer@microsoft.com',
+  'team': 'ASM',
+  'org': 'Azure Security',
+  'department': 'Core Sec Eng Services',
+  'jobTitle': 'Program Management Intern',
+  'projects': ''
+}
 
 
 module.exports = mongoose.model('User', userSchema);

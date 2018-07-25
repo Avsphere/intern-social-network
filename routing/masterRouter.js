@@ -5,6 +5,15 @@ const path = require('path')
 const utils = require('../utils/utils.js');
 const User = require('../models/user');
 
+const frontendDev = true;
+
+if (frontendDev) {
+  router.get('/', (req, res) => {
+    res.render('index', {
+      user: User.dummyData
+    })
+  })
+}
 
 router.get('/', (req, res) => {
   if (!req.isAuthenticated()) {
@@ -17,14 +26,20 @@ router.get('/', (req, res) => {
   }
 });
 
-router.get('/account', utils.checkAuthenticated, function(req, res) {
+router.get('/account', utils.checkAuthenticated, function (req, res) {
   let profileData = req.user.profile;
-  if (!profileData.team) { profileData.team = 'Enter Team Name' }
-  if (!profileData.org) { profileData.org = 'Enter Org Name' }
-  res.render('account', { user: profileData });
+  if (!profileData.team) {
+    profileData.team = 'Enter Team Name'
+  }
+  if (!profileData.org) {
+    profileData.org = 'Enter Org Name'
+  }
+  res.render('account', {
+    user: profileData
+  });
 })
 
-router.get('/blogTest', function(req,res){
+router.get('/blogTest', function (req, res) {
   res.render('blogTest');
 })
 
@@ -53,15 +68,15 @@ router.get('/token',
         })
       } else {
         return utils.createNewUser({
-                firstName: blanketScoped_userData.body.givenName,
-                surname: blanketScoped_userData.body.surname,
-                displayName: blanketScoped_userData.body.displayName,
-                department: blanketScoped_userData.body.department,
-                jobTitle: blanketScoped_userData.body.jobTitle,
-                upn: blanketScoped_userData.body.onPremisesUserPrincipalName
-              })
+          firstName: blanketScoped_userData.body.givenName,
+          surname: blanketScoped_userData.body.surname,
+          displayName: blanketScoped_userData.body.displayName,
+          department: blanketScoped_userData.body.department,
+          jobTitle: blanketScoped_userData.body.jobTitle,
+          upn: blanketScoped_userData.body.onPremisesUserPrincipalName
+        })
       }
-    }).then( (mongoUser) => {
+    }).then((mongoUser) => {
       req.user.profile = mongoUser;
       res.render('index', {
         user: req.user.profile
@@ -87,14 +102,16 @@ router.get('/disconnect', (req, res) => {
 
 router.post('/updateUser', (req, res) => {
   let userId = req.body.userId,
-      userData = req.body.formData;
-  User.findById( userId, function(err, user) {
-    if ( !err ) {
+    userData = req.body.formData;
+  User.findById(userId, function (err, user) {
+    if (!err) {
       user.team = userData.team;
       user.org = userData.org;
-      let projectIds = utils.createProjects( userId, userData.projects );
-      res.send( user );
-    } else { console.log("Problem in update user!"); }
+      let projectIds = utils.createProjects(userId, userData.projects);
+      res.send(user);
+    } else {
+      console.log("Problem in update user!");
+    }
   })
 })
 

@@ -53,6 +53,7 @@ export class TagMaster {
         let tag = $(el.target).text(),
             parent = $(el.target).parent(),
             type = $(parent).attr('data-type');
+        console.log("Tag was clicked!", el, type, that)
         if ( type === 'concept') {
           if ( that.selectedConceptTags.includes(tag) ) {
               that.removeTag(tag);

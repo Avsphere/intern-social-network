@@ -15,19 +15,37 @@ const User = require('../models/user')
 //   })
 // }
 
-router.get('/', (req, res) => {
-  if (!req.isAuthenticated()) {
-    res.redirect('/login')
-  } else {
-    let profileData = req.user.profile
-    res.render('index', {
-      user: profileData,
-    })
-  }
-})
+// router.get('/', (req, res) => {
+//   if (!req.isAuthenticated()) {
+//     res.redirect('/login')
+//   } else {
+//     let profileData = req.user.profile
+//     res.render('index', {
+//       user: profileData,
+//     })
+//   }
+// })
 
-router.get('/account', utils.checkAuthenticated, function(req, res) {
-  let profileData = req.user.profile
+function getDummyUser() {
+  return {
+    displayName : "Aaron",
+    firstName : "aa",
+    surname : "perr",
+    upn : "woahAaron@gmail.com",
+    team : "Bea",
+    org : "uty",
+    department : "cloud",
+    jobTitle : "awesomeJob",
+    projects : []
+  }
+}
+
+router.get('/', (req, res) => {
+  res.render('index', { user : getDummyUser() })
+})
+router.get('/account', function(req, res) {
+  // let profileData = req.user.profile;
+  let profileData =  getDummyUser();
   if (!profileData.team) {
     profileData.team = 'Enter Team Name'
   }
@@ -35,7 +53,7 @@ router.get('/account', utils.checkAuthenticated, function(req, res) {
     profileData.org = 'Enter Org Name'
   }
   res.render('account', {
-    user: profileData,
+    user: profileData
   })
 })
 

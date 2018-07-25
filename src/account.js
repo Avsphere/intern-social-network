@@ -1,7 +1,10 @@
-import axios from 'axios'
+import axios from 'axios';
+import { TagMaster } from './tagMaster.js'
 export class Account {
   constructor() {
     this.initHandlers();
+    this.tagMaster = new TagMaster();
+    this.currProjectCount = 0;
   }
   helloworld() {
     console.log("Hello world from account");
@@ -64,61 +67,66 @@ export class Account {
       })
     })
   }
-
-  addProjectHtml() {
-    console.log("Running html fun")
-
-    $('#projectSection').append(`
+  buildProjectHtml(projectData) {
+    //add so that auto populates if already there are projects
+    let html = `
       <div class="Account__newProject">
         <div class="Account__newProject__title"> New Project </div>
         <div class="formWrapper" style="margin-left:3%; max-width:50%;">
-          <form autocomplete="off"> 
+          <form autocomplete="off">
             <div class="form-group">
-              <label for="projectName"> Project Name </label> 
+              <label for="projectName"> Project Name </label>
               <input class="form-control" id="projectName" type="text" placeholder="Enter Project Name">
             </div>
             <div class="form-group">
-              <label for="projectDescription"> Project Description </label> 
+              <label for="projectDescription"> Project Description </label>
               <input class="form-control" id="projectDescription" type="text" placeholder="Enter Project Description">
             </div>
-            <div class="form-group">
-              <select name="cars">  
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="fiat">Fiat</option>
-                <option value="audi">Audi</option>
-              </select>
+            <div id="conceptTags${this.currProjectCount}">
+            </div>
+            <div id="techStackTags${this.currProjectCount}">
             </div>
             <div class="form-group">
               <div class="Account__newProject__timeTitle">Time spent during avg. week on...</div>
-              <label for="meetingTime"> Meetings </label> 
-              <input class="form-control" id="meetingTime" type="text" placeholder="x hrs">
-              <label for="devTime"> Dev Work </label> 
+              <label for="meetingTime"> Meetings </label>
+              <input class="form-control" id="meetingTime" type="text" placeholder="x fraction">
+              <label for="devTime"> Dev Work </label>
               <input class="form-control" id="devTime" type="text" placeholder="x hrs">
-              <label for="designTime"> Design Work </label> 
+              <label for="designTime"> Design Work </label>
               <input class="form-control" id="designTime" type="text" placeholder="x hrs">
-              <label for="emailTime"> Emails </label> 
+              <label for="emailTime"> Emails </label>
               <input class="form-control" id="emailTime" type="text" placeholder="x hrs">
-              <label for="writingTime"> Writing/Specing </label> 
+              <label for="writingTime"> Writing/Specing </label>
               <input class="form-control" id="writingTime" type="text" placeholder="x hrs">
             </div>
-          </form> 
+          </form>
         </div>
       </div>
-    `);
+    `;
+    return html;
   }
 
   initHandlers() {
     let that = this;
-
     $('#submitForm').on('click', (el) => {
       el.preventDefault();
       that.updateAccount();
     })
 
     $('#addProject').on('click', (e) => {
+      console.log('here')
       e.preventDefault();
-      that.addProjectHtml();
+      let conceptTagDivId = 'conceptTagDiv' + that.currProjectCount,
+          techStackTagDivId = 'techStackDiv' + that.currProjectCount,
+          newProjectHtml = that.buildProjectHtml();
+
+      let conceptTagHtml = that.tagMaster.buildTags(conceptTagDivId, 'concept'),
+          techStackTagHtml = that.tagMaster.buildTags(techStackTagDivId, 'techStack');
+      $('#projectSection').append(newProjectHtml);
+      $('#conceptTags' + that.currProjectCount).append(conceptTagHtml);
+      $('#techStackTags' + that.currProjectCount).append(techStackTagHtml)
+      that.tagMaster.addHandles(conceptTagDivId);
+      that.tagMaster.addHandles(techStackTagDivId);
     })
   }
 

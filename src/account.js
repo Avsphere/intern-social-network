@@ -64,12 +64,21 @@ export class Account {
     })
   }
 
+  addProjectHtml() {
+    $('#projectSection').append(`
+      <div> test </div>
+    `)
+  }
 
   initHandlers() {
     let that = this;
     $('#submitForm').on('click', (el) => {
       el.preventDefault();
       that.updateAccount();
+    })
+    $('#addProjectHtml').on('click', (e) => {
+      e.preventDefault();
+      that.addProjectHtml();
     })
   }
 

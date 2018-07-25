@@ -82,7 +82,7 @@ export class Account {
             </div>
             <div class="form-group">
               <label for="projectDescription"> Project Description </label> 
-              <input class="form-control" id="projectDescription" type="text" placeholder="Enter Project Description">
+              <textarea class="form-control" id="projectDescription" type="text" placeholder="Enter Project Description"></textarea>
             </div>
             <div class="form-group">
               <select name="cars">  

@@ -1,5 +1,6 @@
 const request = require('superagent');
 const User = require('../models/user');
+const Project = require('../models/project');
 const passport = require('passport')
 
 
@@ -15,12 +16,26 @@ function getUserData(accessToken) {
   })
 }
 
-function createProjects( formProjects ) {
-  let projects = formProjects.map( (p) => {
-    p.ownedBy = userId;
-    let newProject = new Project(p);
-    newProject.save( );
-    return new Project(p);
+function createProjects( userId, formProjects ) {
+  return new Promise( (resolve, reject) => {
+    let promises = formProjects.map( (p) => {
+      return new Promise( (resolve, reject) => {
+        p.ownedBy = userId;
+        let newProject = new Project(p);
+        newProject.save( function(err, newProject) {
+          if ( err ) {
+            console.error("Error in create projects", err); reject(err);
+          }
+          else {
+            resolve(newProject.ownedBy);
+          }
+        })
+      })
+    })
+    //promises is the list of resolutions from above
+    Promise.all( promises ).then( (projectIds) => {
+      resolve(projectIds);
+    })
   })
 }
 
@@ -73,6 +88,7 @@ function getProfilePhoto(accessToken) {
   })
 }
 
+exports.createProjects = createProjects;
 exports.checkAuthenticated = checkAuthenticated;
 exports.getUserData = getUserData;
 exports.findUserByUPN = findUserByUPN;

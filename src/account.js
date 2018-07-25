@@ -114,7 +114,6 @@ export class Account {
     })
 
     $('#addProject').on('click', (e) => {
-      console.log('here')
       e.preventDefault();
       let conceptTagDivId = 'conceptTagDiv' + that.currProjectCount,
           techStackTagDivId = 'techStackDiv' + that.currProjectCount,

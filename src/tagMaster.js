@@ -24,6 +24,26 @@ export class TagMaster {
     return html;
   }
 
+  getSelected(){
+    return {
+      selectedConceptTags : this.selectedConceptTags,
+      selectedTechStackTags : this.selectedTechStackTags
+    }
+  }
+
+  removeTag( tag ) {
+    let spliceIndex = 0;
+    let foundCheck = this.selectedConceptTags.find( (t, i) => {
+      if ( t === tag ) { spliceIndex = i; return t; }
+    })
+    if ( foundCheck ) {
+      this.selectedConceptTags.splice( spliceIndex, 1 );
+    } else {
+      console.log("Something went wrong with tag removal");
+    }
+
+  }
+
   addHandles( divId ) {
     let that = this,
         tags = $('#' + divId).find('ul li.searchBadge');
@@ -34,20 +54,19 @@ export class TagMaster {
             parent = $(el.target).parent(),
             type = $(parent).attr('data-type');
         if ( type === 'concept') {
-          if ( this.selectedConceptTags.includes(tag) ) {
-            console.log("already selected")
+          if ( that.selectedConceptTags.includes(tag) ) {
+              that.removeTag(tag);
           } else {
-            this.selectedConceptTags.push(tag)
+            that.selectedConceptTags.push(tag)
           }
         }
         else if ( type === 'techStack') {
           if ( this.selectedTechStackTags.includes(tag) ) {
-            console.log("already selected")
+            that.removeTag(tag);
           } else {
-            this.selectedTechStackTags.push(tag)
+            that.selectedTechStackTags.push(tag)
           }
         }
-        console.log("Clicked tag!", this)
       })
     })
   }

@@ -5,9 +5,25 @@ export class Account {
     this.initHandlers();
     this.tagMaster = new TagMaster();
     this.currProjectCount = 0;
+    this.currUserId = $('#titleHeader').attr('data-account-id');
+    this.getUserProjects().then( (d) => { console.log(d); })
+    console.log(this)
+
   }
-  helloworld() {
-    console.log("Hello world from account");
+  getUserProjects() {
+    return new Promise( (resolve, reject) => {
+      axios.post('/getUserProjects', { userId : this.currUserId })
+      .then((res) => {
+        if (res.statusText === 'OK') {
+          resolve(res.data);
+        } else {
+          console.log("FAILED", res);
+        }
+      }).catch((err) => {
+        console.log("ERROR in request runner login", err);
+        resolve(err);
+      })
+    })
   }
 
   returnDummyFormData() {
@@ -53,7 +69,7 @@ export class Account {
     return new Promise((resolve, reject) => {
       let data = {
         formData: this.grabFormData(),
-        userId: $('#titleHeader').attr('data-account-id')
+        userId: this.currUserId
       }
       axios.post('/updateUser', data).then((res) => {
         if (res.statusText === 'OK') {
@@ -61,12 +77,15 @@ export class Account {
         } else {
           console.log("FAILED", res);
         }
-      }).catch((e) => {
+      }).catch((err) => {
         console.log("ERROR in request runner login", err);
         resolve(err);
       })
     })
   }
+
+
+
   buildProjectHtml(projectData) {
     //add so that auto populates if already there are projects
     let html = `

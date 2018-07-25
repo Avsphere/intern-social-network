@@ -37,6 +37,10 @@ TABLE OF CONTENTS
 /*---------------------------------------------------------------------- /
 SECTIONS
 ----------------------------------------------------------------------- */
+/* AARONS SLOPPY ADDITION */
+.selected-tag {
+  background : blue;
+}
 
 .container {
   margin: 5px;

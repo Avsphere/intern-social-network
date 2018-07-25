@@ -20,7 +20,6 @@ export class TagMaster {
       html += buildTag(t);
     })
     html += '</ul></div>';
-
     return html;
   }
 
@@ -41,7 +40,14 @@ export class TagMaster {
     } else {
       console.log("Something went wrong with tag removal");
     }
-
+  }
+  toggleHighlight( listItem ) {
+    //css for selected-tag can be found in cards.css
+    if ( listItem.hasClass('selected-tag') ) {
+      listItem.removeClass('selected-tag');
+    } else {
+      listItem.addClass('selected-tag')
+    }
   }
 
   addHandles( divId ) {
@@ -50,10 +56,10 @@ export class TagMaster {
     tags.toArray().forEach( (tag) => {
       $(tag).on('click', (el) => {
         el.preventDefault();
-        let tag = $(el.target).text(),
+        let tagText = $(el.target).text(),
             parent = $(el.target).parent(),
             type = $(parent).attr('data-type');
-        console.log("Tag was clicked!", el, type, that)
+        that.toggleHighlight(parent);
         if ( type === 'concept') {
           if ( that.selectedConceptTags.includes(tag) ) {
               that.removeTag(tag);
@@ -71,7 +77,4 @@ export class TagMaster {
       })
     })
   }
-
-
-
 }

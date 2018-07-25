@@ -1,18 +1,17 @@
 /******************
 ** Shared Styles **
 ******************/
-$themeBlue : #00A1F1;
-$themeWhite: #FFFFFF;
-
-body {
-    font-family: 'Open Sans', arial, sans-serif;
-}
+$blueTheme : #00A1F1;
+$whiteTheme: #FFFFFF;
+$font1: 'Roboto', sans-serif;
+$font2: 'Open Sans', arial, sans-serif;
 
 /******************
 ** Navbar Styles **
 ******************/
 .Navbar {
-    background: $themeBlue;
+    background: $blueTheme;
+    font-family: $font1;
 }
 .Navbar__container {
     display: flex;
@@ -22,7 +21,6 @@ body {
 
     width: 90%;
     height: 128px;
-
     margin-top: 0px;
     margin-left: auto;
     margin-right: auto;
@@ -31,19 +29,50 @@ body {
 }
 .Navbar__title {
     margin-left: 12px;
-    font-size: 32px;
 
-    color: $themeWhite;
+    font-size: 32px;
+    color: $whiteTheme;
 }
 .Navbar__items {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 150px;
 
-    color: $themeWhite;
+    width: 150px;
+    color: $whiteTheme;
 }
+
+/******************
+** Footer Styles **
+******************/
+.Footer {
+    position: absolute;
+    bottom: 0px;
+    height: 60px;
+    width: 100%;
+
+    background: $blueTheme;
+
+}
+.Footer__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    height: 60px;
+    width: 100%;
+    margin-top: 0px;
+    margin-bottom: 0px;
+
+}
+.Footer__msg {
+    font-size: 14px;
+    font-family: $font2;
+    color: $whiteTheme;
+}
+
 /***********************
 ** Browse Page Styles **
 ***********************/

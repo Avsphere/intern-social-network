@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const project = mongoose.Schema({
+const projectSchema = mongoose.Schema({
   title : { type : String, required : true },
   description : { type : String, required : true },
   conceptTags : [String],
@@ -16,4 +16,4 @@ const project = mongoose.Schema({
 
 
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('Project', projectSchema);

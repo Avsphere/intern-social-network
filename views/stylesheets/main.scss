@@ -6,6 +6,7 @@ $whiteTheme: #FFFFFF;
 $font1: 'Roboto', sans-serif;
 $font2: 'Open Sans', arial, sans-serif;
 
+
 /******************
 ** Navbar Styles **
 ******************/
@@ -25,7 +26,6 @@ $font2: 'Open Sans', arial, sans-serif;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 0px;
-
 }
 .Navbar__title {
     margin-left: 12px;
@@ -40,8 +40,17 @@ $font2: 'Open Sans', arial, sans-serif;
     align-items: center;
 
     width: 150px;
+
+    text-decoration: None;
     color: $whiteTheme;
 }
+.Navbar__items__about {
+    color: $whiteTheme;
+}
+.Navbar__items__profile {
+    color: $whiteTheme;
+}
+
 
 /******************
 ** Footer Styles **
@@ -53,7 +62,6 @@ $font2: 'Open Sans', arial, sans-serif;
     width: 100%;
 
     background: $blueTheme;
-
 }
 .Footer__container {
     display: flex;
@@ -65,7 +73,6 @@ $font2: 'Open Sans', arial, sans-serif;
     width: 100%;
     margin-top: 0px;
     margin-bottom: 0px;
-
 }
 .Footer__msg {
     font-size: 14px;

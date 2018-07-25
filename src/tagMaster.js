@@ -1,8 +1,17 @@
 export class TagMaster {
 
   constructor() {
-    this.conceptList = ['IoT', 'Cloud', 'AI', 'Outlook'];
-    this.techStackList = ['ps', 'js', 'haskell', 'css'];
+    this.conceptList = [
+      "gaming", "mixed reality", "virtual reality", "augmented reality", "accessibility", "supportability", "artificial intelligence", "machine learning", "IOT", "big data", "security", "natural language processing", "speech recognition", "ux/ui", "merchandising", "design", "data storage", "blockchain", "education", "automation",
+      "networking", "anomaly detection", "distributed systems", "event sourcing"
+    ];
+    this.techStackList = [
+      "unity", "javascript", "jquery", "django", "go", "objective c", "backbone.js", "powershell", "c#", "asp.net", "kubernetes", "jenkins", "mongodb", "bootstrap", "postgresql", "mysql", "sqlite", "memcached", "aws",
+      "python", "linux", "ajax", "nginx", "react", "android", "ios", "angular", "tensorflow",
+      "docker", "xcode", "java", "redis", "ruby", "sass", "rails", "html/css", "apache", "php", "github",
+      "webpack", "node.js", "babel", "adobe xd", "adobe illustrator", "adobe photoshop", "microsoft word",
+      "microsoft excel", "microsoft powerpoint", "balsamiq"
+    ];
     this.selectedConceptTags = [];
     this.selectedTechStackTags = [];
   }

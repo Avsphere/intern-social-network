@@ -1,83 +1,81 @@
 /******************
 ** Shared Styles **
 ******************/
-$blueTheme : #00A1F1;
-$whiteTheme: #FFFFFF;
+$blueTheme: #00a1f1;
+$whiteTheme: #ffffff;
 $font1: 'Roboto', sans-serif;
 $font2: 'Open Sans', arial, sans-serif;
-
 
 /******************
 ** Navbar Styles **
 ******************/
 .Navbar {
-    background: $blueTheme;
-    font-family: $font1;
+  background: $blueTheme;
+  font-family: $font1;
 }
 .Navbar__container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 
-    width: 90%;
-    height: 128px;
-    margin-top: 0px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 0px;
+  width: 90%;
+  height: 128px;
+  margin-top: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0px;
 }
 .Navbar__title {
-    margin-left: 12px;
+  margin-left: 12px;
 
-    font-size: 32px;
-    color: $whiteTheme;
+  font-size: 32px;
+  color: $whiteTheme;
 }
 .Navbar__items {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 
-    width: 150px;
+  width: 150px;
 
-    text-decoration: None;
-    color: $whiteTheme;
+  text-decoration: None;
+  color: $whiteTheme;
 }
 .Navbar__items__about {
-    color: $whiteTheme;
+  color: $whiteTheme;
 }
 .Navbar__items__profile {
-    color: $whiteTheme;
+  color: $whiteTheme;
 }
-
 
 /******************
 ** Footer Styles **
 ******************/
 .Footer {
-    position: absolute;
-    bottom: 0px;
-    height: 60px;
-    width: 100%;
+  position: absolute;
+  bottom: 0px;
+  height: 60px;
+  width: 100%;
 
-    background: $blueTheme;
+  background: $blueTheme;
 }
 .Footer__container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 
-    height: 60px;
-    width: 100%;
-    margin-top: 0px;
-    margin-bottom: 0px;
+  height: 60px;
+  width: 100%;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 .Footer__msg {
-    font-size: 14px;
-    font-family: $font2;
-    color: $whiteTheme;
+  font-size: 14px;
+  font-family: $font2;
+  color: $whiteTheme;
 }
 
 /***********************
@@ -89,148 +87,149 @@ $font2: 'Open Sans', arial, sans-serif;
   ************************/
 
 .Account {
-    margin-top: 12px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 12px;
-    width: 80%;
+  margin-top: 12px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 12px;
+  width: 80%;
 }
 
 .Account__title {
-    font-size: 48px;
+  font-size: 48px;
 }
 
 .Account__newProject {
-    margin-top: 0px;
-    margin-left: 12px;
-    margin-right: auto;
-    margin-bottom: 0px;
-    width: 80%;
+  margin-top: 0px;
+  margin-left: 12px;
+  margin-right: auto;
+  margin-bottom: 0px;
+  width: 80%;
 }
 
 .Account__newProject__title {
-    font-style: bold;
+  font-style: bold;
 }
 
 .searchBadge {
-    margin-top: 4%;
+  margin-top: 4%;
 }
 
 .search {
-    background-color: #f0f0f0;
-    width: 75%;
-    position: relative;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    padding: 3%;
+  background-color: #f0f0f0;
+  width: 75%;
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  padding: 3%;
 }
 
 .amber {
-    background-color: #ffc107 !important;
+  background-color: #ffc107 !important;
 }
 
 .baseInfo {
-    margin-left: 12%;
+  margin-left: 12%;
 }
 
 .clipboard {
-    margin-left: 2rem;
-    font-size: 2rem;
-    color: #565353;
+  margin-left: 2rem;
+  font-size: 2rem;
+  color: #565353;
 }
 
 tr.clickable-row {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .sectionHeader {
-    margin-top: 2%;
-    margin-bottom: 2%;
+  margin-top: 2%;
+  margin-bottom: 2%;
 }
 
 h3 {
-    font-weight: 400;
+  font-weight: 400;
 }
 
 h5 {
-    font-weight: 400;
+  font-weight: 400;
 }
 
 .sectionTitle {
-    font-weight: 500;
-    font-size: 1.4rem;
+  font-weight: 500;
+  font-size: 1.4rem;
 }
 
 #wrapper {
-    position: absolute;
-    left: 0;
-    width: 800px;
-    text-align: center;
-    top: 40%;
-    left: 40%;
-    margin-left: -160px;
-    margin-top: -160px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
+  position: absolute;
+  left: 0;
+  width: 800px;
+  text-align: center;
+  top: 40%;
+  left: 40%;
+  margin-left: -160px;
+  margin-top: -160px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
 }
 
 canvas {
-    position: absolute;
-    top: 40%;
-    left: 0;
-    z-index: 0;
-    width: 100%;
-    height: 60%;
-    pointer-events: none;
+  position: absolute;
+  top: 40%;
+  left: 0;
+  z-index: 0;
+  width: 100%;
+  height: 60%;
+  pointer-events: none;
 }
 
 #documentationTitle {
-    position: absolute;
-    top: 20%;
+  position: absolute;
+  top: 20%;
 }
 
 tr.clickable-row {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .sectionHeader {
-    margin-top: 2%;
-    margin-bottom: 2%;
+  margin-top: 2%;
+  margin-bottom: 2%;
 }
 
 .pageTitle {
-    margin-left: 2rem;
-    margin-top: .5rem;
+  margin-left: 2rem;
+  margin-top: 0.5rem;
 }
 
 .pageTitle h4 a {
-    color: white;
-    font-size: 1.25rem;
-    font-weight: 400;
-    font-family: "adelle-sans", sans-serif;
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 400;
+  font-family: 'adelle-sans', sans-serif;
 }
 
 .documentationLink {
-    margin-left: 3%;
-    margin-top: .75rem;
+  margin-left: 3%;
+  margin-top: 0.75rem;
 }
 
 .documentationLink a {
-    color: white;
-    font-size: 1.25rem;
-    font-weight: 400;
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 400;
 }
 
 .logoImage {
-    max-width: 100px;
+  max-width: 100px;
 }
 
 .bd-navbar {
-    min-height: 2.5rem;
-    background-color: #405075;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, .05), inset 0 -1px 0 rgba(0, 0, 0, .1);
+  min-height: 2.5rem;
+  background-color: #405075;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
 }

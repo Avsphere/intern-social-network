@@ -5,15 +5,15 @@ const path = require('path')
 const utils = require('../utils/utils.js')
 const User = require('../models/user')
 
-const frontendDev = true
+// const frontendDev = true
 
-if (frontendDev) {
-  router.get('/', (req, res) => {
-    res.render('index', {
-      user: User.dummyData,
-    })
-  })
-}
+// if (frontendDev) {
+//   router.get('/', (req, res) => {
+//     res.render('index', {
+//       user: User.dummyData,
+//     })
+//   })
+// }
 
 router.get('/', (req, res) => {
   if (!req.isAuthenticated()) {

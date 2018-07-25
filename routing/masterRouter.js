@@ -4,7 +4,7 @@ const passport = require('passport')
 const path = require('path')
 const utils = require('../utils/utils.js')
 const User = require('../models/user')
-
+const Project = require('../models/project')
 // const frontendDev = true
 
 // if (frontendDev) {
@@ -27,7 +27,9 @@ const User = require('../models/user')
 // })
 
 function getDummyUser() {
+  //this id is a real user id
   return {
+    _id : '5b57b107f2ade61c10c4f0f8',
     displayName : "Aaron",
     firstName : "aa",
     surname : "perr",
@@ -130,17 +132,43 @@ router.get('/disconnect', (req, res) => {
 
 router.post('/updateUser', (req, res) => {
   let userId = req.body.userId,
-    userData = req.body.formData
+      userData = req.body.formData;
   User.findById(userId, function(err, user) {
     if (!err) {
+      //console.log('Update user Found user: ', user);
       user.team = userData.team
       user.org = userData.org
-      let projectIds = utils.createProjects(userId, userData.projects)
-      res.send(user)
+      utils.createProjects(userId, userData.projects).then( (projectIds) => {
+        console.log('New project Ids ', projectIds);
+        user.projects = user.projects.concat(projectIds);
+        user.save( (err) => {
+          res.send({success : true})
+        })
+      })
     } else {
       console.log('Problem in update user!')
     }
   })
 })
+
+router.post('/getUserProjects', (req, res) => {
+  let userId = req.body.userId;
+  User.findById(userId, function(err, user) {
+    if (!err) {
+      Project.find({
+        '_id' : {
+          $in : user.projects
+        }
+      }, function(err, projects){
+          res.send(projects)
+      })
+    } else {
+      console.log('Problem in update user!')
+    }
+  })
+})
+
+
+
 
 module.exports = router

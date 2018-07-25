@@ -27,7 +27,7 @@ function createProjects( userId, formProjects ) {
             console.error("Error in create projects", err); reject(err);
           }
           else {
-            resolve(newProject.ownedBy);
+            resolve(newProject._id);
           }
         })
       })

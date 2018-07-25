@@ -2,7 +2,7 @@ extends layout
 
 block content
   div.Account
-    div.Account__title#titleHeader(data-account-id= user._id) Account Page
+    div.Account__title#titleHeader(data-account-id=user._id) Account Page
     // Account information
     div.formWrapper(style="margin-left:3%; max-width:50%;" )
       form( autocomplete="off" )
@@ -29,4 +29,3 @@ block content
 
     button.btn.btn-primary#addProject Add new project
     button.btn.btn-primary#submitForm(type='submit') Save
-

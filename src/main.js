@@ -8,8 +8,6 @@ $(function() {
   if ( window.location.pathname.includes('account') ) {
     let acc = new Account();
 
-    acc.helloworld();
-
   } else if ( window.location.pathname.includes('blogTest') ) {
 
   }

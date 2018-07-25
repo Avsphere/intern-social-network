@@ -1,0 +1,45 @@
+@import './shared.scss';
+
+/******************
+** Navbar Styles **
+******************/
+.Navbar {
+  background: $blueTheme;
+  font-family: $font1;
+}
+.Navbar__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 90%;
+  height: 128px;
+  margin-top: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0px;
+}
+.Navbar__title {
+  margin-left: 12px;
+
+  font-size: 32px;
+  color: $whiteTheme;
+}
+.Navbar__items {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 250px;
+
+  text-decoration: None;
+  color: $whiteTheme;
+}
+.Navbar__items__about {
+  color: $whiteTheme;
+}
+.Navbar__items__profile {
+  color: $whiteTheme;
+}

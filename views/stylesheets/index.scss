@@ -1,0 +1,101 @@
+@import './shared.scss';
+
+/*******************************
+** Browse (Index) Page Styles **
+*******************************/
+.Browse {
+  height: 100%;
+  width: 100%;
+}
+.Browse__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  // height: 400px;
+  width: 100%;
+  margin-top: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+
+  background: $blueTheme;
+}
+.Browse__msg {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  color: $whiteTheme;
+}
+.Browse__msg__header {
+  font-size: 64px;
+  font-family: $font1;
+}
+.Browse__msg__text {
+  font-size: 24px;
+}
+.Browse__search {
+  width: 80%;
+}
+.Browse__searchbar {
+  margin-top: 12px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 12px;
+  width: 100%;
+}
+.Browse__tagFilter {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.Browse__tagFilter__title {
+  margin-top: 0px;
+  margin-left: 0px;
+  margin-right: 12px;
+  margin-bottom: 0px;
+
+  min-width: 125px;
+  color: $whiteTheme;
+}
+.Browse__tagFilter__tagList ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  list-style: none;
+  padding-top: 6px;
+  padding-left: 0;
+  margin-top: 6px;
+  max-height: 125px;
+  overflow-y: scroll;
+}
+
+.Browse__tagFilter__tagList a {
+  border: 1px solid $whiteTheme;
+  border-radius: 3px;
+  color: $whiteTheme;
+  font-size: 1rem;
+  height: 2rem;
+  line-height: 1rem;
+  letter-spacing: 1px;
+  padding: 0.4rem;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+  width: 5rem;
+}
+
+.Browse__tagFilter__tagList a:hover {
+  background: $whiteTheme;
+  color: $blueTheme;
+  text-decoration: none;
+}
+.Browse__tagFilter__tag {
+  margin-top: 0px;
+  margin-left: 0px;
+  margin-right: 0.5rem;
+  margin-bottom: 0.7rem;
+}

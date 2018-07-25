@@ -24,6 +24,10 @@ router.get('/account', utils.checkAuthenticated, function(req, res) {
   });
 })
 
+router.get('/blogTest', function(req,res){
+  res.render('blogTest');
+})
+
 
 router.get('/login',
   passport.authenticate('azuread-openidconnect', {

@@ -464,6 +464,18 @@ eval("/* WEBPACK VAR INJECTION */(function($) {\n\nObject.defineProperty(exports
 
 /***/ }),
 
+/***/ "./src/blogViewControl.js":
+/*!********************************!*\
+  !*** ./src/blogViewControl.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nmodule.exports = function ($) {\n  \"use strict\"; // Start of use strict\n\n  // Floating label headings for the contact form\n\n  $(\"body\").on(\"input propertychange\", \".floating-label-form-group\", function (e) {\n    $(this).toggleClass(\"floating-label-form-group-with-value\", !!$(e.target).val());\n  }).on(\"focus\", \".floating-label-form-group\", function () {\n    $(this).addClass(\"floating-label-form-group-with-focus\");\n  }).on(\"blur\", \".floating-label-form-group\", function () {\n    $(this).removeClass(\"floating-label-form-group-with-focus\");\n  });\n\n  // Show the navbar when the page is scrolled up\n  var MQL = 992;\n\n  //primary navigation slide-in effect\n  if ($(window).width() > MQL) {\n    var headerHeight = $('#mainNav').height();\n    $(window).on('scroll', {\n      previousTop: 0\n    }, function () {\n      var currentTop = $(window).scrollTop();\n      //check if user is scrolling up\n      if (currentTop < this.previousTop) {\n        //if scrolling up...\n        if (currentTop > 0 && $('#mainNav').hasClass('is-fixed')) {\n          $('#mainNav').addClass('is-visible');\n        } else {\n          $('#mainNav').removeClass('is-visible is-fixed');\n        }\n      } else if (currentTop > this.previousTop) {\n        //if scrolling down...\n        $('#mainNav').removeClass('is-visible');\n        if (currentTop > headerHeight && !$('#mainNav').hasClass('is-fixed')) $('#mainNav').addClass('is-fixed');\n      }\n      this.previousTop = currentTop;\n    });\n  }\n};\n\n//# sourceURL=webpack:///./src/blogViewControl.js?");
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
@@ -484,7 +496,7 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nvar _jquery = __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\");\n\nvar _jquery2 = _interopRequireDefault(_jquery);\n\n__webpack_require__(/*! bootstrap */ \"./node_modules/bootstrap/dist/js/bootstrap.js\");\n\nvar _index = __webpack_require__(/*! ./index.js */ \"./src/index.js\");\n\nvar _requestRunner = __webpack_require__(/*! ./requestRunner.js */ \"./src/requestRunner.js\");\n\nvar _account = __webpack_require__(/*! ./account.js */ \"./src/account.js\");\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n(0, _jquery2.default)(function () {\n  if (window.location.pathname.includes('account')) {\n    var acc = new _account.Account();\n    acc.helloworld();\n  } else if (window.location.pathname.includes('account')) {}\n});\n\n//# sourceURL=webpack:///./src/main.js?");
+eval("\n\nvar _jquery = __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\");\n\nvar _jquery2 = _interopRequireDefault(_jquery);\n\n__webpack_require__(/*! bootstrap */ \"./node_modules/bootstrap/dist/js/bootstrap.js\");\n\nvar _blogViewControl = __webpack_require__(/*! ./blogViewControl.js */ \"./src/blogViewControl.js\");\n\nvar _blogViewControl2 = _interopRequireDefault(_blogViewControl);\n\nvar _index = __webpack_require__(/*! ./index.js */ \"./src/index.js\");\n\nvar _requestRunner = __webpack_require__(/*! ./requestRunner.js */ \"./src/requestRunner.js\");\n\nvar _account = __webpack_require__(/*! ./account.js */ \"./src/account.js\");\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n(0, _jquery2.default)(function () {\n  if (window.location.pathname.includes('account')) {\n    var acc = new _account.Account();\n    acc.helloworld();\n  } else if (window.location.pathname.includes('blogTest')) {}\n});\n\n//# sourceURL=webpack:///./src/main.js?");
 
 /***/ }),
 

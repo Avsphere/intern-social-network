@@ -1,0 +1,62 @@
+extends layout
+block content
+    // Page Header
+    header.blog-masthead(style="")
+      .overlay
+      .container
+        .row
+          .col-lg-8.col-md-10.mx-auto
+            .site-heading
+              h1 Intern Social Network
+              span.subheading A way to shop successfully
+    .container
+      .row
+        .col-lg-8.col-md-10.mx-auto
+          .post-preview
+            a(href='post.html')
+              h2.post-title
+                | Example Card
+              h3.post-subtitle
+                | Blah blah blah
+            p.post-meta
+              | Posted by
+              a(href='#') Aaron Perrine
+              |               on May 14, 2018
+          hr
+          .post-preview
+            a(href='post.html')
+              h2.post-title
+                | Example Card
+              h3.post-subtitle
+                | Blah blah blah
+            p.post-meta
+              | Posted by
+              a(href='#') Aaron Perrine
+              |               on May 14, 2018
+          hr  
+          // Pager
+          .clearfix
+            a.btn.btn-primary.float-right(href='#') Older Posts →
+    hr
+    // Footer
+    footer
+      .container
+        .row
+          .col-lg-8.col-md-10.mx-auto
+            ul.list-inline.text-center
+              li.list-inline-item
+                a(href='#')
+                  span.fa-stack.fa-lg
+                    i.fa.fa-circle.fa-stack-2x
+                    i.fa.fa-twitter.fa-stack-1x.fa-inverse
+              li.list-inline-item
+                a(href='#')
+                  span.fa-stack.fa-lg
+                    i.fa.fa-circle.fa-stack-2x
+                    i.fa.fa-facebook.fa-stack-1x.fa-inverse
+              li.list-inline-item
+                a(href='#')
+                  span.fa-stack.fa-lg
+                    i.fa.fa-circle.fa-stack-2x
+                    i.fa.fa-github.fa-stack-1x.fa-inverse
+            p.copyright.text-muted Copyright © Your Website 2018

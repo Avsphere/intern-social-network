@@ -1,0 +1,81 @@
+@import './shared.scss';
+
+/**********************
+** About Page Styles **
+**********************/
+.About {
+  height: 100%;
+  width: 100%;
+}
+.About__header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  height: 350px;
+  width: 100%;
+  background: $blueTheme;
+}
+.About__header__msgLoc {
+  width: 70%;
+}
+.About__header__msg {
+  font-size: 64px;
+  font-family: $font1;
+  color: $whiteTheme;
+}
+.About__works {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  height: 100%;
+  width: 100%;
+}
+.About__works__titleLoc {
+  margin-top: 12px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 12px;
+}
+.About__works__title {
+  color: $blueTheme;
+  font-family: $font1;
+  font-size: 48px;
+}
+.About__works__content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 20px;
+  margin-bottom: 10px;
+
+  width: 85%;
+}
+.About__works__contentBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  height: 350px;
+  width: 225px;
+}
+.About__contentBox__image {
+  height: 40%;
+  width: 70%;
+
+  background: red;
+}
+.About__contentBox__msgLoc {
+  height: 60%;
+  width: 100%;
+}
+.About__contentBox__msg {
+  font-family: $font1;
+  text-align: center;
+}

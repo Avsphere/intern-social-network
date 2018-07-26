@@ -1,12 +1,16 @@
 import axios from 'axios';
 import { TagMaster } from './tagMaster.js'
+import Fuse from 'fuse.js'
 export class Index {
 
   constructor() {
+
+    this.fuseOptions = {
+      id: '_id',
+      keys: ['techStackTags', 'conceptTags']
+    }
     this.tagMaster = new TagMaster();
-    console.log(this.tagMaster);
     this.initView();
-    this.t = 0;
   }
   initView() {
     let conceptTagHtml = this.tagMaster.buildTags('conceptTags', 'concept'),
@@ -16,7 +20,23 @@ export class Index {
     //These are the mandatory handles that add selected tags to array
     this.tagMaster.addHandles();
     this.getAggregateUsersAndProjects().then((usersAndProjects) => {
+      usersAndProjects.forEach((u) => {
+        u.tags = [];
+        u.projects.forEach((p) => {
+          u.tags = u.tags.concat(p.conceptTags);
+          u.tags = u.tags.concat(p.techStackTags);
+        })
+      })
       this.users = usersAndProjects;
+      this.projectList = [];
+      usersAndProjects.forEach((user) => {
+        user.projects.forEach((project) => {
+          this.projectList.push(project);
+        })
+      });
+      this.fuse = new Fuse(this.projectList, this.fuseOptions)
+      console.log(this);
+
       let projectCards = this.buildProjectCards();
       $('#filteredProjects').append(projectCards);
     })
@@ -46,6 +66,22 @@ export class Index {
     })
   }
 
+  showOnlyProjects(ids) {
+    function getRandomInt(max) {
+      return Math.floor(Math.random() * Math.floor(max));
+    }
+
+    console.log(ids);
+    $('#filteredProjects').find('.card').toArray().forEach((card) => {
+      let cardId = $(card).attr('data-projectId');
+      if (!ids.includes(cardId)) {
+        let forDemo = getRandomInt(10);
+        if (forDemo < 4) {
+          $(card).remove()
+        }
+      }
+    })
+  }
 
   buildProjectCards() {
     let that = this;
@@ -61,7 +97,7 @@ export class Index {
       if (p.conceptTags.length > 0 && p.techStackTags.length > 0) {
         tagList = buildTagList(p.conceptTags.concat(p.techStackTags));
       }
-      let html = `<div class="card" data-userId=${userData._id}>
+      let html = `<div class="card" data-userId=${userData._id} data-projectId=${p._id}>
          <div class="card__container">
             <div class="card__orgName">${userData.department}</div>
             <div class="card__projectTitle"><a href="#">${p.title}</a></div>
@@ -77,7 +113,7 @@ export class Index {
       </div>`
       return html;
     }
-    function buildProjectCards(user) {
+    function buildHtmlProjectCards(user) {
       let userCardData = {
         _id: user._id,
         department: user.department,
@@ -89,16 +125,18 @@ export class Index {
         .map(p => buildCard(userCardData, p))
       return cards;
     }
-    let cardArrays = this.users.map(u => buildProjectCards(u))
+    let cardArrays = this.users.map(u => buildHtmlProjectCards(u))
     let mergedCards = [].concat.apply([], cardArrays);
     let html = '';
     mergedCards.forEach((c) => { html += c; })
     return html;
   }
 
-  getCurrentFilterTags() {
-    this.currentFilterTags = this.tagMaster.getTagsIn('filterTags');
-    return this.currentFilterTags;
+  getCurrentFilterTagText() {
+    let tags = this.tagMaster.getTagsIn('filterTags').map((t) => {
+      return $(t).text();
+    })
+    return tags;
   }
 
   handles() {
@@ -147,6 +185,10 @@ export class Index {
     this.tagMaster.getAllTags().forEach((tag) => {
       $(tag).on('click', (el) => {
         handleTagPlacement(tag);
+        let currentFilterTags = that.getCurrentFilterTagText(),
+          fuseSearchString = currentFilterTags.join(' ');
+        let returnIds = that.fuse.search(fuseSearchString);
+        that.showOnlyProjects(returnIds);
       })
     })
 

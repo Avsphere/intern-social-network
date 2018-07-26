@@ -7,14 +7,18 @@ block content
         div.Browse__msg__header Browse Projects
         div.Browse__msg__text Start seaching for projects now. 
       div.Browse__search
+        // Search Bar
         div.Browse__searchbar
           input.form-control(type='text', placeholder='Search for projects here...', aria-label='search')
+        // Concept Tags Filter
         div.Browse__tagFilter 
           div.Browse__tagFilter__title Filter by concepts
           div.Browse__tagFilter__tagList#conceptTagContainer
+        // Stack Tags Filter
         div.Browse__tagFilter 
           div.Browse__tagFilter__title Filter by stack
           div.Browse__tagFilter__tagList#techStackTagContainer
+        // Applied Tags
         div.Browse__tagFilter 
           div.Browse__tagFilter__title Applied filters
           div.Browse__tagFilter__tagList
@@ -80,63 +84,3 @@ block content
             .card_footer
               img(src='media/soAnonymous.png').card__authorImage 
               .card__authorName Hannah Fowler, Program Management Intern
-       
-
-  //- main.container-fluid(role='main')
-  //-   #detailModal.modal(tabindex='-1', role='dialog', aria-hidden='true')
-  //-     .modal-dialog.modal-dialog-centered(role='document', style='max-width:800px')
-  //-       .modal-content
-  //-         .modal-header
-  //-           h1.modal-title Modal title
-  //-           button.close(type='button', data-dismiss='modal', aria-label='Close')
-  //-             span(aria-hidden='true') ×
-  //-         .modal-body(style='overflow-y:scroll;')
-  //-         .modal-footer
-  //-           button#downloadJson.btn.btn-primary(type='button')
-  //-             | Download JSON 
-  //-             i.fas.fa-download
-  //-           button.btn.btn-secondary(type='button', data-dismiss='modal') Close
-  //-   // Container for all search things
-  //-   section.jumbotron.text-center
-  //-     .container
-  //-       h1.jumbotron-heading Find that team yo
-  //-       p.lead.text-muted
-  //-         | Shopping is hard. Team shopping is even harder. This apps seeks to alleviate potential pain by peer sourcing the shopping process
-  //-       input.form-control(type='text', placeholder='Les find that project', aria-label='search')
-  //-     .row
-  //-       .col
-  //-         .concept-tag-container.container(style="margin-top:2%")
-  //-           h2 Find by concepts
-  //-           .blog-tags(style="margin-top:3%; margin-left:33%")
-  //-             ul
-  //-               li.searchBadge
-  //-                 a(href='#') Identity
-  //-               li.searchBadge
-  //-                 a(href='#') Web Design
-  //-               li.searchBadge
-  //-                 a(href='#') IoT
-  //-               li.searchBadge
-  //-                 a(href='#') Cloud
-  //-               li.searchBadge
-  //-                 a(href='#') AI
-  //-               li.searchBadge
-  //-                 a(href='#') Intune
-  //-               li.searchBadge
-  //-                 a(href='#') Outlook
-  //-               li.searchBadge
-  //-                 a(href='#') Sharepoint
-  //-       .col
-  //-         .concept-tag-container.container(style="margin-top:2%")
-  //-           h2 Find by stack
-  //-           .blog-tags(style="margin-top:3%; margin-left:33%")
-  //-             ul
-  //-               li.searchBadge
-  //-                 a(href='#') PowerShell
-  //-               li.searchBadge
-  //-                 a(href='#') Javascript
-  //-               li.searchBadge
-  //-                 a(href='#') C#
-  //-               li.searchBadge
-  //-                 a(href='#') Mongo
-        
-

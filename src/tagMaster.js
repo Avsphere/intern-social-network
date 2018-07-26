@@ -35,7 +35,7 @@ export class TagMaster {
       let value = that.tagToDataValue(tag);
       return `<li class="searchBadge" data-type=${listType} data-value=${value}><a href="#">${tag}</a></li>`;
     }
-    let html = `<div id=${divId} class="blog-tags container-fluid"><ul>`;
+    let html = `<div id=${divId} class="container-fluid"><ul>`;
 
     tagList.forEach( (t) => {
       html += buildTag(t);

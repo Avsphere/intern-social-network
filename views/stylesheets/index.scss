@@ -53,7 +53,7 @@
   align-items: flex-start;
 }
 .Browse__tagFilter__title {
-  margin-top: 0px;
+  margin-top: 6px;
   margin-left: 0px;
   margin-right: 12px;
   margin-bottom: 0px;
@@ -68,7 +68,7 @@
   list-style: none;
   padding-top: 6px;
   padding-left: 0;
-  margin-top: 6px;
+  padding-right: 6px;
   max-height: 125px;
   overflow-y: scroll;
 }
@@ -86,8 +86,12 @@
   white-space: nowrap;
   width: 5rem;
 }
-.Browse__tagFilter__tagList ul li {
-  margin-top: 1%;
+.Browse__tagFilter__tagList li {
+  margin-top: 0px;
+  margin-left: 0px;
+  margin-right: 6px;
+  margin-bottom: 6px;
+  
 }
 .Browse__tagFilter__tagList a:hover {
   background: $whiteTheme;

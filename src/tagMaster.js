@@ -9,7 +9,7 @@ export class TagMaster {
       'supportability',
       'artificial intelligence',
       'machine learning',
-      'IOT',
+      'iot',
       'big data',
       'security',
       'natural language processing',
@@ -26,6 +26,8 @@ export class TagMaster {
       'anomaly detection',
       'distributed systems',
       'event sourcing',
+      'cloud',
+      'image recognition'
     ]
     this.techStackList = [
       'unity',

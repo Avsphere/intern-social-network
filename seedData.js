@@ -121,7 +121,7 @@ function seedDummyProjects() {
     {
       title : 'Xbox in the cloud',
       description : 'This project focuses on detecting anomalies',
-      conceptTags : ['anomaly detection', 'security'],
+      conceptTags : ['big data', 'security', 'cloud'],
       techStackTags : ['python'],
       timeDistribution: {
         meetingTime : 8,
@@ -135,7 +135,7 @@ function seedDummyProjects() {
     {
       title : 'Competitive Strategy for Azure apps',
       description : 'This project focuses on detecting anomalies',
-      conceptTags : ['anomaly detection', 'security'],
+      conceptTags : ['merchandising', 'design'],
       techStackTags : ['html/css'],
       timeDistribution: {
         meetingTime : 8,
@@ -149,7 +149,7 @@ function seedDummyProjects() {
     {
       title : 'Speech recognition for Hololens',
       description : 'This project focuses on detecting anomalies',
-      conceptTags : ['anomaly detection', 'security'],
+      conceptTags : ['accessibility', 'artificial intelligence', 'speech recognition'],
       techStackTags : ['mongodb'],
       timeDistribution: {
         meetingTime : 8,
@@ -177,8 +177,8 @@ function seedDummyProjects() {
     {
       title : 'Windows Hello',
       description : 'This project focuses on detecting anomalies',
-      conceptTags : ['anomaly detection', 'security'],
-      techStackTags : ['Microsoft Word'],
+      conceptTags : ['ux', 'ui', 'image recognition', 'design'],
+      techStackTags : ['microsoft word'],
       timeDistribution: {
         meetingTime : 8,
         devTime : 4,
@@ -191,8 +191,8 @@ function seedDummyProjects() {
     {
       title : 'Ink to text for education',
       description : 'This project focuses on detecting anomalies',
-      conceptTags : ['anomaly detection', 'security'],
-      techStackTags : ['Microsoft Excel'],
+      conceptTags : ['iot', 'education'],
+      techStackTags : ['microsoft powerpoint'],
       timeDistribution: {
         meetingTime : 8,
         devTime : 4,
@@ -206,7 +206,7 @@ function seedDummyProjects() {
       title : 'Hacking STEM: teaching calculus',
       description : 'This project focuses on detecting anomalies',
       conceptTags : ['education'],
-      techStackTags : ['Microsoft PowerPoint'],
+      techStackTags : ['microsoft powerpoint'],
       timeDistribution: {
         meetingTime : 8,
         devTime : 4,
@@ -358,202 +358,6 @@ function seedDummyProjects() {
     },
     {
       title : 'Surface Dial for Conferencing',
-      description : 'This project focuses on detecting anomalies',
-      conceptTags : ['anomaly detection', 'security'],
-      techStackTags : ['ASP.NET', 'c#', 'java', 'Microsoft PowerPoint'],
-      timeDistribution: {
-        meetingTime : 8,
-        devTime : 4,
-        designTime : 7,
-        emailTime : 9,
-        writingTime : 5
-      },
-      ownedBy :''
-    },
-    {
-      title : 'Xbox Authentication Library',
-      description : 'This project focuses on detecting anomalies',
-      conceptTags : ['anomaly detection', 'security'],
-      techStackTags : ['ASP.NET', 'c#', 'java', 'Microsoft PowerPoint'],
-      timeDistribution: {
-        meetingTime : 8,
-        devTime : 4,
-        designTime : 7,
-        emailTime : 9,
-        writingTime : 5
-      },
-      ownedBy :''
-    },
-    {
-      title : 'Xbox Authentication Library',
-      description : 'This project focuses on detecting anomalies',
-      conceptTags : ['anomaly detection', 'security'],
-      techStackTags : ['ASP.NET', 'c#', 'java', 'Microsoft PowerPoint'],
-      timeDistribution: {
-        meetingTime : 8,
-        devTime : 4,
-        designTime : 7,
-        emailTime : 9,
-        writingTime : 5
-      },
-      ownedBy :''
-    },
-    {
-      title : 'Xbox Authentication Library',
-      description : 'This project focuses on detecting anomalies',
-      conceptTags : ['anomaly detection', 'security'],
-      techStackTags : ['ASP.NET', 'c#', 'java', 'Microsoft PowerPoint'],
-      timeDistribution: {
-        meetingTime : 8,
-        devTime : 4,
-        designTime : 7,
-        emailTime : 9,
-        writingTime : 5
-      },
-      ownedBy :''
-    },
-    {
-      title : 'Xbox Authentication Library',
-      description : 'This project focuses on detecting anomalies',
-      conceptTags : ['anomaly detection', 'security'],
-      techStackTags : ['ASP.NET', 'c#', 'java', 'Microsoft PowerPoint'],
-      timeDistribution: {
-        meetingTime : 8,
-        devTime : 4,
-        designTime : 7,
-        emailTime : 9,
-        writingTime : 5
-      },
-      ownedBy :''
-    },
-    {
-      title : 'Xbox Authentication Library',
-      description : 'This project focuses on detecting anomalies',
-      conceptTags : ['anomaly detection', 'security'],
-      techStackTags : ['ASP.NET', 'c#', 'java', 'Microsoft PowerPoint'],
-      timeDistribution: {
-        meetingTime : 8,
-        devTime : 4,
-        designTime : 7,
-        emailTime : 9,
-        writingTime : 5
-      },
-      ownedBy :''
-    },
-    {
-      title : 'Xbox Authentication Library',
-      description : 'This project focuses on detecting anomalies',
-      conceptTags : ['anomaly detection', 'security'],
-      techStackTags : ['ASP.NET', 'c#', 'java', 'Microsoft PowerPoint'],
-      timeDistribution: {
-        meetingTime : 8,
-        devTime : 4,
-        designTime : 7,
-        emailTime : 9,
-        writingTime : 5
-      },
-      ownedBy :''
-    },
-    {
-      title : 'Xbox Authentication Library',
-      description : 'This project focuses on detecting anomalies',
-      conceptTags : ['anomaly detection', 'security'],
-      techStackTags : ['ASP.NET', 'c#', 'java', 'Microsoft PowerPoint'],
-      timeDistribution: {
-        meetingTime : 8,
-        devTime : 4,
-        designTime : 7,
-        emailTime : 9,
-        writingTime : 5
-      },
-      ownedBy :''
-    },
-    {
-      title : 'Xbox Authentication Library',
-      description : 'This project focuses on detecting anomalies',
-      conceptTags : ['anomaly detection', 'security'],
-      techStackTags : ['ASP.NET', 'c#', 'java', 'Microsoft PowerPoint'],
-      timeDistribution: {
-        meetingTime : 8,
-        devTime : 4,
-        designTime : 7,
-        emailTime : 9,
-        writingTime : 5
-      },
-      ownedBy :''
-    },
-    {
-      title : 'Xbox Authentication Library',
-      description : 'This project focuses on detecting anomalies',
-      conceptTags : ['anomaly detection', 'security'],
-      techStackTags : ['ASP.NET', 'c#', 'java', 'Microsoft PowerPoint'],
-      timeDistribution: {
-        meetingTime : 8,
-        devTime : 4,
-        designTime : 7,
-        emailTime : 9,
-        writingTime : 5
-      },
-      ownedBy :''
-    },
-    {
-      title : 'Xbox Authentication Library',
-      description : 'This project focuses on detecting anomalies',
-      conceptTags : ['anomaly detection', 'security'],
-      techStackTags : ['ASP.NET', 'c#', 'java', 'Microsoft PowerPoint'],
-      timeDistribution: {
-        meetingTime : 8,
-        devTime : 4,
-        designTime : 7,
-        emailTime : 9,
-        writingTime : 5
-      },
-      ownedBy :''
-    },
-    {
-      title : 'Xbox Authentication Library',
-      description : 'This project focuses on detecting anomalies',
-      conceptTags : ['anomaly detection', 'security'],
-      techStackTags : ['ASP.NET', 'c#', 'java', 'Microsoft PowerPoint'],
-      timeDistribution: {
-        meetingTime : 8,
-        devTime : 4,
-        designTime : 7,
-        emailTime : 9,
-        writingTime : 5
-      },
-      ownedBy :''
-    },
-    {
-      title : 'Xbox Authentication Library',
-      description : 'This project focuses on detecting anomalies',
-      conceptTags : ['anomaly detection', 'security'],
-      techStackTags : ['ASP.NET', 'c#', 'java', 'Microsoft PowerPoint'],
-      timeDistribution: {
-        meetingTime : 8,
-        devTime : 4,
-        designTime : 7,
-        emailTime : 9,
-        writingTime : 5
-      },
-      ownedBy :''
-    },
-    {
-      title : 'Xbox Authentication Library',
-      description : 'This project focuses on detecting anomalies',
-      conceptTags : ['anomaly detection', 'security'],
-      techStackTags : ['ASP.NET', 'c#', 'java', 'Microsoft PowerPoint'],
-      timeDistribution: {
-        meetingTime : 8,
-        devTime : 4,
-        designTime : 7,
-        emailTime : 9,
-        writingTime : 5
-      },
-      ownedBy :''
-    },
-    {
-      title : 'Xbox Authentication Library',
       description : 'This project focuses on detecting anomalies',
       conceptTags : ['anomaly detection', 'security'],
       techStackTags : ['ASP.NET', 'c#', 'java', 'Microsoft PowerPoint'],

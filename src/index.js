@@ -44,12 +44,11 @@ export class Index {
     let that = this;
     function handleFilterTagClick( el ) {
       el.preventDefault()
-      let tag = $(el.target),
-          tagDataVal = $(el.target).parent().attr('data-value')
-      $(tag).remove()
+      let liElem = $(el.target).closest('li'),
+          tagDataVal = $(el.target).closest('li').attr('data-value');
+      $(liElem).remove()
       that.tagMaster.getAllTags().find( (t) => {
         if ( $(t).attr('data-value') === tagDataVal ) {
-          console.log("FOund it")
           $(t).removeClass('selected-tag')
           return t;
         }

@@ -72,10 +72,14 @@ export class TagMaster {
   }
   toggleHighlight( listItem ) {
     //css for selected-tag can be found in cards.css
-    if ( listItem.hasClass('selected-tag') ) {
-      listItem.removeClass('selected-tag');
+    if ( listItem.is('li') ) {
+      if ( listItem.hasClass('selected-tag') ) {
+        listItem.removeClass('selected-tag');
+      } else {
+        listItem.addClass('selected-tag')
+      }
     } else {
-      listItem.addClass('selected-tag')
+      console.log("item clicked is ", listItem);
     }
   }
 
@@ -103,10 +107,10 @@ export class TagMaster {
           el.preventDefault();
           console.log(divId, tag)
           let $tag = $(el.target),
-              parent = $tag.parent(),
-              type = $(parent).attr('data-type'),
-              tagDataVal = $(parent).attr('data-value');
-          that.toggleHighlight(parent);
+              liElem = $tag.closest('li'),
+              type = $(liElem).attr('data-type'),
+              tagDataVal = $(liElem).attr('data-value');
+          that.toggleHighlight(liElem);
           if ( type === 'concept') {
             if ( that.selectedConceptTags.includes(tagDataVal) ) {
                 that.removeTag(tagDataVal, type);

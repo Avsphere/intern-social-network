@@ -216,6 +216,7 @@ export class Account {
         })
     })
   }
+
   updateProject() {
     return new Promise((resolve, reject) => {
       let formDataAndId = this.grabProjectFormData()
@@ -247,13 +248,13 @@ export class Account {
               projectData._id
             } >
       <label for="projectName"> Project Name </label>
-      <input class="form-control" id="projectName" type="text" placeholder="${
+      <input class="form-control" id="projectName" type="text" value="${
         projectData.title
       }">
             </div>
       <div class="form-group">
         <label for="projectDescription"> Project Description </label>
-        <input class="form-control" id="projectDescription" type="text" placeholder="${
+        <input class="form-control" id="projectDescription" type="text" value="${
           projectData.description
         }">
             </div>
@@ -270,23 +271,23 @@ export class Account {
         <div class="form-group">
           <div class="Account__newProject__timeTitle">Time spent during avg. week on...</div>
           <label for="meetingTime"> Meetings </label>
-          <input class="form-control" id="meetingTime" type="text" placeholder="${
+          <input class="form-control" id="meetingTime" type="text" value="${
             projectData.timeDistribution.meetingTime
           }">
             <label for="devTime"> Dev Work </label>
-            <input class="form-control" id="devTime" type="text" placeholder="${
+            <input class="form-control" id="devTime" type="text" value="${
               projectData.timeDistribution.devTime
             }">
               <label for="designTime"> Design Work </label>
-              <input class="form-control" id="designTime" type="text" placeholder="${
+              <input class="form-control" id="designTime" type="text" value="${
                 projectData.timeDistribution.designTime
               }">
                 <label for="emailTime"> Emails </label>
-                <input class="form-control" id="emailTime" type="text" placeholder="${
+                <input class="form-control" id="emailTime" type="text" value="${
                   projectData.timeDistribution.emailTime
                 }">
                   <label for="writingTime"> Writing/Specing </label>
-                  <input class="form-control" id="writingTime" type="text" placeholder="${
+                  <input class="form-control" id="writingTime" type="text" value="${
                     projectData.timeDistribution.writingTime
                   }">
             </div>

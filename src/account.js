@@ -33,7 +33,6 @@ export class Account {
         })
     })
   }
-
   getUserAndProjects() {
     return new Promise((resolve, reject) => {
       axios.post('/getUserAndProjects', { userId: this.currUserId })
@@ -49,7 +48,6 @@ export class Account {
         })
     })
   }
-
   getUserById() {
     return new Promise((resolve, reject) => {
       axios.post('/getUserById', { userId: this.currUserId })
@@ -65,7 +63,6 @@ export class Account {
         })
     })
   }
-
   returnDummyFormData() {
     return {
       team: "aarons team",
@@ -102,7 +99,24 @@ export class Account {
   }
 
 
-  grabFormData() {
+  grabAccountFormData() {
+    let formData = {
+      team: $('#team').val(),
+      org: $('#org').val()
+    }
+    return formData
+  }
+  grabProjectFormData() {
+    //same for this, but to grab the tags
+    let selectedTags = this.tagMaster.getSelected(),
+      conceptTags = selectedTags.selectedConceptTags,
+      techStackTags = selectedTags.selectedTechStackTags;
+
+    let projectId = $('#projectData').attr('data-projectId')
+
+    return {
+      projectId: projectId
+    }
 
   }
 
@@ -150,10 +164,27 @@ export class Account {
   updateAccount() {
     return new Promise((resolve, reject) => {
       let data = {
-        formData: this.grabFormData(),
+        formData: this.grabAccountFormData(),
         userId: this.currUserId
       }
       axios.post('/updateUser', data).then((res) => {
+        if (res.statusText === 'OK') {
+          resolve(res.data);
+        } else {
+          console.log("FAILED", res);
+        }
+      }).catch((err) => {
+        console.log("ERROR in request runner login", err);
+        resolve(err);
+      })
+    })
+  }
+  updateProject() {
+    return new Promise((resolve, reject) => {
+      let data = {
+        formData: this.grabProjectFormData(),
+      }
+      axios.post('/updateProject', data).then((res) => {
         if (res.statusText === 'OK') {
           resolve(res.data);
         } else {
@@ -172,94 +203,94 @@ export class Account {
     //add so that auto populates if already there are projects
     let html = `
           <form autocomplete="off">
-            <div class="form-group">
-              <label for="projectName"> Project Name </label>
-              <input class="form-control" id="projectName" type="text" placeholder="${projectData.title}">
+            <div class="form-group" id="projectData" data-projectId=${projectData._id} >
+      <label for="projectName"> Project Name </label>
+      <input class="form-control" id="projectName" type="text" placeholder="${projectData.title}">
             </div>
-            <div class="form-group">
-              <label for="projectDescription"> Project Description </label>
-              <input class="form-control" id="projectDescription" type="text" placeholder="${projectData.description}">
+      <div class="form-group">
+        <label for="projectDescription"> Project Description </label>
+        <input class="form-control" id="projectDescription" type="text" placeholder="${projectData.description}">
             </div>
-            <label for="projectDescription"> Concept Tags </label>
-            <div class="Account__tagFilter__tagList"> 
-              <div id="projectConceptTags${this.currProjectCount}">
-              </div>
-            </div>
-            <label for="projectDescription"> Stack Tags </label>
-            <div class="Account__tagFilter__tagList"> 
-              <div id="projectTechStackTags${this.currProjectCount}">
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="Account__newProject__timeTitle">Time spent during avg. week on...</div>
-              <label for="meetingTime"> Meetings </label>
-              <input class="form-control" id="meetingTime" type="text" placeholder="${projectData.timeDistribution.meetingTime}">
-              <label for="devTime"> Dev Work </label>
-              <input class="form-control" id="devTime" type="text" placeholder="${projectData.timeDistribution.devTime}">
+        <label for="projectDescription"> Concept Tags </label>
+        <div class="Account__tagFilter__tagList">
+          <div id="projectConceptTags${this.currProjectCount}">
+          </div>
+        </div>
+        <label for="projectDescription"> Stack Tags </label>
+        <div class="Account__tagFilter__tagList">
+          <div id="projectTechStackTags${this.currProjectCount}">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="Account__newProject__timeTitle">Time spent during avg. week on...</div>
+          <label for="meetingTime"> Meetings </label>
+          <input class="form-control" id="meetingTime" type="text" placeholder="${projectData.timeDistribution.meetingTime}">
+            <label for="devTime"> Dev Work </label>
+            <input class="form-control" id="devTime" type="text" placeholder="${projectData.timeDistribution.devTime}">
               <label for="designTime"> Design Work </label>
               <input class="form-control" id="designTime" type="text" placeholder="${projectData.timeDistribution.designTime}">
-              <label for="emailTime"> Emails </label>
-              <input class="form-control" id="emailTime" type="text" placeholder="${projectData.timeDistribution.emailTime}">
-              <label for="writingTime"> Writing/Specing </label>
-              <input class="form-control" id="writingTime" type="text" placeholder="${projectData.timeDistribution.writingTime}">
+                <label for="emailTime"> Emails </label>
+                <input class="form-control" id="emailTime" type="text" placeholder="${projectData.timeDistribution.emailTime}">
+                  <label for="writingTime"> Writing/Specing </label>
+                  <input class="form-control" id="writingTime" type="text" placeholder="${projectData.timeDistribution.writingTime}">
             </div>
           </form>
-    `;
+                `;
     return html;
   }
   buildNewProjectHtml() {
     //add so that auto populates if already there are projects
     let html = `
       <div class="Account__newProject">
-        <div class="Account__newProject__title"> New Project </div>
-        <div class="formWrapper" style="margin-left:3%; max-width:50%;">
-          <form autocomplete="off">
-            <div class="form-group">
-              <label for="projectName"> Project Name </label>
-              <input class="form-control" id="projectName" type="text" placeholder="Enter Project Name">
+                  <div class="Account__newProject__title"> New Project </div>
+                  <div class="formWrapper" style="margin-left:3%; max-width:50%;">
+                    <form autocomplete="off">
+                      <div class="form-group">
+                        <label for="projectName"> Project Name </label>
+                        <input class="form-control" id="projectName" type="text" placeholder="Enter Project Name">
             </div>
-            <div class="form-group">
-              <label for="projectDescription"> Project Description </label>
-              <input class="form-control" id="projectDescription" type="text" placeholder="Enter Project Description">
+                        <div class="form-group">
+                          <label for="projectDescription"> Project Description </label>
+                          <input class="form-control" id="projectDescription" type="text" placeholder="Enter Project Description">
             </div>
-            <div class="Account__tagFilter__tagList">
-              <div id="conceptTags${this.currProjectCount}">
-              </div>
-            </div>
-            <div class="Account__tagFilter__tagList">
-              <div id="techStackTags${this.currProjectCount}">
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="Account__newProject__timeTitle">Time spent during avg. week on...</div>
-              <label for="meetingTime"> Meetings </label>
-              <input class="form-control" id="meetingTime" type="text" placeholder="x fraction">
-              <label for="devTime"> Dev Work </label>
-              <input class="form-control" id="devTime" type="text" placeholder="x hrs">
-              <label for="designTime"> Design Work </label>
-              <input class="form-control" id="designTime" type="text" placeholder="x hrs">
-              <label for="emailTime"> Emails </label>
-              <input class="form-control" id="emailTime" type="text" placeholder="x hrs">
-              <label for="writingTime"> Writing/Specing </label>
-              <input class="form-control" id="writingTime" type="text" placeholder="x hrs">
+                          <div class="Account__tagFilter__tagList">
+                            <div id="conceptTags${this.currProjectCount}">
+                            </div>
+                          </div>
+                          <div class="Account__tagFilter__tagList">
+                            <div id="techStackTags${this.currProjectCount}">
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="Account__newProject__timeTitle">Time spent during avg. week on...</div>
+                            <label for="meetingTime"> Meetings </label>
+                            <input class="form-control" id="meetingTime" type="text" placeholder="x fraction">
+                              <label for="devTime"> Dev Work </label>
+                              <input class="form-control" id="devTime" type="text" placeholder="x hrs">
+                                <label for="designTime"> Design Work </label>
+                                <input class="form-control" id="designTime" type="text" placeholder="x hrs">
+                                  <label for="emailTime"> Emails </label>
+                                  <input class="form-control" id="emailTime" type="text" placeholder="x hrs">
+                                    <label for="writingTime"> Writing/Specing </label>
+                                    <input class="form-control" id="writingTime" type="text" placeholder="x hrs">
             </div>
           </form>
         </div>
       </div>
-    `;
+                              `;
     return html;
   }
 
   buildProfilePage() {
     let profileData = this.currUser;
     let html = `<form autocomplete="off">
-       <div class="form-group"><label for="displayName">Display Name</label><input class="form-control" id="displayName" type="text" aria-describedby="emailHelp" value="${profileData.displayName}" disabled=""></div>
-       <div class="form-group"><label for="exampleInputPassword1">UPN</label><input class="form-control" id="upn" type="text" value="${profileData.upn}" disabled=""></div>
-       <div class="form-group"><label for="displayName">Department</label><input class="form-control" id="department" type="text" aria-describedby="emailHelp" value="${profileData.department}" disabled=""></div>
-       <div class="form-group"><label for="displayName">Job Title</label><input class="form-control" id="jobTitle" type="text" aria-describedby="emailHelp" value="${profileData.jobTitle}" disabled=""></div>
-       <div class="form-group"><label for="exampleInputPassword1">Team</label><input class="form-control" id="team" type="text" value="${profileData.team}"></div>
-       <div class="form-group"><label for="exampleInputPassword1">Org</label>
-       <input class="form-control" id="org" type="text" value="${profileData.org}"></div>
+                                <div class="form-group"><label for="displayName">Display Name</label><input class="form-control" id="displayName" type="text" aria-describedby="emailHelp" value="${profileData.displayName}" disabled=""></div>
+                                  <div class="form-group"><label for="exampleInputPassword1">UPN</label><input class="form-control" id="upn" type="text" value="${profileData.upn}" disabled=""></div>
+                                    <div class="form-group"><label for="displayName">Department</label><input class="form-control" id="department" type="text" aria-describedby="emailHelp" value="${profileData.department}" disabled=""></div>
+                                      <div class="form-group"><label for="displayName">Job Title</label><input class="form-control" id="jobTitle" type="text" aria-describedby="emailHelp" value="${profileData.jobTitle}" disabled=""></div>
+                                        <div class="form-group"><label for="exampleInputPassword1">Team</label><input class="form-control" id="team" type="text" value="${profileData.team}"></div>
+                                          <div class="form-group"><label for="exampleInputPassword1">Org</label>
+                                            <input class="form-control" id="org" type="text" value="${profileData.org}"></div>
     </form>`
     return html;
   }
@@ -270,7 +301,11 @@ export class Account {
     let that = this;
     $('#submitForm').on('click', (el) => {
       el.preventDefault();
-      that.updateAccount();
+      if ($('#profileTab').hasClass('active')) {
+        that.updateAccount()
+      } else {
+        that.updateProject();
+      }
     })
 
     $('#profileTab').on('click', (el) => {

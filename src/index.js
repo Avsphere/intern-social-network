@@ -28,6 +28,7 @@ export class Index {
         })
       })
       this.users = usersAndProjects;
+      console.log(this.users);
       this.projectList = [];
       usersAndProjects.forEach((user) => {
         user.projects.forEach((project) => {
@@ -187,15 +188,16 @@ export class Index {
         handleTagPlacement(tag);
         let currentFilterTags = that.getCurrentFilterTagText(),
           fuseSearchString = currentFilterTags.join(' ');
-          console.log(fuseSearchString);
+        console.log(fuseSearchString);
         let returnIds = that.fuse.search(fuseSearchString);
         that.showOnlyProjects(returnIds);
       })
     })
 
     $('.card').on('click', () => {
-        console.log("here")
-        $('#myModal').modal({})
+      console.log("here")
+      // let modalTitle = 
+      $('#myModal').modal({})
     })
 
 

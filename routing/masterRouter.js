@@ -6,16 +6,16 @@ const utils = require('../utils/utils.js')
 const User = require('../models/user')
 const Project = require('../models/project')
 
-router.get('/', (req, res) => {
-  if (!req.isAuthenticated()) {
-    res.redirect('/login')
-  } else {
-    let profileData = req.user.profile
-    res.render('index', {
-      user: profileData,
-    })
-  }
-})
+// router.get('/', (req, res) => {
+//   if (!req.isAuthenticated()) {
+//     res.redirect('/login')
+//   } else {
+//     let profileData = req.user.profile
+//     res.render('index', {
+//       user: profileData,
+//     })
+//   }
+// })
 
 function getDummyUser() {
   //this id is a real user id
@@ -33,12 +33,12 @@ function getDummyUser() {
   }
 }
 
-// router.get('/', (req, res) => {
-//   res.render('index', { user: getDummyUser() })
-// })
-router.get('/account', utils.checkAuthenticated, function(req, res) {
-  let profileData = req.user.profile;
-  //let profileData = getDummyUser()
+router.get('/', (req, res) => {
+  res.render('index', { user: getDummyUser() })
+})
+router.get('/account', function (req, res) {
+  //let profileData = req.user.profile;
+  let profileData = getDummyUser()
   if (!profileData.team) {
     profileData.team = 'Enter Team Name'
   }
@@ -50,11 +50,11 @@ router.get('/account', utils.checkAuthenticated, function(req, res) {
   })
 })
 
-router.get('/about', function(req, res) {
+router.get('/about', function (req, res) {
   res.render('about')
 })
 
-router.get('/blogTest', function(req, res) {
+router.get('/blogTest', function (req, res) {
   res.render('blogTest')
 })
 
@@ -124,15 +124,30 @@ router.get('/disconnect', (req, res) => {
 router.post('/updateUser', (req, res) => {
   let userId = req.body.userId,
     userData = req.body.formData
-  User.findById(userId, function(err, user) {
+
+  User.findById(userId, function (err, user) {
+    if (!err) {
+      console.log('Update user Found user: ', user);
+      user.team = userData.team
+      user.org = userData.org
+      user.save(err => {
+        res.send({ success: true })
+      })
+    }
+  })
+})
+
+router.post('/updateProject', (req, res) => {
+  let projectData = req.body.formData;
+  Project.findById(projectData._id, function (err, user) {
     if (!err) {
       //console.log('Update user Found user: ', user);
-      user.team = userData.team
+      project.tags = userData.team
       user.org = userData.org
       utils.createProjects(userId, userData.projects).then(projectIds => {
         console.log('New project Ids ', projectIds)
         user.projects = user.projects.concat(projectIds)
-        user.save(err => {
+        project.save(err => {
           res.send({ success: true })
         })
       })
@@ -144,8 +159,8 @@ router.post('/updateUser', (req, res) => {
 
 router.post('/getUserById', (req, res) => {
   let userId = req.body.userId;
-  User.findById(userId, function(err, user) {
-    if( !err ) {
+  User.findById(userId, function (err, user) {
+    if (!err) {
       res.send(user);
     } else { console.log("error in getUserById"); }
   })
@@ -153,7 +168,7 @@ router.post('/getUserById', (req, res) => {
 
 router.post('/getUserProjects', (req, res) => {
   let userId = req.body.userId
-  User.findById(userId, function(err, user) {
+  User.findById(userId, function (err, user) {
     if (!err) {
       Project.find(
         {
@@ -161,7 +176,7 @@ router.post('/getUserProjects', (req, res) => {
             $in: user.projects,
           },
         },
-        function(err, projects) {
+        function (err, projects) {
           res.send(projects)
         }
       )
@@ -174,7 +189,7 @@ router.post('/getUserProjects', (req, res) => {
 router.post('/getUserAndProjects', (req, res) => {
   let userId = req.body.userId;
   let foundUser = {};
-  User.findById(userId, function(err, user) {
+  User.findById(userId, function (err, user) {
     if (!err) {
       foundUser = user;
       Project.find(
@@ -183,8 +198,8 @@ router.post('/getUserAndProjects', (req, res) => {
             $in: user.projects,
           },
         },
-        function(err, projects) {
-          res.send({projects : projects, user : foundUser})
+        function (err, projects) {
+          res.send({ projects: projects, user: foundUser })
         }
       )
     } else {
@@ -193,30 +208,30 @@ router.post('/getUserAndProjects', (req, res) => {
   })
 })
 
-router.post('/getAggregateUsersAndProjects', (req,res) => {
-  User.find({}, function(err, usersDocs) {
-    let users = usersDocs.map( d => d.toObject() )
-    let promises = users.map( (u) => {
-      return new Promise( (resolve, reject) => {
+router.post('/getAggregateUsersAndProjects', (req, res) => {
+  User.find({}, function (err, usersDocs) {
+    let users = usersDocs.map(d => d.toObject())
+    let promises = users.map((u) => {
+      return new Promise((resolve, reject) => {
         Project.find({
-          _id : {
-            $in : u.projects
+          _id: {
+            $in: u.projects
           }
         },
-        function( err, projects ) {
-          u.projects = projects;
-          resolve(u);
-        })
+          function (err, projects) {
+            u.projects = projects;
+            resolve(u);
+          })
       })
     })
-    Promise.all( promises ).then( usersAndProjects => {
+    Promise.all(promises).then(usersAndProjects => {
       res.send(usersAndProjects);
     })
   })
 })
 
 router.post('/getAllProjects', (req, res) => {
-  Project.find({}, function(err, projects) {
+  Project.find({}, function (err, projects) {
     res.send(projects)
   })
 })

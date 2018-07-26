@@ -4,14 +4,17 @@ export class Index {
 
   constructor() {
     this.tagMaster = new TagMaster();
+    console.log(this.tagMaster);
     this.initView();
   }
   initView() {
-    let that = this;
-    let conceptTagHtml = that.tagMaster.buildTags('conceptTags', 'concept'),
-        techStackTagHtml = that.tagMaster.buildTags('techStackTags', 'techStack');
+    let conceptTagHtml = this.tagMaster.buildTags('conceptTags', 'concept'),
+        techStackTagHtml = this.tagMaster.buildTags('techStackTags', 'techStack');
     $('#conceptTagContainer').append(conceptTagHtml);
     $('#techStackTagContainer').append(techStackTagHtml);
+    //These are the mandatory handles that add selected tags to array
+    this.tagMaster.addHandles();
+    this.handles();
   }
 
   helloworld() {
@@ -30,6 +33,13 @@ export class Index {
   // that.tagMaster.addHandles(conceptTagDivId);
   // that.tagMaster.addHandles(techStackTagDivId);
   handles() {
+    //If a tag is clicked and it does not exist in the filterTags area then I recreate it there
+    let that = this;
+    this.tagMaster.getAllTags().forEach( (tag) => {
+      $(tag).on('click', (el) => {
+        console.log( tag, that.tagMaster.getSelected() )
 
+      })
+    })
   }
 }

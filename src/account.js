@@ -7,7 +7,7 @@ export class Account {
     this.currProjectCount = 0;
     this.currUserId = $('#titleHeader').attr('data-account-id');
     this.getUserProjects().then( (d) => { console.log(d); })
-    console.log(this)
+    console.log(this.tagMaster)
 
   }
   getUserProjects() {
@@ -143,8 +143,7 @@ export class Account {
       $('#projectSection').append(newProjectHtml);
       $('#conceptTags' + that.currProjectCount).append(conceptTagHtml);
       $('#techStackTags' + that.currProjectCount).append(techStackTagHtml)
-      that.tagMaster.addHandles(conceptTagDivId);
-      that.tagMaster.addHandles(techStackTagDivId);
+      that.tagMaster.addHandles();
     })
   }
 

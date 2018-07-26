@@ -168,6 +168,12 @@ router.post('/getUserProjects', (req, res) => {
   })
 })
 
+router.post('/getAllProjects', (req,res) => {
+  Project.find({}, function(err, projects) {
+    res.send(projects);
+  })
+})
+
 
 
 

@@ -1,8 +1,8 @@
 export class TagMaster {
 
-  constructor() {
+  constructor(moveTo) {
     this.conceptList = [
-      "gaming", "mixed reality", "virtual reality", "augmented reality", "accessibility", "supportability", "artificial intelligence", "machine learning", "IOT", "big data", "security", "natural language processing", "speech recognition", "ux/ui", "merchandising", "design", "data storage", "blockchain", "education", "automation",
+      "gaming", "mixed reality", "virtual reality", "augmented reality", "accessibility", "supportability", "artificial intelligence", "machine learning", "IOT", "big data", "security", "natural language processing", "speech recognition", "ux", "ui", "merchandising", "design", "data storage", "blockchain", "education", "automation",
       "networking", "anomaly detection", "distributed systems", "event sourcing"
     ];
     this.techStackList = [
@@ -14,16 +14,25 @@ export class TagMaster {
     ];
     this.selectedConceptTags = [];
     this.selectedTechStackTags = [];
+    this.populatedDivs = [];
+  }
+
+  tagToDataValue( tag ) {
+    return tag.toLowerCase().trim().split(' ').join('_');
   }
 
   buildTags( divId, listType ) {
+    let that = this;
+    //assumes it was appended
+    this.populatedDivs.push( divId );
     let tagList = [];
     if ( listType === 'concept' ) {  tagList = this.conceptList; }
     else if ( listType === 'techStack' ) { tagList = this.techStackList; }
     function buildTag( tag ){
-      return `<li class="searchBadge" data-type=${listType}><a href="#">${tag}</a></li>`;
+      let value = that.tagToDataValue(tag);
+      return `<li class="searchBadge" data-type=${listType} data-value=${value}><a href="#">${tag}</a></li>`;
     }
-    let html = `<div id=${divId} class="blog-tags container-fluid"> <ul>`;
+    let html = `<div id=${divId} class="blog-tags container-fluid"><ul>`;
 
     tagList.forEach( (t) => {
       html += buildTag(t);
@@ -37,6 +46,13 @@ export class TagMaster {
       selectedConceptTags : this.selectedConceptTags,
       selectedTechStackTags : this.selectedTechStackTags
     }
+  }
+  moveTag( tag ) {
+
+  }
+
+  getPopulatedDivs(){
+    return this.populatedDivs;
   }
 
   removeTag( tag ) {
@@ -59,30 +75,44 @@ export class TagMaster {
     }
   }
 
-  addHandles( divId ) {
-    let that = this,
-        tags = $('#' + divId).find('ul li.searchBadge');
-    tags.toArray().forEach( (tag) => {
-      $(tag).on('click', (el) => {
-        el.preventDefault();
-        let tagText = $(el.target).text(),
-            parent = $(el.target).parent(),
-            type = $(parent).attr('data-type');
-        that.toggleHighlight(parent);
-        if ( type === 'concept') {
-          if ( that.selectedConceptTags.includes(tag) ) {
-              that.removeTag(tag);
-          } else {
-            that.selectedConceptTags.push(tag)
+  getAllTags(){
+    let allTags = []
+    this.populatedDivs.forEach( (divId) => {
+      let tags = $('#' + divId).find('ul li.searchBadge');
+      allTags = allTags.concat(tags);
+    })
+    return allTags;
+  }
+
+  addHandles() {
+    let that = this;
+    this.populatedDivs
+    .forEach( (divId) => {
+      let tags = $('#' + divId).find('ul li.searchBadge');
+      tags.toArray().forEach( (tag) => {
+        $(tag).on('click', (el) => {
+          el.preventDefault();
+          console.log(divId, tag)
+          let $tag = $(el.target),
+              parent = $tag.parent(),
+              type = $(parent).attr('data-type'),
+              tagDataVal = $(parent).attr('data-value');
+          that.toggleHighlight(parent);
+          if ( type === 'concept') {
+            if ( that.selectedConceptTags.includes(tagDataVal) ) {
+                that.removeTag(tagDataVal);
+            } else {
+              that.selectedConceptTags.push(tagDataVal)
+            }
           }
-        }
-        else if ( type === 'techStack') {
-          if ( this.selectedTechStackTags.includes(tag) ) {
-            that.removeTag(tag);
-          } else {
-            that.selectedTechStackTags.push(tag)
+          else if ( type === 'techStack') {
+            if ( this.selectedTechStackTags.includes(tagDataVal) ) {
+              that.removeTag(tagDataVal);
+            } else {
+              that.selectedTechStackTags.push(tagDataVal)
+            }
           }
-        }
+        })
       })
     })
   }

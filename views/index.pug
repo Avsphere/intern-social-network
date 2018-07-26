@@ -1,6 +1,18 @@
 extends layout
 
 block content
+  #projectModal.modal(tabindex='-1', role='dialog', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered(role='document', style='max-width:800px')
+      .projectModal__content
+        .projectModal__header
+          .projectModal__title
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+        .projectModal__body
+          .projectModal__orgName
+          .projectModal__description
+          .projectModal__tagList
+        .projectModal__footer
   div.Browse
     div.Browse__container
       div.Browse__msg
@@ -9,7 +21,7 @@ block content
       div.Browse__search
         // Search Bar
         div.Browse__searchbar
-          input.form-control(type='text', placeholder='Search for projects here...', aria-label='search')
+          input.form-control(type='text', id="mainSearchBar" placeholder='Search for projects here...', aria-label='search')
         // Concept Tags Filter
         div.Browse__tagFilter 
           div.Browse__tagFilter__title Filter by concepts
@@ -25,19 +37,3 @@ block content
             ul#filterTagsList
     div.Browse__projects
       div.Browse__projectsList#filteredProjects
-        #projectModal.modal(tabindex='-1', role='dialog', aria-hidden='true')
-          .modal-dialog.modal-dialog-centered(role='document', style='max-width:800px')
-            .projectModal__content
-              .projectModal__header
-                .projectModal__title
-                button.close(type='button', data-dismiss='modal', aria-label='Close')
-                  span(aria-hidden='true') ×
-              .projectModal__body
-                .projectModal__orgNameLabel Organization
-                .projectModal__orgName
-                .projectModal__descriptionLabel Description
-                .projectModal__description
-                .projectModal__tagListLabel Tags
-                .projectModal__tagList
-                .projectModal__footerLabel Contact
-                .projectModal__footer

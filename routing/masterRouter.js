@@ -6,16 +6,16 @@ const utils = require('../utils/utils.js')
 const User = require('../models/user')
 const Project = require('../models/project')
 
-// router.get('/', (req, res) => {
-//   if (!req.isAuthenticated()) {
-//     res.redirect('/login')
-//   } else {
-//     let profileData = req.user.profile
-//     res.render('index', {
-//       user: profileData,
-//     })
-//   }
-// })
+router.get('/', (req, res) => {
+  if (!req.isAuthenticated()) {
+    res.redirect('/login')
+  } else {
+    let profileData = req.user.profile
+    res.render('index', {
+      user: profileData,
+    })
+  }
+})
 
 function getDummyUser() {
   //this id is a real user id
@@ -33,12 +33,12 @@ function getDummyUser() {
   }
 }
 
-router.get('/', (req, res) => {
-  res.render('index', {user: getDummyUser()})
-})
+// router.get('/', (req, res) => {
+//   res.render('index', {user: getDummyUser()})
+// })
 router.get('/account', function(req, res) {
-  //let profileData = req.user.profile;
-  let profileData = getDummyUser()
+  let profileData = req.user.profile;
+  // let profileData = getDummyUser()
   if (!profileData.team) {
     profileData.team = 'Enter Team Name'
   }

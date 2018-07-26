@@ -19,8 +19,8 @@ module.exports = function(passport) {
 
   passport.use(new OIDCStrategy({
     redirectUrl: 'http://localhost:3000/token',
-    clientID: '06322244-0a08-4e0a-9687-bdc3438b93b1',
-    clientSecret: 'bpZVE61#(zmdspYNIQ592|%',
+    clientID: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
     identityMetadata: 'https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration',
     allowHttpForRedirectUrl: true, // For development only
     responseType: 'code',

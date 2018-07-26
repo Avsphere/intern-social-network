@@ -92,9 +92,9 @@ export class TagMaster {
     //   .split(' ')
     //   .join('_')
   }
-  buildSingleTag(tag, dataVal, type) {
-    return `<li class="searchBadge" data-type=${type} data-value=${dataVal}><a href="#">${tag}</a></li>`
-  }
+  // buildSingleTag(tag, dataVal, type) {
+  //   return `<li class="searchBadge" data-type=${type} data-value=""${dataVal}><a href="#">${tag}</a></li>`
+  // }
 
   buildTags(divId, listType) {
     let that = this

@@ -3,9 +3,15 @@ import { TagMaster } from './tagMaster.js'
 import Fuse from 'fuse.js'
 export class Index {
   constructor() {
-    this.fuseOptions = {
-      id: '_id',
-      keys: ['techStackTags', 'conceptTags'],
+    this.tagFuseOptions = {
+      keys: ['tag'],
+      shouldSort: true,
+      threshold: 0.4,
+    }
+    this.cardFuseOptions = {
+      keys: ['tag'],
+      shouldSort: true,
+      threshold: 0.4,
     }
     this.tagMaster = new TagMaster()
     this.initView()
@@ -19,53 +25,16 @@ export class Index {
     //These are the mandatory handles that add selected tags to array
     this.tagMaster.addHandles()
     this.getAggregateUsersAndProjects().then(usersAndProjects => {
-      usersAndProjects.forEach(u => {
-        u.tags = []
-        u.projects.forEach(p => {
-          u.tags = u.tags.concat(p.conceptTags)
-          u.tags = u.tags.concat(p.techStackTags)
-        })
-      })
+
       this.users = usersAndProjects
-      console.log(this.users)
       this.projectList = []
-      usersAndProjects.forEach(user => {
-        user.projects.forEach(project => {
-          this.projectList.push(project)
-        })
-      })
-      this.fuse = new Fuse(this.projectList, this.fuseOptions)
+      this.relDict = {};
+      this.initDefaults();
+      this.tagFuse = new Fuse(this.tagFuseTags, this.tagFuseOptions)
       console.log(this)
 
-      let projectCards = this.buildProjectCards()
-      $('#filteredProjects').append(projectCards)
+      this.buildAndAppendProjectCards()
 
-      // Modal Contents Functions
-      $('.card').on('click', el => {
-        let projectId = $(el.target).closest('.card').attr('data-projectId'),
-          userId = $(el.target).closest('.card').attr('data-userId'),
-          project = that.findProjectById(projectId),
-          user = that.findUserById(userId),
-          modal = $('#projectModal'),
-          footer = '',
-          tagList = ''
-        footer += `<div>` + user.displayName + ` is a ` + user.jobTitle + ` on ` + user.department + `. You can reach out to ` + user.firstName + ` at ` + user.upn + `.</div>`
-        project.conceptTags.forEach(t => {
-          tagList += `<li><a href="#">${t}</a></li>`
-        })
-        project.techStackTags.forEach(t => {
-          tagList += `<li><a href="#">${t}</a></li>`
-        })
-
-        modal.find('.projectModal__title').text(project.title)
-        modal.find('.projectModal__orgName').text(user.org)
-        modal.find('.projectModal__description').text(project.description)
-        modal.find('.projectModal__tagList').html(`<ul id='cardTagList' class="card__tagList">` + tagList +
-          `</ul>`)
-        modal.find('.projectModal__footer').html(footer)
-        console.log(user)
-        $('#projectModal').modal({})
-      })
     })
     this.handles()
   }
@@ -86,7 +55,38 @@ export class Index {
         })
     })
   }
+  buildAndAppendProjectCards() {
+    let that = this;
+    $('#filteredProjects').empty();
+    let projectCards = this.buildProjectCards();
+    $('#filteredProjects').append(projectCards);
+    // Modal Contents Functions
+    $('.card').on('click', el => {
+      let projectId = $(el.target).closest('.card').attr('data-projectId'),
+        userId = $(el.target).closest('.card').attr('data-userId'),
+        project = that.findProjectById(projectId),
+        user = that.findUserById(userId),
+        modal = $('#projectModal'),
+        footer = '',
+        tagList = ''
+      footer += `<div>` + user.displayName + ` is a ` + user.jobTitle + ` on ` + user.department + `. You can reach out to ` + user.firstName + ` at ` + user.upn + `.</div>`
+      project.conceptTags.forEach(t => {
+        tagList += `<li><a href="#">${t}</a></li>`
+      })
+      project.techStackTags.forEach(t => {
+        tagList += `<li><a href="#">${t}</a></li>`
+      })
 
+      modal.find('.projectModal__title').text(project.title)
+      modal.find('.projectModal__orgName').text(user.org)
+      modal.find('.projectModal__description').text(project.description)
+      modal.find('.projectModal__tagList').html(`<ul id='cardTagList' class="card__tagList">` + tagList +
+        `</ul>`)
+      modal.find('.projectModal__footer').html(footer)
+      console.log(user)
+      $('#projectModal').modal({})
+    })
+  }
   findProjectById(id) {
     return this.projectList.find(p => {
       if (p._id === id) {
@@ -98,6 +98,32 @@ export class Index {
     return this.users.find(u => {
       if (u._id === id) {
         return u
+      }
+    })
+  }
+  findTagByDataVal(dataVal) {
+
+  }
+
+  sortHtmlTags() {
+    let searchText = $('#mainSearchBar').val().trim(),
+      invSearchResults = this.tagFuse.search(searchText).reverse();
+    invSearchResults.forEach((s) => {
+      if ($(s.htmlRef).attr('data-type') === 'concept') {
+        $('#conceptTags').find('ul').prepend(s.htmlRef)
+      } else if ($(s.htmlRef).attr('data-type') === 'techStack') {
+        $('#techStackTags').find('ul').prepend(s.htmlRef)
+      }
+    })
+  }
+  sortHtmlCards() {
+    let searchText = $('#mainSearchBar').val().trim(),
+      invSearchResults = this.tagFuse.search(searchText).reverse();
+    invSearchResults.forEach((s) => {
+      if ($(s.htmlRef).attr('data-type') === 'concept') {
+        $('#conceptTags').find('ul').prepend(s.htmlRef)
+      } else if ($(s.htmlRef).attr('data-type') === 'techStack') {
+        $('#techStackTags').find('ul').prepend(s.htmlRef)
       }
     })
   }
@@ -114,17 +140,14 @@ export class Index {
       .forEach(card => {
         let cardId = $(card).attr('data-projectId')
         if (!ids.includes(cardId)) {
-          let forDemo = getRandomInt(10)
-          if (forDemo < 4) {
-            $(card).remove()
-          }
+          $(card).remove()
         }
       })
   }
 
   buildProjectCards() {
     let that = this
-    function buildCard(userData, p) {
+    function buildCard(p) {
       function buildTagList(projectTags) {
         let html = ''
         projectTags.forEach(t => {
@@ -132,7 +155,8 @@ export class Index {
         })
         return html
       }
-      let tagList = ''
+      let tagList = '',
+        userData = p.userData;
       if (p.conceptTags.length > 0 && p.techStackTags.length > 0) {
         tagList = buildTagList(p.conceptTags.concat(p.techStackTags))
       }
@@ -156,19 +180,15 @@ export class Index {
       </div>`
       return html
     }
-    function buildHtmlProjectCards(user) {
-      let userCardData = {
-        _id: user._id,
-        department: user.department,
-        displayName: user.displayName,
-        jobTitle: user.jobTitle,
-      }
-      let projects = user.projects
-      let cards = projects.map(p => buildCard(userCardData, p))
-      return cards
-    }
-    let cardArrays = this.users.map(u => buildHtmlProjectCards(u))
-    let mergedCards = [].concat.apply([], cardArrays)
+    // function buildHtmlProjectCards(user) {
+    //
+    //   let projects = user.projects
+    //   let cards = projects.map(p => buildCard(userCardData, p))
+    //   return cards
+    // }
+
+    let cards = that.projectList.map(p => buildCard(p))
+    let mergedCards = [].concat.apply([], cards)
     let html = ''
     mergedCards.forEach(c => {
       html += c
@@ -182,6 +202,64 @@ export class Index {
     })
     return tags
   }
+
+  assignRelevanceScore() {
+    let filterTags = this.getCurrentFilterTagText();
+    for (let tag in this.relDict) {
+      let projectList = this.relDict[tag];
+
+      projectList.forEach((p) => {
+        p.relScore = 0;
+        filterTags.forEach((t) => {
+          if (p.tags.includes(t)) {
+            p.relScore++;
+          }
+        })
+      })
+    }
+  }
+
+  sortByRelevanceScore() {
+    this.projectList = this.projectList.sort((a, b) => {
+      if (a.relScore < b.relScore) {
+        return 1;
+      } else {
+        return -1
+      }
+    })
+  }
+
+  initDefaults() {
+    //wrapping for easy fuzzy search
+    this.tagFuseTags = this.tagMaster.getAllTags().map(t => {
+      return {
+        tag: $(t).text(),
+        htmlRef: t
+      }
+    })
+    this.users.forEach(u => {
+      u.projects.forEach(p => {
+        p.tags = p.conceptTags.concat(p.techStackTags);
+        p.userData = {
+          _id: u._id,
+          department: u.department,
+          displayName: u.displayName,
+          jobTitle: u.jobTitle,
+        }
+        this.projectList.push(p)
+
+        p.tags
+          .forEach((t) => {
+            if (this.relDict.hasOwnProperty(t)) {
+              this.relDict[t].push(p);
+            } else {
+              this.relDict[t] = [p];
+            }
+          })
+      })
+    })
+  }
+
 
   handles() {
     //If a tag is clicked and it does not exist in the filterTags area then I recreate it there
@@ -199,6 +277,12 @@ export class Index {
           return t
         }
       })
+    }
+    function handleNewFilterTag() {
+      that.assignRelevanceScore();
+      that.sortByRelevanceScore();
+      that.buildAndAppendProjectCards();
+
     }
 
     function handleTagPlacement(tag) {
@@ -235,12 +319,17 @@ export class Index {
     this.tagMaster.getAllTags().forEach(tag => {
       $(tag).on('click', el => {
         handleTagPlacement(tag)
-        let currentFilterTags = that.getCurrentFilterTagText(),
-          fuseSearchString = currentFilterTags.join(' ')
-        console.log(fuseSearchString)
-        let returnIds = that.fuse.search(fuseSearchString)
-        that.showOnlyProjects(returnIds)
+        handleNewFilterTag();
       })
     })
+
+    $('#mainSearchBar').on('keyup', (el) => {
+      let text = $('#mainSearchBar').val()
+      if (text.length > 0) {
+        that.sortHtmlTags();
+        that.sortHtmlCards();
+      }
+    })
+
   }
 }

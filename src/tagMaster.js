@@ -17,61 +17,61 @@ export class TagMaster {
     this.populatedDivs = [];
   }
 
-  tagToDataValue( tag ) {
+  tagToDataValue(tag) {
     return tag.toLowerCase().trim().split(' ').join('_');
   }
-  buildTag( tag, dataVal, type) {
+  buildTag(tag, dataVal, type) {
     return `<li class="searchBadge" data-type=${type} data-value=${dataVal}><a href="#">${tag}</a></li>`;
   }
 
-  buildTags( divId, listType ) {
+  buildTags(divId, listType) {
     let that = this;
     //assumes it was appended
-    this.populatedDivs.push( divId );
+    this.populatedDivs.push(divId);
     let tagList = [];
-    if ( listType === 'concept' ) {  tagList = this.conceptList; }
-    else if ( listType === 'techStack' ) { tagList = this.techStackList; }
-    function buildTag( tag ){
+    if (listType === 'concept') { tagList = this.conceptList; }
+    else if (listType === 'techStack') { tagList = this.techStackList; }
+    function buildTag(tag) {
       let value = that.tagToDataValue(tag);
       return `<li class="searchBadge" data-type=${listType} data-value=${value}><a href="#">${tag}</a></li>`;
     }
-    let html = `<div id=${divId} class="container-fluid"><ul>`;
+    let html = `<div id=${divId}><ul>`;
 
-    tagList.forEach( (t) => {
+    tagList.forEach((t) => {
       html += buildTag(t);
     })
     html += '</ul></div>';
     return html;
   }
 
-  getSelected(){
+  getSelected() {
     return {
-      selectedConceptTags : this.selectedConceptTags,
-      selectedTechStackTags : this.selectedTechStackTags
+      selectedConceptTags: this.selectedConceptTags,
+      selectedTechStackTags: this.selectedTechStackTags
     }
   }
 
 
-  getPopulatedDivs(){
+  getPopulatedDivs() {
     return this.populatedDivs;
   }
 
-  removeTag( tagDataVal, type ) {
+  removeTag(tagDataVal, type) {
     let spliceIndex = 0,
-        selectedTags = type === 'techStack' ? this.selectedTechStackTags : this.selectedConceptTags;
-    let foundCheck = selectedTags.find( (t, i) => {
-      if ( t === tagDataVal ) { spliceIndex = i; return t; }
+      selectedTags = type === 'techStack' ? this.selectedTechStackTags : this.selectedConceptTags;
+    let foundCheck = selectedTags.find((t, i) => {
+      if (t === tagDataVal) { spliceIndex = i; return t; }
     })
-    if ( foundCheck ) {
-      selectedTags.splice( spliceIndex, 1 );
+    if (foundCheck) {
+      selectedTags.splice(spliceIndex, 1);
     } else {
       console.log("Something went wrong with tag removal");
     }
   }
-  toggleHighlight( listItem ) {
+  toggleHighlight(listItem) {
     //css for selected-tag can be found in cards.css
-    if ( listItem.is('li') ) {
-      if ( listItem.hasClass('selected-tag') ) {
+    if (listItem.is('li')) {
+      if (listItem.hasClass('selected-tag')) {
         listItem.removeClass('selected-tag');
       } else {
         listItem.addClass('selected-tag')
@@ -81,16 +81,16 @@ export class TagMaster {
     }
   }
 
-  getAllTags(){
+  getAllTags() {
     let allTags = []
-    this.populatedDivs.forEach( (divId) => {
+    this.populatedDivs.forEach((divId) => {
       let tags = $('#' + divId).find('ul li.searchBadge').toArray();
       allTags = allTags.concat(tags);
     })
     return allTags;
   }
 
-  getTagsIn( divId ){
+  getTagsIn(divId) {
     let tags = $('#' + divId).find('ul li.searchBadge').toArray();
     return tags;
   }
@@ -98,33 +98,33 @@ export class TagMaster {
   addHandles() {
     let that = this;
     this.populatedDivs
-    .forEach( (divId) => {
-      let tags = $('#' + divId).find('ul li.searchBadge');
-      tags.toArray().forEach( (tag) => {
-        $(tag).on('click', (el) => {
-          el.preventDefault();
-          console.log(divId, tag)
-          let $tag = $(el.target),
+      .forEach((divId) => {
+        let tags = $('#' + divId).find('ul li.searchBadge');
+        tags.toArray().forEach((tag) => {
+          $(tag).on('click', (el) => {
+            el.preventDefault();
+            console.log(divId, tag)
+            let $tag = $(el.target),
               liElem = $tag.closest('li'),
               type = $(liElem).attr('data-type'),
               tagDataVal = $(liElem).attr('data-value');
-          that.toggleHighlight(liElem);
-          if ( type === 'concept') {
-            if ( that.selectedConceptTags.includes(tagDataVal) ) {
+            that.toggleHighlight(liElem);
+            if (type === 'concept') {
+              if (that.selectedConceptTags.includes(tagDataVal)) {
                 that.removeTag(tagDataVal, type);
-            } else {
-              that.selectedConceptTags.push(tagDataVal)
+              } else {
+                that.selectedConceptTags.push(tagDataVal)
+              }
             }
-          }
-          else if ( type === 'techStack') {
-            if ( this.selectedTechStackTags.includes(tagDataVal) ) {
-              that.removeTag(tagDataVal, type);
-            } else {
-              that.selectedTechStackTags.push(tagDataVal)
+            else if (type === 'techStack') {
+              if (this.selectedTechStackTags.includes(tagDataVal)) {
+                that.removeTag(tagDataVal, type);
+              } else {
+                that.selectedTechStackTags.push(tagDataVal)
+              }
             }
-          }
+          })
         })
       })
-    })
   }
 }

@@ -193,6 +193,27 @@ router.post('/getUserAndProjects', (req, res) => {
   })
 })
 
+router.post('/getAggregateUsersAndProjects', (req,res) => {
+  User.find({}, function(err, usersDocs) {
+    let users = usersDocs.map( d => d.toObject() )
+    let promises = users.map( (u) => {
+      return new Promise( (resolve, reject) => {
+        Project.find({
+          _id : {
+            $in : u.projects
+          }
+        },
+        function( err, projects ) {
+          u.projects = projects;
+          resolve(u);
+        })
+      })
+    })
+    Promise.all( promises ).then( usersAndProjects => {
+      res.send(usersAndProjects);
+    })
+  })
+})
 
 router.post('/getAllProjects', (req, res) => {
   Project.find({}, function(err, projects) {

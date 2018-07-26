@@ -1,46 +1,63 @@
-import axios from 'axios';
+import axios from 'axios'
 import { TagMaster } from './tagMaster.js'
 export class Account {
   constructor() {
-    this.initHandlers();
-    this.tagMaster = new TagMaster();
-    this.currProjectCount = 0;
-    this.currUserId = $('#titleHeader').attr('data-account-id');
-    this.getUserProjects().then( (d) => { console.log(d); })
+    this.initHandlers()
+    this.tagMaster = new TagMaster()
+    this.currProjectCount = 0
+    this.currUserId = $('#titleHeader').attr('data-account-id')
+    this.getUserProjects().then(d => {
+      console.log(d)
+    })
     console.log(this)
-
   }
   getUserProjects() {
-    return new Promise( (resolve, reject) => {
-      axios.post('/getUserProjects', { userId : this.currUserId })
-      .then((res) => {
-        if (res.statusText === 'OK') {
-          resolve(res.data);
-        } else {
-          console.log("FAILED", res);
-        }
-      }).catch((err) => {
-        console.log("ERROR in request runner login", err);
-        resolve(err);
-      })
+    return new Promise((resolve, reject) => {
+      axios
+        .post('/getUserProjects', { userId: this.currUserId })
+        .then(res => {
+          if (res.statusText === 'OK') {
+            resolve(res.data)
+          } else {
+            console.log('FAILED', res)
+          }
+        })
+        .catch(err => {
+          console.log('ERROR in request runner login', err)
+          resolve(err)
+        })
     })
   }
 
-  addTabs() {
-    this.getUserProjects().then( (projects) => {
-      let tabs = projects.map( (p) => {
-        return `<li><a href="#">Project</a></li>`
+  addTabHtml() {
+    this.getUserProjects().then(projects => {
+      let count = 0
+      let tabs = projects.map(p => {
+        count += 1
+        return `<li><a href="#">Project ${count}</a></li>`
       })
+      return tabs
     })
+  }
+
+  buildTabsHtml() {
+    let tabsMenuHtml = `
+      <ul class="nav nav-tabs"><li><a href='#'>Profile info</a></li>`
+    tabList = this.addTabHtml()
+    tabList.forEach(t => {
+      tabsMenuHtml += t
+    })
+    tabsMenuHtml += '</ul>'
   }
 
   returnDummyFormData() {
     return {
-      team: "aarons team",
+      team: 'aarons team',
       org: 'awesome org',
-      projects: [{
-          title: "Awesome project",
-          description: "A cool ass project yo",
+      projects: [
+        {
+          title: 'Awesome project',
+          description: 'A cool ass project yo',
           conceptTags: ['IoT', 'cloud'],
           techStackTags: ['ps', 'js', 'css'],
           timeDistribution: {
@@ -48,12 +65,12 @@ export class Account {
             devTime: 3,
             designTime: 1,
             emailTime: 1,
-            writingTime: 3
-          }
+            writingTime: 3,
+          },
         },
         {
-          title: "Woah woah project",
-          description: "A cool ass project yo",
+          title: 'Woah woah project',
+          description: 'A cool ass project yo',
           conceptTags: ['Mixed Reality', 'Design'],
           techStackTags: ['ps', 'js', 'css'],
           timeDistribution: {
@@ -61,38 +78,38 @@ export class Account {
             devTime: 3,
             designTime: 11,
             emailTime: 11,
-            writingTime: 3
-          }
-        }
-      ]
-
+            writingTime: 3,
+          },
+        },
+      ],
     }
   }
 
   grabFormData() {
-    return this.returnDummyFormData();
+    return this.returnDummyFormData()
   }
 
   updateAccount() {
     return new Promise((resolve, reject) => {
       let data = {
         formData: this.grabFormData(),
-        userId: this.currUserId
+        userId: this.currUserId,
       }
-      axios.post('/updateUser', data).then((res) => {
-        if (res.statusText === 'OK') {
-          resolve(res.data);
-        } else {
-          console.log("FAILED", res);
-        }
-      }).catch((err) => {
-        console.log("ERROR in request runner login", err);
-        resolve(err);
-      })
+      axios
+        .post('/updateUser', data)
+        .then(res => {
+          if (res.statusText === 'OK') {
+            resolve(res.data)
+          } else {
+            console.log('FAILED', res)
+          }
+        })
+        .catch(err => {
+          console.log('ERROR in request runner login', err)
+          resolve(err)
+        })
     })
   }
-
-
 
   buildProjectHtml(projectData) {
     //add so that auto populates if already there are projects
@@ -129,30 +146,35 @@ export class Account {
           </form>
         </div>
       </div>
-    `;
-    return html;
+    `
+    return html
   }
 
   initHandlers() {
-    let that = this;
-    $('#submitForm').on('click', (el) => {
-      el.preventDefault();
-      that.updateAccount();
+    let that = this
+
+    $('#tabsMenu').append(that.buildTabsHtml())
+
+    $('#submitForm').on('click', el => {
+      el.preventDefault()
+      that.updateAccount()
     })
-      e.preventDefault();
+    $('#addProject').on('click', e => {
+      e.preventDefault()
       let conceptTagDivId = 'conceptTagDiv' + that.currProjectCount,
-          techStackTagDivId = 'techStackDiv' + that.currProjectCount,
-          newProjectHtml = that.buildProjectHtml();
+        techStackTagDivId = 'techStackDiv' + that.currProjectCount,
+        newProjectHtml = that.buildProjectHtml()
 
       let conceptTagHtml = that.tagMaster.buildTags(conceptTagDivId, 'concept'),
-          techStackTagHtml = that.tagMaster.buildTags(techStackTagDivId, 'techStack');
-      $('#projectSection').append(newProjectHtml);
-      $('#conceptTags' + that.currProjectCount).append(conceptTagHtml);
+        techStackTagHtml = that.tagMaster.buildTags(
+          techStackTagDivId,
+          'techStack'
+        )
+      $('#projectSection').append(newProjectHtml)
+      $('#conceptTags' + that.currProjectCount).append(conceptTagHtml)
       $('#techStackTags' + that.currProjectCount).append(techStackTagHtml)
-      that.tagMaster.addHandles(conceptTagDivId);
-      that.tagMaster.addHandles(techStackTagDivId);
+      that.tagMaster.addHandles(conceptTagDivId)
+      that.tagMaster.addHandles(techStackTagDivId)
     })
   }
-
-
 }

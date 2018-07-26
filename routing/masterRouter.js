@@ -5,15 +5,6 @@ const path = require('path')
 const utils = require('../utils/utils.js')
 const User = require('../models/user')
 const Project = require('../models/project')
-// const frontendDev = true
-
-// if (frontendDev) {
-//   router.get('/', (req, res) => {
-//     res.render('index', {
-//       user: User.dummyData,
-//     })
-//   })
-// }
 
 // router.get('/', (req, res) => {
 //   if (!req.isAuthenticated()) {
@@ -29,25 +20,25 @@ const Project = require('../models/project')
 function getDummyUser() {
   //this id is a real user id
   return {
-    _id : '5b57b107f2ade61c10c4f0f8',
-    displayName : "Aaron",
-    firstName : "aa",
-    surname : "perr",
-    upn : "woahAaron@gmail.com",
-    team : "Bea",
-    org : "uty",
-    department : "cloud",
-    jobTitle : "awesomeJob",
-    projects : []
+    _id: '5b57b107f2ade61c10c4f0f8',
+    displayName: 'Aaron',
+    firstName: 'aa',
+    surname: 'perr',
+    upn: 'woahAaron@gmail.com',
+    team: 'Bea',
+    org: 'uty',
+    department: 'cloud',
+    jobTitle: 'awesomeJob',
+    projects: [],
   }
 }
 
 router.get('/', (req, res) => {
-  res.render('index', { user : getDummyUser() })
+  res.render('index', { user: getDummyUser() })
 })
 router.get('/account', function(req, res) {
   // let profileData = req.user.profile;
-  let profileData =  getDummyUser();
+  let profileData = getDummyUser()
   if (!profileData.team) {
     profileData.team = 'Enter Team Name'
   }
@@ -55,7 +46,7 @@ router.get('/account', function(req, res) {
     profileData.org = 'Enter Org Name'
   }
   res.render('account', {
-    user: profileData
+    user: profileData,
   })
 })
 
@@ -132,17 +123,17 @@ router.get('/disconnect', (req, res) => {
 
 router.post('/updateUser', (req, res) => {
   let userId = req.body.userId,
-      userData = req.body.formData;
+    userData = req.body.formData
   User.findById(userId, function(err, user) {
     if (!err) {
       //console.log('Update user Found user: ', user);
       user.team = userData.team
       user.org = userData.org
-      utils.createProjects(userId, userData.projects).then( (projectIds) => {
-        console.log('New project Ids ', projectIds);
-        user.projects = user.projects.concat(projectIds);
-        user.save( (err) => {
-          res.send({success : true})
+      utils.createProjects(userId, userData.projects).then(projectIds => {
+        console.log('New project Ids ', projectIds)
+        user.projects = user.projects.concat(projectIds)
+        user.save(err => {
+          res.send({ success: true })
         })
       })
     } else {
@@ -152,29 +143,29 @@ router.post('/updateUser', (req, res) => {
 })
 
 router.post('/getUserProjects', (req, res) => {
-  let userId = req.body.userId;
+  let userId = req.body.userId
   User.findById(userId, function(err, user) {
     if (!err) {
-      Project.find({
-        '_id' : {
-          $in : user.projects
-        }
-      }, function(err, projects){
+      Project.find(
+        {
+          _id: {
+            $in: user.projects,
+          },
+        },
+        function(err, projects) {
           res.send(projects)
-      })
+        }
+      )
     } else {
       console.log('Problem in update user!')
     }
   })
 })
 
-router.post('/getAllProjects', (req,res) => {
+router.post('/getAllProjects', (req, res) => {
   Project.find({}, function(err, projects) {
-    res.send(projects);
+    res.send(projects)
   })
 })
-
-
-
 
 module.exports = router

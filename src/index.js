@@ -127,7 +127,7 @@ export class Index {
       let html = `<div class="card" data-userId=${userData._id} data-projectId=${p._id}>
          <div class="card__container">
             <div class="card__orgName">${userData.department}</div>
-            <div class="card__projectTitle"><a href="#" data-toggle="modal" data-target="#projectModal">${
+            <div class="card__projectTitle"><a href="#">${
               p.title
             }</a></div>
             <div class="card__projectDescrip">${p.description}</div>

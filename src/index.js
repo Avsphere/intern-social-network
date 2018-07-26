@@ -56,6 +56,7 @@ export class Index {
     })
   }
   buildAndAppendProjectCards() {
+    let that = this;
     $('#filteredProjects').empty();
     let projectCards = this.buildProjectCards();
     $('#filteredProjects').append(projectCards);

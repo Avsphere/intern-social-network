@@ -187,19 +187,17 @@ export class Index {
         handleTagPlacement(tag);
         let currentFilterTags = that.getCurrentFilterTagText(),
           fuseSearchString = currentFilterTags.join(' ');
+          console.log(fuseSearchString);
         let returnIds = that.fuse.search(fuseSearchString);
         that.showOnlyProjects(returnIds);
       })
     })
 
-    $('#myModal').on('show.bs.modal', function (event) {
-      var button = $(event.relatedTarget) // Button that triggered the modal
-      var data_val = button.data('testing') // Extract info from data-* attributes
-      // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-      // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-      console.log(data_val)
-      var modal = $(this)
-      modal.find('.modal-title').text(data_val)
+    $('.card').on('click', () => {
+        console.log("here")
+        $('#myModal').modal({})
     })
+
+
   }
 }

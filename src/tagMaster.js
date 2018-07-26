@@ -8,7 +8,7 @@ export class TagMaster {
     this.techStackList = [
       "unity", "javascript", "jquery", "django", "go", "objective c", "backbone.js", "powershell", "c#", "asp.net", "kubernetes", "jenkins", "mongodb", "bootstrap", "postgresql", "mysql", "sqlite", "memcached", "aws",
       "python", "linux", "ajax", "nginx", "react", "android", "ios", "angular", "tensorflow",
-      "docker", "xcode", "java", "redis", "ruby", "sass", "rails", "html/css", "apache", "php", "github",
+      "docker", "xcode", "java", "redis", "ruby", "sass", "rails", "html", "css", "apache", "php", "github",
       "webpack", "node.js", "babel", "adobe xd", "adobe illustrator", "adobe photoshop", "microsoft word",
       "microsoft excel", "microsoft powerpoint", "balsamiq"
     ];

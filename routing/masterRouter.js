@@ -142,6 +142,15 @@ router.post('/updateUser', (req, res) => {
   })
 })
 
+router.post('/getUserById', (req, res) => {
+  let userId = req.body.userId;
+  User.findById(userId, function(err, user) {
+    if( !err ) {
+      res.send(user);
+    } else { console.log("error in getUserById"); }
+  })
+})
+
 router.post('/getUserProjects', (req, res) => {
   let userId = req.body.userId
   User.findById(userId, function(err, user) {
@@ -161,6 +170,29 @@ router.post('/getUserProjects', (req, res) => {
     }
   })
 })
+
+router.post('/getUserAndProjects', (req, res) => {
+  let userId = req.body.userId;
+  let foundUser = {};
+  User.findById(userId, function(err, user) {
+    if (!err) {
+      foundUser = user;
+      Project.find(
+        {
+          _id: {
+            $in: user.projects,
+          },
+        },
+        function(err, projects) {
+          res.send({projects : projects, user : foundUser})
+        }
+      )
+    } else {
+      console.log('Problem in update user!')
+    }
+  })
+})
+
 
 router.post('/getAllProjects', (req, res) => {
   Project.find({}, function(err, projects) {

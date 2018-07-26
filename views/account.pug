@@ -4,39 +4,15 @@ block content
   div.Account
     div.Account__title#titleHeader(data-account-id=user._id) Account Page
     ul.nav.nav-tabs#tabsMenu
-      li.active
+      li.menuTab.active#profileTab
         a(href="#") Profile Info
-      li
-        a(href="#") Project 1
-      li
-        a(href="#") Project 2
-      li
-        a(href="#") Project 3
 
     // Account information
-    div.formWrapper(style="margin-left:3%; max-width:50%;" )
-      form( autocomplete="off" )
-        .form-group
-          label(for='displayName') Display Name
-          input#displayName.form-control(type='text', aria-describedby='emailHelp', placeholder=user.displayName, disabled )
-        .form-group
-          label(for='exampleInputPassword1') UPN
-          input#upn.form-control(type='text', placeholder=user.upn disabled)
-        .form-group
-          label(for='displayName') Department
-          input#department.form-control(type='text', aria-describedby='emailHelp', placeholder=user.department, disabled )
-        .form-group
-          label(for='displayName') Job Title
-          input#jobTitle.form-control(type='text', aria-describedby='emailHelp', placeholder=user.jobTitle, disabled )
-        .form-group
-          label(for='exampleInputPassword1') Team
-          input#team.form-control(type='text', placeholder=user.team)
-        .form-group
-          label(for='exampleInputPassword1') Org
-          input#org.form-control(type='text', placeholder=user.org)
+    div.formWrapper( style="padding-top:3%")
+
     // Projects Section
     div.Account__contents#accountContents
     div.Account__projects#projectSection
 
     button.btn.btn-primary#addProject Add new project
-    button.btn.btn-primary#submitForm(type='submit') Save
+    button.btn.btn-primary#submitForm(type='submit' style="margin-left: 2%;") Save

@@ -50,9 +50,7 @@ export class TagMaster {
       selectedTechStackTags : this.selectedTechStackTags
     }
   }
-  moveTag( tag ) {
 
-  }
 
   getPopulatedDivs(){
     return this.populatedDivs;

@@ -9,13 +9,13 @@ export class Account {
     this.getUserAndProjects().then(data => {
       this.currUser = data.user
       this.projectList = data.projects
-      console.log('Project and user', this.projectList, this.currUser)
+      //console.log('Project and user', this.projectList, this.currUser)
       this.buildTabs()
       $('.formWrapper').html(this.buildProfilePage())
       this.initHandlers()
     })
 
-    console.log(this.tagMaster)
+    //console.log(this.tagMaster)
   }
   getUserProjects() {
     return new Promise((resolve, reject) => {
@@ -229,7 +229,7 @@ export class Account {
             'techStack',
           )
         this.currProjectCount++
-        console.log('Tag html', conceptTagHtml)
+        //console.log('Tag html', conceptTagHtml)
         $('#' + conceptTagContainerId).append(conceptTagHtml)
         $('#' + techStackTagContainerId).append(techStackTagHtml)
         //These are the mandatory handles that add selected tags to array

@@ -9,7 +9,7 @@ export class TagMaster {
       'supportability',
       'artificial intelligence',
       'machine learning',
-      'IOT',
+      'iot',
       'big data',
       'security',
       'natural language processing',
@@ -26,6 +26,9 @@ export class TagMaster {
       'anomaly detection',
       'distributed systems',
       'event sourcing',
+      'cloud',
+      'image recognition',
+      'productivity'
     ]
     this.techStackList = [
       'unity',
@@ -158,7 +161,7 @@ export class TagMaster {
         listItem.addClass('selected-tag')
       }
     } else {
-      console.log('item clicked is ', listItem)
+      //console.log('item clicked is ', listItem)
     }
   }
 
@@ -187,7 +190,7 @@ export class TagMaster {
       tags.toArray().forEach(tag => {
         $(tag).on('click', el => {
           el.preventDefault()
-          console.log(divId, tag)
+          //console.log(divId, tag)
           let $tag = $(el.target),
             liElem = $tag.closest('li'),
             type = $(liElem).attr('data-type'),

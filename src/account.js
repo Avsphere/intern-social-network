@@ -1,162 +1,196 @@
-import axios from 'axios';
-import { TagMaster } from './tagMaster.js'
+import axios from 'axios'
+import {TagMaster} from './tagMaster.js'
 export class Account {
   constructor() {
-    this.tagMaster = new TagMaster();
-    this.currProjectCount = 0;
-    this.currUserId = $('#titleHeader').attr('data-account-id');
+    this.tagMaster = new TagMaster()
+    this.currProjectCount = 0
+    this.currUserId = $('#titleHeader').attr('data-account-id')
 
-    this.getUserAndProjects().then((data) => {
-      this.currUser = data.user;
-      this.projectList = data.projects;
-      console.log("Project and user", this.projectList, this.currUser)
-      this.buildTabs();
+    this.getUserAndProjects().then(data => {
+      this.currUser = data.user
+      this.projectList = data.projects
+      console.log('Project and user', this.projectList, this.currUser)
+      this.buildTabs()
       $('.formWrapper').html(this.buildProfilePage())
-      this.initHandlers();
+      this.initHandlers()
     })
 
     console.log(this.tagMaster)
-
   }
   getUserProjects() {
     return new Promise((resolve, reject) => {
-      axios.post('/getUserProjects', { userId: this.currUserId })
-        .then((res) => {
+      axios
+        .post('/getUserProjects', {userId: this.currUserId})
+        .then(res => {
           if (res.statusText === 'OK') {
-            resolve(res.data);
+            resolve(res.data)
           } else {
-            console.log("FAILED", res);
+            console.log('FAILED', res)
           }
-        }).catch((err) => {
-          console.log("ERROR in request runner login", err);
-          resolve(err);
+        })
+        .catch(err => {
+          console.log('ERROR in request runner login', err)
+          resolve(err)
         })
     })
   }
   getUserAndProjects() {
     return new Promise((resolve, reject) => {
-      axios.post('/getUserAndProjects', { userId: this.currUserId })
-        .then((res) => {
+      axios
+        .post('/getUserAndProjects', {userId: this.currUserId})
+        .then(res => {
           if (res.statusText === 'OK') {
-            resolve(res.data);
+            resolve(res.data)
           } else {
-            console.log("FAILED", res);
+            console.log('FAILED', res)
           }
-        }).catch((err) => {
-          console.log("ERROR in request runner login", err);
-          resolve(err);
+        })
+        .catch(err => {
+          console.log('ERROR in request runner login', err)
+          resolve(err)
         })
     })
   }
   getUserById() {
     return new Promise((resolve, reject) => {
-      axios.post('/getUserById', { userId: this.currUserId })
-        .then((res) => {
+      axios
+        .post('/getUserById', {userId: this.currUserId})
+        .then(res => {
           if (res.statusText === 'OK') {
-            resolve(res.data);
+            resolve(res.data)
           } else {
-            console.log("FAILED", res);
+            console.log('FAILED', res)
           }
-        }).catch((err) => {
-          console.log("ERROR in request runner login", err);
-          resolve(err);
+        })
+        .catch(err => {
+          console.log('ERROR in request runner login', err)
+          resolve(err)
         })
     })
   }
   returnDummyFormData() {
     return {
-      team: "aarons team",
+      team: 'aarons team',
       org: 'awesome org',
-      projects: [{
-        title: "Awesome project",
-        description: "A cool ass project yo",
-        conceptTags: ['IoT', 'cloud'],
-        techStackTags: ['ps', 'js', 'css'],
-        timeDistribution: {
-          meetingTime: 4,
-          devTime: 3,
-          designTime: 1,
-          emailTime: 1,
-          writingTime: 3
-        }
-      },
-      {
-        title: "Woah woah project",
-        description: "A cool ass project yo",
-        conceptTags: ['Mixed Reality', 'Design'],
-        techStackTags: ['ps', 'js', 'css'],
-        timeDistribution: {
-          meetingTime: 4,
-          devTime: 3,
-          designTime: 11,
-          emailTime: 11,
-          writingTime: 3
-        }
-      }
-      ]
-
+      projects: [
+        {
+          title: 'Awesome project',
+          description: 'A cool ass project yo',
+          conceptTags: ['IoT', 'cloud'],
+          techStackTags: ['ps', 'js', 'css'],
+          timeDistribution: {
+            meetingTime: 4,
+            devTime: 3,
+            designTime: 1,
+            emailTime: 1,
+            writingTime: 3,
+          },
+        },
+        {
+          title: 'Woah woah project',
+          description: 'A cool ass project yo',
+          conceptTags: ['Mixed Reality', 'Design'],
+          techStackTags: ['ps', 'js', 'css'],
+          timeDistribution: {
+            meetingTime: 4,
+            devTime: 3,
+            designTime: 11,
+            emailTime: 11,
+            writingTime: 3,
+          },
+        },
+      ],
     }
   }
-
 
   grabAccountFormData() {
     let formData = {
       team: $('#team').val(),
-      org: $('#org').val()
+      org: $('#org').val(),
     }
     return formData
   }
   grabProjectFormData() {
-    //same for this, but to grab the tags
     let selectedTags = this.tagMaster.getSelected(),
       conceptTags = selectedTags.selectedConceptTags,
-      techStackTags = selectedTags.selectedTechStackTags;
+      techStackTags = selectedTags.selectedTechStackTags
+
+    let formData = {
+      title: $('#projectName').val(),
+      description: $('#projectDescription').val(),
+      conceptTags: conceptTags,
+      techStackTags: techStackTags,
+      timeDistribution: {
+        meetingTime: $('#meetingTime').val(),
+        devTime: $('#devTime').val(),
+        designTime: $('#designTime').val(),
+        emailTime: $('#emailTime').val(),
+        writingTime: $('#writingTime').val(),
+      },
+    }
 
     let projectId = $('#projectData').attr('data-projectId')
 
     return {
-      projectId: projectId
+      projectId: projectId,
+      formData: formData,
     }
-
   }
 
   findProjectById(id) {
-    return this.projectList.find((p) => {
+    return this.projectList.find(p => {
       if (p._id === id) {
-        return p;
+        return p
       }
     })
   }
   highlightClickedTab(tabClicked) {
-    $('#tabsMenu').find('li').toArray().forEach((t) => {
-      if ($(t).hasClass('active')) { $(t).removeClass('active'); }
-    })
-    tabClicked.addClass('active');
+    $('#tabsMenu')
+      .find('li')
+      .toArray()
+      .forEach(t => {
+        if ($(t).hasClass('active')) {
+          $(t).removeClass('active')
+        }
+      })
+    tabClicked.addClass('active')
   }
 
   buildTabs() {
-    this.projectList.forEach((p) => {
+    this.projectList.forEach(p => {
       let projectTitle = p.title,
-        tabItem = $(`<li class="menuTab" data-id=${p._id}><a href="#">${projectTitle}</a></li>`)
+        tabItem = $(
+          `<li class="menuTab" data-id=${
+            p._id
+          }><a href="#">${projectTitle}</a></li>`,
+        )
       $('#tabsMenu').append(tabItem)
-      tabItem.on('click', (el) => {
-        el.preventDefault();
+      tabItem.on('click', el => {
+        el.preventDefault()
         let tabClicked = $(el.target).closest('li'),
           projectId = tabClicked.attr('data-id'),
-          projectData = this.findProjectById(projectId);
-        this.highlightClickedTab(tabClicked);
-        let projectHtml = this.buildProjectHtml(projectData);
+          projectData = this.findProjectById(projectId)
+        this.highlightClickedTab(tabClicked)
+        let projectHtml = this.buildProjectHtml(projectData)
         $('.formWrapper').html(projectHtml)
-        let conceptTagContainerId = 'projectConceptTags' + this.currProjectCount,
-          conceptTagHtml = this.tagMaster.buildTags(conceptTagContainerId, 'concept');
-        let techStackTagContianerId = 'projectTechStackTags' + this.currProjectCount,
-          techStackTagHtml = this.tagMaster.buildTags(techStackTagContianerId, 'techStack');
-        this.currProjectCount++;
-        console.log("Tag html", conceptTagHtml);
-        $('#' + conceptTagContainerId).append(conceptTagHtml);
-        $('#' + techStackTagContianerId).append(techStackTagHtml);
+        let conceptTagContainerId =
+            'projectConceptTags' + this.currProjectCount,
+          conceptTagHtml = this.tagMaster.buildTags(
+            conceptTagContainerId,
+            'concept',
+          )
+        let techStackTagContianerId =
+            'projectTechStackTags' + this.currProjectCount,
+          techStackTagHtml = this.tagMaster.buildTags(
+            techStackTagContianerId,
+            'techStack',
+          )
+        this.currProjectCount++
+        console.log('Tag html', conceptTagHtml)
+        $('#' + conceptTagContainerId).append(conceptTagHtml)
+        $('#' + techStackTagContianerId).append(techStackTagHtml)
         //These are the mandatory handles that add selected tags to array
-        this.tagMaster.addHandles();
+        this.tagMaster.addHandles()
       })
     })
   }
@@ -164,52 +198,64 @@ export class Account {
   updateAccount() {
     return new Promise((resolve, reject) => {
       let data = {
+        userId: this.currUserId,
         formData: this.grabAccountFormData(),
-        userId: this.currUserId
       }
-      axios.post('/updateUser', data).then((res) => {
-        if (res.statusText === 'OK') {
-          resolve(res.data);
-        } else {
-          console.log("FAILED", res);
-        }
-      }).catch((err) => {
-        console.log("ERROR in request runner login", err);
-        resolve(err);
-      })
+      axios
+        .post('/updateUser', data)
+        .then(res => {
+          if (res.statusText === 'OK') {
+            resolve(res.data)
+          } else {
+            console.log('FAILED', res)
+          }
+        })
+        .catch(err => {
+          console.log('ERROR in request runner login', err)
+          resolve(err)
+        })
     })
   }
   updateProject() {
     return new Promise((resolve, reject) => {
+      let formDataAndId = this.grabProjectFormData()
       let data = {
-        formData: this.grabProjectFormData(),
+        projectId: formDataAndId.projectId,
+        formData: formDataAndId.formData,
       }
-      axios.post('/updateProject', data).then((res) => {
-        if (res.statusText === 'OK') {
-          resolve(res.data);
-        } else {
-          console.log("FAILED", res);
-        }
-      }).catch((err) => {
-        console.log("ERROR in request runner login", err);
-        resolve(err);
-      })
+      axios
+        .post('/updateProject', data)
+        .then(res => {
+          if (res.statusText === 'OK') {
+            resolve(res.data)
+          } else {
+            console.log('FAILED', res)
+          }
+        })
+        .catch(err => {
+          console.log('ERROR in request runner login', err)
+          resolve(err)
+        })
     })
   }
-
-
 
   buildProjectHtml(projectData) {
     //add so that auto populates if already there are projects
     let html = `
           <form autocomplete="off">
-            <div class="form-group" id="projectData" data-projectId=${projectData._id} >
+            <div class="form-group" id="projectData" data-projectId=${
+              projectData._id
+            } >
       <label for="projectName"> Project Name </label>
-      <input class="form-control" id="projectName" type="text" placeholder="${projectData.title}">
+      <input class="form-control" id="projectName" type="text" placeholder="${
+        projectData.title
+      }">
             </div>
       <div class="form-group">
         <label for="projectDescription"> Project Description </label>
-        <input class="form-control" id="projectDescription" type="text" placeholder="${projectData.description}">
+        <input class="form-control" id="projectDescription" type="text" placeholder="${
+          projectData.description
+        }">
             </div>
         <label for="projectDescription"> Concept Tags </label>
         <div class="Account__tagFilter__tagList">
@@ -224,19 +270,29 @@ export class Account {
         <div class="form-group">
           <div class="Account__newProject__timeTitle">Time spent during avg. week on...</div>
           <label for="meetingTime"> Meetings </label>
-          <input class="form-control" id="meetingTime" type="text" placeholder="${projectData.timeDistribution.meetingTime}">
+          <input class="form-control" id="meetingTime" type="text" placeholder="${
+            projectData.timeDistribution.meetingTime
+          }">
             <label for="devTime"> Dev Work </label>
-            <input class="form-control" id="devTime" type="text" placeholder="${projectData.timeDistribution.devTime}">
+            <input class="form-control" id="devTime" type="text" placeholder="${
+              projectData.timeDistribution.devTime
+            }">
               <label for="designTime"> Design Work </label>
-              <input class="form-control" id="designTime" type="text" placeholder="${projectData.timeDistribution.designTime}">
+              <input class="form-control" id="designTime" type="text" placeholder="${
+                projectData.timeDistribution.designTime
+              }">
                 <label for="emailTime"> Emails </label>
-                <input class="form-control" id="emailTime" type="text" placeholder="${projectData.timeDistribution.emailTime}">
+                <input class="form-control" id="emailTime" type="text" placeholder="${
+                  projectData.timeDistribution.emailTime
+                }">
                   <label for="writingTime"> Writing/Specing </label>
-                  <input class="form-control" id="writingTime" type="text" placeholder="${projectData.timeDistribution.writingTime}">
+                  <input class="form-control" id="writingTime" type="text" placeholder="${
+                    projectData.timeDistribution.writingTime
+                  }">
             </div>
           </form>
-                `;
-    return html;
+                `
+    return html
   }
   buildNewProjectHtml() {
     //add so that auto populates if already there are projects
@@ -277,58 +333,69 @@ export class Account {
           </form>
         </div>
       </div>
-                              `;
-    return html;
+                              `
+    return html
   }
 
   buildProfilePage() {
-    let profileData = this.currUser;
+    let profileData = this.currUser
     let html = `<form autocomplete="off">
-                                <div class="form-group"><label for="displayName">Display Name</label><input class="form-control" id="displayName" type="text" aria-describedby="emailHelp" value="${profileData.displayName}" disabled=""></div>
-                                  <div class="form-group"><label for="exampleInputPassword1">UPN</label><input class="form-control" id="upn" type="text" value="${profileData.upn}" disabled=""></div>
-                                    <div class="form-group"><label for="displayName">Department</label><input class="form-control" id="department" type="text" aria-describedby="emailHelp" value="${profileData.department}" disabled=""></div>
-                                      <div class="form-group"><label for="displayName">Job Title</label><input class="form-control" id="jobTitle" type="text" aria-describedby="emailHelp" value="${profileData.jobTitle}" disabled=""></div>
-                                        <div class="form-group"><label for="exampleInputPassword1">Team</label><input class="form-control" id="team" type="text" value="${profileData.team}"></div>
+                                <div class="form-group"><label for="displayName">Display Name</label><input class="form-control" id="displayName" type="text" aria-describedby="emailHelp" value="${
+                                  profileData.displayName
+                                }" disabled=""></div>
+                                  <div class="form-group"><label for="exampleInputPassword1">UPN</label><input class="form-control" id="upn" type="text" value="${
+                                    profileData.upn
+                                  }" disabled=""></div>
+                                    <div class="form-group"><label for="displayName">Department</label><input class="form-control" id="department" type="text" aria-describedby="emailHelp" value="${
+                                      profileData.department
+                                    }" disabled=""></div>
+                                      <div class="form-group"><label for="displayName">Job Title</label><input class="form-control" id="jobTitle" type="text" aria-describedby="emailHelp" value="${
+                                        profileData.jobTitle
+                                      }" disabled=""></div>
+                                        <div class="form-group"><label for="exampleInputPassword1">Team</label><input class="form-control" id="team" type="text" value="${
+                                          profileData.team
+                                        }"></div>
                                           <div class="form-group"><label for="exampleInputPassword1">Org</label>
-                                            <input class="form-control" id="org" type="text" value="${profileData.org}"></div>
+                                            <input class="form-control" id="org" type="text" value="${
+                                              profileData.org
+                                            }"></div>
     </form>`
-    return html;
+    return html
   }
 
-
-
   initHandlers() {
-    let that = this;
-    $('#submitForm').on('click', (el) => {
-      el.preventDefault();
+    let that = this
+    $('#submitForm').on('click', el => {
+      el.preventDefault()
       if ($('#profileTab').hasClass('active')) {
         that.updateAccount()
       } else {
-        that.updateProject();
+        that.updateProject()
       }
     })
 
-    $('#profileTab').on('click', (el) => {
-      el.preventDefault();
-      let tabClicked = $(el.target).closest('li');
-      that.highlightClickedTab(tabClicked);
+    $('#profileTab').on('click', el => {
+      el.preventDefault()
+      let tabClicked = $(el.target).closest('li')
+      that.highlightClickedTab(tabClicked)
       $('.formWrapper').html(that.buildProfilePage())
     })
 
-    $('#addProject').on('click', (e) => {
-      e.preventDefault();
+    $('#addProject').on('click', e => {
+      e.preventDefault()
       let conceptTagDivId = 'conceptTagDiv' + that.currProjectCount,
         techStackTagDivId = 'techStackDiv' + that.currProjectCount,
-        newProjectHtml = that.buildNewProjectHtml();
+        newProjectHtml = that.buildNewProjectHtml()
 
       let conceptTagHtml = that.tagMaster.buildTags(conceptTagDivId, 'concept'),
-        techStackTagHtml = that.tagMaster.buildTags(techStackTagDivId, 'techStack');
-      $('#projectSection').append(newProjectHtml);
-      $('#conceptTags' + that.currProjectCount).append(conceptTagHtml);
+        techStackTagHtml = that.tagMaster.buildTags(
+          techStackTagDivId,
+          'techStack',
+        )
+      $('#projectSection').append(newProjectHtml)
+      $('#conceptTags' + that.currProjectCount).append(conceptTagHtml)
       $('#techStackTags' + that.currProjectCount).append(techStackTagHtml)
-      that.tagMaster.addHandles();
+      that.tagMaster.addHandles()
     })
   }
-
-
 }

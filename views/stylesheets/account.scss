@@ -33,6 +33,9 @@
 /***************
 ** Tag Styles **
 ***************/
+.Account__tagFilter__title {
+
+}
 .Account__tagFilter__tagList ul {
   display: flex;
   flex-direction: row;
@@ -46,7 +49,7 @@
   border: 1px solid $blueTheme;
   border-radius: 3px;
   color: $blueTheme;
-  font-size: 1rem;
+  font-size: 1.2rem;
   height: 2rem;
   line-height: 1rem;
   letter-spacing: 1px;
@@ -55,9 +58,11 @@
   text-transform: uppercase;
   white-space: nowrap;
   width: 5rem;
+  margin-right: 6px;
+
 }
 .Account__tagFilter__tagList ul li {
-  margin-top: 1%;
+  margin-bottom: 6px;
 }
 .Account__tagFilter__tagList a:hover {
   background: $blueTheme;
@@ -69,4 +74,9 @@
   margin-left: 0px;
   margin-right: 0.5rem;
   margin-bottom: 0.7rem;
+}
+.Account__tagFilter__tagList .selected-tag a {
+  background: $blueTheme;
+  color: $whiteTheme;
+  text-decoration: none;
 }

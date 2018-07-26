@@ -51,32 +51,39 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
+  background: $blueTheme;
+
+  margin-bottom: 12px;
 }
 .Browse__tagFilter__title {
-  margin-top: 0px;
+  margin-top: 6px;
   margin-left: 0px;
   margin-right: 12px;
-  margin-bottom: 0px;
+  margin-bottom: 6px;
 
   min-width: 125px;
   color: $whiteTheme;
+}
+.Browse__tagFilter__tagList--applied ul {
+  overflow: hidden;
 }
 .Browse__tagFilter__tagList ul {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   list-style: none;
-  padding-top: 6px;
-  padding-left: 0;
   margin-top: 6px;
+  padding-left: 0;
+  padding-right: 6px;
   max-height: 125px;
   overflow-y: scroll;
+  background: $blueTheme;
 }
 .Browse__tagFilter__tagList a {
   border: 1px solid $whiteTheme;
   border-radius: 3px;
   color: $whiteTheme;
-  font-size: 1rem;
+  font-size: 1.2rem;
   height: 2rem;
   line-height: 1rem;
   letter-spacing: 1px;
@@ -86,20 +93,76 @@
   white-space: nowrap;
   width: 5rem;
 }
-.Browse__tagFilter__tagList ul li {
-  margin-top: 1%;
+.Browse__tagFilter__tagList li {
+  margin-top: 0px;
+  margin-left: 0px;
+  margin-right: 6px;
+  margin-bottom: 2px;
 }
 .Browse__tagFilter__tagList a:hover {
   background: $whiteTheme;
   color: $blueTheme;
   text-decoration: none;
 }
-.Browse__tagFilter__tag {
-  margin-top: 0%;
-  margin-left: 0px;
-  margin-right: 0.5rem;
-  margin-bottom: 0.7rem;
+.Browse__appliedFilter {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background: $blueTheme;
+
+  margin-bottom: 12px;
 }
+.Browse__appliedFilter__title {
+  margin-top: 6px;
+  margin-left: 0px;
+  margin-right: 12px;
+  margin-bottom: 6px;
+
+  min-width: 125px;
+  color: $whiteTheme;
+}
+
+.Browse__appliedFilter__tagList ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  list-style: none;
+  margin-top: 6px;
+  padding-left: 0;
+  padding-right: 6px;
+  max-height: 125px;
+  background: $blueTheme;
+}
+.Browse__appliedFilter__tagList a {
+  border: 1px solid $whiteTheme;
+  border-radius: 3px;
+  color: $whiteTheme;
+  font-size: 1.2rem;
+  height: 2rem;
+  line-height: 1rem;
+  letter-spacing: 1px;
+  padding: 0.4rem;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+  width: 5rem;
+}
+.Browse__appliedFilter__tagList li {
+  margin-top: 0px;
+  margin-left: 0px;
+  margin-right: 6px;
+  margin-bottom: 2px;
+}
+.Browse__appliedFilter__tagList a:hover {
+  background: $whiteTheme;
+  color: $blueTheme;
+  text-decoration: none;
+}
+
+/*
+ ** Project Styles **
+*/
 .Browse__projectsList {
   display: flex;
   flex-direction: row;
@@ -181,9 +244,12 @@
   list-style: none;
   padding-left: 0;
   margin-bottom: 0px;
+  text-decoration: none;
 }
 .card__tagList li {
   margin-left: 6px;
+  text-decoration: none;
+
 }
 .card__tagList a {
   border: 1px solid $blueTheme;
@@ -198,6 +264,7 @@
   text-transform: uppercase;
   white-space: nowrap;
   width: 5rem;
+  text-decoration: none;
 }
 .card__tagList a:hover {
   background: $blueTheme;
@@ -227,4 +294,9 @@
   content: ' ';
   height: 32px;
   width: 32px;
+}
+.selected-tag a {
+  background: $whiteTheme;
+  color: $blueTheme;
+  text-decoration: none;
 }

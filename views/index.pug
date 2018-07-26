@@ -66,8 +66,8 @@ block content
         .card
           div.card__container
             div.card__orgName Org/Dept/Team
-            div.card__projectTitle
-              a(href='#') Project Title
+            div.card__projectTitle#showModal
+              a(href='#' data-toggle="modal" data-target="#myModal" data-testing="Hi!") Project Title
             div.card__projectDescrip
               | This project aims to create a UI for the existing PowerShell loren ipsum etc etc etc testing for multiple lines to see how this looks idk why multilines have to be so complicated
             ul.card__tagList
@@ -82,3 +82,14 @@ block content
             .card_footer
               img(src='media/soAnonymous.png').card__authorImage 
               .card__authorName Hannah Fowler, Program Management Intern
+          div.modal.fade#myModal(role="dialog")
+            div.modal-dialog
+              // Modal content
+              div.modal-content
+                div.modal-header
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  h4.modal-title
+                div.modal-body
+                  p Some text in the modal
+                div.modal-footer
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

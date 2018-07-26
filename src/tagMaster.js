@@ -20,6 +20,9 @@ export class TagMaster {
   tagToDataValue( tag ) {
     return tag.toLowerCase().trim().split(' ').join('_');
   }
+  buildTag( tag, dataVal, type) {
+    return `<li class="searchBadge" data-type=${type} data-value=${dataVal}><a href="#">${tag}</a></li>`;
+  }
 
   buildTags( divId, listType ) {
     let that = this;
@@ -55,33 +58,43 @@ export class TagMaster {
     return this.populatedDivs;
   }
 
-  removeTag( tag ) {
-    let spliceIndex = 0;
-    let foundCheck = this.selectedConceptTags.find( (t, i) => {
-      if ( t === tag ) { spliceIndex = i; return t; }
+  removeTag( tagDataVal, type ) {
+    let spliceIndex = 0,
+        selectedTags = type === 'techStack' ? this.selectedTechStackTags : this.selectedConceptTags;
+    let foundCheck = selectedTags.find( (t, i) => {
+      if ( t === tagDataVal ) { spliceIndex = i; return t; }
     })
     if ( foundCheck ) {
-      this.selectedConceptTags.splice( spliceIndex, 1 );
+      selectedTags.splice( spliceIndex, 1 );
     } else {
       console.log("Something went wrong with tag removal");
     }
   }
   toggleHighlight( listItem ) {
     //css for selected-tag can be found in cards.css
-    if ( listItem.hasClass('selected-tag') ) {
-      listItem.removeClass('selected-tag');
+    if ( listItem.is('li') ) {
+      if ( listItem.hasClass('selected-tag') ) {
+        listItem.removeClass('selected-tag');
+      } else {
+        listItem.addClass('selected-tag')
+      }
     } else {
-      listItem.addClass('selected-tag')
+      console.log("item clicked is ", listItem);
     }
   }
 
   getAllTags(){
     let allTags = []
     this.populatedDivs.forEach( (divId) => {
-      let tags = $('#' + divId).find('ul li.searchBadge');
+      let tags = $('#' + divId).find('ul li.searchBadge').toArray();
       allTags = allTags.concat(tags);
     })
     return allTags;
+  }
+
+  getTagsIn( divId ){
+    let tags = $('#' + divId).find('ul li.searchBadge').toArray();
+    return tags;
   }
 
   addHandles() {
@@ -94,20 +107,20 @@ export class TagMaster {
           el.preventDefault();
           console.log(divId, tag)
           let $tag = $(el.target),
-              parent = $tag.parent(),
-              type = $(parent).attr('data-type'),
-              tagDataVal = $(parent).attr('data-value');
-          that.toggleHighlight(parent);
+              liElem = $tag.closest('li'),
+              type = $(liElem).attr('data-type'),
+              tagDataVal = $(liElem).attr('data-value');
+          that.toggleHighlight(liElem);
           if ( type === 'concept') {
             if ( that.selectedConceptTags.includes(tagDataVal) ) {
-                that.removeTag(tagDataVal);
+                that.removeTag(tagDataVal, type);
             } else {
               that.selectedConceptTags.push(tagDataVal)
             }
           }
           else if ( type === 'techStack') {
             if ( this.selectedTechStackTags.includes(tagDataVal) ) {
-              that.removeTag(tagDataVal);
+              that.removeTag(tagDataVal, type);
             } else {
               that.selectedTechStackTags.push(tagDataVal)
             }

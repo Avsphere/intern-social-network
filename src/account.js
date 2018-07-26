@@ -126,9 +126,13 @@ export class Account {
               <label for="projectDescription"> Project Description </label>
               <input class="form-control" id="projectDescription" type="text" placeholder="Enter Project Description">
             </div>
-            <div id="conceptTags${this.currProjectCount}">
+            <div class="Account__tagFilter__tagList">
+              <div id="conceptTags${this.currProjectCount}">
+              </div>
             </div>
-            <div id="techStackTags${this.currProjectCount}">
+            <div class="Account__tagFilter__tagList">
+              <div id="techStackTags${this.currProjectCount}">
+              </div>
             </div>
             <div class="form-group">
               <div class="Account__newProject__timeTitle">Time spent during avg. week on...</div>
@@ -153,7 +157,7 @@ export class Account {
   initHandlers() {
     let that = this
 
-    $('#tabsMenu').append(that.buildTabsHtml())
+    // $('#tabsMenu').append(that.buildTabsHtml())
 
     $('#submitForm').on('click', el => {
       el.preventDefault()

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {TagMaster} from './tagMaster.js'
+import { TagMaster } from './tagMaster.js'
 import Fuse from 'fuse.js'
 export class Index {
   constructor() {
@@ -42,27 +42,28 @@ export class Index {
 
       // Modal Contents Functions
       $('.card').on('click', el => {
-        let projectId = $(el.target)
-            .closest('.card')
-            .attr('data-projectId'),
-          userId = $(el.target)
-            .closest('.card')
-            .attr('data-userId'),
+        let projectId = $(el.target).closest('.card').attr('data-projectId'),
+          userId = $(el.target).closest('.card').attr('data-userId'),
           project = that.findProjectById(projectId),
           user = that.findUserById(userId),
-          modal = $('#projectModal')
-        let tagList =
-          project.conceptTags.join(',') +
-          ' , ' +
-          project.techStackTags.join(',')
-        modal
-          .find('.projectModal__title')
-          .text('Project Name: ' + project.title)
+          modal = $('#projectModal'),
+          footer = '',
+          tagList = ''
+        footer += `<div>` + user.displayName + ` is a ` + user.jobTitle + ` on ` + user.department + `. You can reach out to ` + user.firstName + ` at ` + user.upn + `.</div>`
+        project.conceptTags.forEach(t => {
+          tagList += `<li><a href="#">${t}</a></li>`
+        })
+        project.techStackTags.forEach(t => {
+          tagList += `<li><a href="#">${t}</a></li>`
+        })
+
+        modal.find('.projectModal__title').text(project.title)
         modal.find('.projectModal__orgName').text(user.org)
         modal.find('.projectModal__description').text(project.description)
-        modal.find('.projectModal__tagList').html(tagList)
-        // modal.find('.projectModal__footer').html(footer)
-        console.log(project)
+        modal.find('.projectModal__tagList').html(`<ul id='cardTagList' class="card__tagList">` + tagList +
+          `</ul>`)
+        modal.find('.projectModal__footer').html(footer)
+        console.log(user)
         $('#projectModal').modal({})
       })
     })
@@ -137,7 +138,7 @@ export class Index {
       }
       let html = `<div class="card" data-userId=${
         userData._id
-      } data-projectId=${p._id}>
+        } data-projectId=${p._id}>
          <div class="card__container">
             <div class="card__orgName">${userData.department}</div>
             <div class="card__projectTitle"><a href="#">${p.title}</a></div>
@@ -149,7 +150,7 @@ export class Index {
                <img class="card__authorImage" src="media/soAnonymous.png">
                <div class="card__authorName">${userData.displayName}, ${
         userData.jobTitle
-      }</div>
+        }</div>
             </div>
          </div>
       </div>`

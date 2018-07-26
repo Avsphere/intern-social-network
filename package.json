@@ -22,6 +22,7 @@
     "express": "~4.15.5",
     "express-session": "^1.15.6",
     "font-awesome": "^4.7.0",
+    "fuse.js": "^3.2.1",
     "imports-loader": "^0.8.0",
     "jquery": "^3.3.1",
     "mongoose": "^5.1.0",

@@ -9,7 +9,6 @@ $(function() {
     let acc = new Account();
   } else if ( window.location.pathname.includes('/') ) {
     let ind = new Index();
-    ind.helloworld();
   } else {
   }
 })

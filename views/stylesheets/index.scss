@@ -376,6 +376,10 @@
 .projectModal__title {
   font-size: 32px;
 }
+.projectModal__label {
+  font-size: 24px;
+  margin-top: 12px;
+}
 .projectModal__orgName {
   font-size: 14px;
   color: $grayTheme;
@@ -410,10 +414,10 @@
 
   width: 90%;
 
-  margin-top: 12px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 12px;
+  // margin-top: 12px;
+  // margin-left: auto;
+  // margin-right: auto;
+  // margin-bottom: 12px;
 
   font-size: 16px;
 }

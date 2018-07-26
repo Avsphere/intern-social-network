@@ -78,7 +78,7 @@ export class Index {
       })
 
       modal.find('.projectModal__title').text(project.title)
-      modal.find('.projectModal__orgName').text(user.org)
+      modal.find('.projectModal__orgName').text(user.department)
       modal.find('.projectModal__description').text(project.description)
       modal.find('.projectModal__tagList').html(`<ul id='cardTagList' class="card__tagList">` + tagList +
         `</ul>`)

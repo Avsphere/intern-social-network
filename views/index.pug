@@ -24,16 +24,17 @@ block content
           div.Browse__appliedFilter__tagList#filterTags
             ul#filterTagsList
     div.Browse__projects
+      #projectModal.modal(tabindex='-1', role='dialog', aria-hidden='true')
+        .modal-dialog.modal-dialog-centered(role='document', style='max-width:800px')
+          .projectModal__content
+            .projectModal__header
+              .projectModal__title
+              button.close(type='button', data-dismiss='modal', aria-label='Close')
+                span(aria-hidden='true') ×
+            .projectModal__body
+              .projectModal__orgName
+              .projectModal__description
+              .projectModal__tagList
+            .projectModal__footer
       div.Browse__projectsList#filteredProjects
-        #projectModal.modal(tabindex='-1', role='dialog', aria-hidden='true')
-          .modal-dialog.modal-dialog-centered(role='document', style='max-width:800px')
-            .projectModal__content
-              .projectModal__header
-                .projectModal__title
-                button.close(type='button', data-dismiss='modal', aria-label='Close')
-                  span(aria-hidden='true') ×
-              .projectModal__body
-                .projectModal__orgName
-                .projectModal__description
-                .projectModal__tagList
-              .projectModal__footer
+

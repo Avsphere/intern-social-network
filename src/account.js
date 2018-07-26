@@ -26,6 +26,14 @@ export class Account {
     })
   }
 
+  addTabs() {
+    this.getUserProjects().then( (projects) => {
+      let tabs = projects.map( (p) => {
+        return `<li><a href="#">Project</a></li>`
+      })
+    })
+  }
+
   returnDummyFormData() {
     return {
       team: "aarons team",
@@ -131,8 +139,6 @@ export class Account {
       el.preventDefault();
       that.updateAccount();
     })
-
-    $('#addProject').on('click', (e) => {
       e.preventDefault();
       let conceptTagDivId = 'conceptTagDiv' + that.currProjectCount,
           techStackTagDivId = 'techStackDiv' + that.currProjectCount,

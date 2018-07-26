@@ -136,20 +136,41 @@ router.post('/updateUser', (req, res) => {
     }
   })
 })
-router.post('/createProject', (req, res) => {
-  return new Promise((resolve, reject) => {
-    project = req.body.formData
-    let newProject = new Project(project)
-    newProject.save(function(err, newProject) {
-      if (err) {
-        console.error('Error in create projects', err)
-        reject(err)
-      } else {
-        resolve(newProject._id)
-      }
-    })
+
+router.post('/createProject', (req,res) => {
+  let newProject = new Project(req.body.formData),
+      ownedBy = req.body.formData.ownedBy;
+
+  newProject.save(function(err, newProj) {
+    if (err) { console.error('Error in create projects', err); }
+    else {
+      User.findById(ownedBy, function(err, user) {
+        if (err) { console.error('Error in create projects find user', err); }
+        else {
+          user.projects.push(newProj._id);
+          user.save( (err,saved) => { if(err){ console.log("Error in create projects save user", err)} })
+          res.send(newProj);
+        }
+      })
+    }
   })
 })
+
+
+// router.post('/createProject', (req, res) => {
+//   return new Promise((resolve, reject) => {
+//     project = req.body.formData
+//     let newProject = new Project(project)
+//     newProject.save(function(err, newProject) {
+//       if (err) {
+//         console.error('Error in create projects', err)
+//         reject(err)
+//       } else {
+//         resolve(newProject._id)
+//       }
+//     })
+//   })
+// })
 router.post('/updateProject', (req, res) => {
   let projectId = req.body.projectId,
     projectData = req.body.formData
@@ -163,7 +184,7 @@ router.post('/updateProject', (req, res) => {
       project.techStackTags = projectData.techStackTags
       project.timeDistribution = projectData.timeDistribution
       project.save(err => {
-        // console.log(err)
+        if ( err ) { console.log(err); }
         res.send({success: true})
       })
     }

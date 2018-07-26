@@ -85,13 +85,14 @@ export class TagMaster {
   }
 
   tagToDataValue(tag) {
-    return tag
-      .toLowerCase()
-      .trim()
-      .split(' ')
-      .join('_')
+    return tag; //for demo before making tag model
+    // return tag
+    //   .toLowerCase()
+    //   .trim()
+    //   .split(' ')
+    //   .join('_')
   }
-  buildTag(tag, dataVal, type) {
+  buildSingleTag(tag, dataVal, type) {
     return `<li class="searchBadge" data-type=${type} data-value=${dataVal}><a href="#">${tag}</a></li>`
   }
 
@@ -106,8 +107,8 @@ export class TagMaster {
       tagList = this.techStackList
     }
     function buildTag(tag) {
-      let value = that.tagToDataValue(tag)
-      return `<li class="searchBadge" data-type=${listType} data-value=${value}><a href="#">${tag}</a></li>`
+      //let value = that.tagToDataValue(tag)
+      return `<li class="searchBadge" data-type="${listType}" data-value="${tag}"><a href="#">${tag}</a></li>`
     }
     let html = `<div id=${divId}><ul>`
 
@@ -115,6 +116,7 @@ export class TagMaster {
       html += buildTag(t)
     })
     html += '</ul></div>'
+    //console.log("HTML\n\n", html);
     return html
   }
 

@@ -113,8 +113,7 @@ export class Account {
   grabProjectFormData() {
     let selectedTags = this.tagMaster.getSelected(),
       conceptTags = selectedTags.selectedConceptTags,
-      techStackTags = selectedTags.selectedTechStackTags
-
+      techStackTags = selectedTags.selectedTechStackTags;
     let formData = {
       title: $('#projectName').val(),
       description: $('#projectDescription').val(),
@@ -131,7 +130,6 @@ export class Account {
     }
 
     let projectId = $('#projectData').attr('data-projectId')
-
     return {
       projectId: projectId,
       formData: formData,
@@ -272,7 +270,6 @@ export class Account {
         projectId: formDataAndId.projectId,
         formData: formDataAndId.formData,
       }
-      console.log(data)
       axios
         .post('/createProject', data)
         .then(res => {
@@ -451,7 +448,11 @@ export class Account {
         that.updateAccount()
       } else {
         if ($('#newTab').hasClass('active')) {
-          that.createProject()
+          that.createProject().then( (newProject) => {
+            console.log("new project", newProject)
+            window.location.href = "/account";
+          }).catch( (e) => { console.log("Error when creating new project", e); });
+
         } else {
           that.updateProject()
         }

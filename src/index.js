@@ -11,6 +11,7 @@ export class Index {
     this.initView()
   }
   initView() {
+    let that = this;
     let conceptTagHtml = this.tagMaster.buildTags('conceptTags', 'concept'),
       techStackTagHtml = this.tagMaster.buildTags('techStackTags', 'techStack')
     $('#conceptTagContainer').append(conceptTagHtml)
@@ -38,6 +39,21 @@ export class Index {
 
       let projectCards = this.buildProjectCards()
       $('#filteredProjects').append(projectCards)
+      $('.card').on('click', (el) => {
+        let projectId = $(el.target).closest('.card').attr('data-projectId'),
+            userId = $(el.target).closest('.card').attr('data-userId'),
+            project = that.findProjectById(projectId),
+            user = that.findUserById(userId),
+            modal = $('#projectModal')
+        let tagList = project.conceptTags.join(',') + ' , ' + project.techStackTags.join(',');
+        modal.find('.projectModal__title').text(project.title)
+        modal.find('.projectModal__orgName').text(user.org)
+        modal.find('.projectModal__description').text(project.description)
+        modal.find('.projectModal__tagList').html(tagList)
+        modal.find('.projectModal__footer').html(footer)
+        console.log(project);
+        $('#projectModal').modal({})
+      })
     })
     this.handles()
   }
@@ -63,6 +79,13 @@ export class Index {
     return this.projectList.find(p => {
       if (p._id === id) {
         return p
+      }
+    })
+  }
+  findUserById(id) {
+    return this.users.find(u => {
+      if (u._id === id) {
+        return u
       }
     })
   }
@@ -101,9 +124,7 @@ export class Index {
       if (p.conceptTags.length > 0 && p.techStackTags.length > 0) {
         tagList = buildTagList(p.conceptTags.concat(p.techStackTags))
       }
-      let html = `<div class="card" data-userId=${
-        userData._id
-      } data-projectId=${p._id}>
+      let html = `<div class="card" data-userId=${userData._id} data-projectId=${p._id}>
          <div class="card__container">
             <div class="card__orgName">${userData.department}</div>
             <div class="card__projectTitle"><a href="#" data-toggle="modal" data-target="#projectModal">${
@@ -210,27 +231,5 @@ export class Index {
       })
     })
 
-    $('#projectModal').on('show.bs.modal', function(event) {
-      let cardContainer = $(event.relatedTarget)
-        .parent()
-        .parent()
-      let orgName = cardContainer.find('.card__orgName').text(),
-        tagList = cardContainer.find('#cardTagList').html(),
-        title = cardContainer.find('.card__projectTitle').text(),
-        description = cardContainer.find('.card__projectDescrip').text(),
-        footer = cardContainer.find('.card__footer').html()
-      var modal = $(this)
-      console.log(orgName)
-      console.log(tagList)
-      console.log(title)
-      console.log(description)
-      console.log(footer)
-
-      modal.find('.projectModal__title').text(title)
-      modal.find('.projectModal__orgName').text(orgName)
-      modal.find('.projectModal__description').text(description)
-      modal.find('.projectModal__tagList').html(tagList)
-      modal.find('.projectModal__footer').html(footer)
-    })
   }
 }

@@ -72,7 +72,7 @@ export class Index {
       modal.find('.projectModal__description').text(project.description)
       modal.find('.projectModal__tagList').html(tagList)
       modal.find('.projectModal__footer').html(footer)
-      console.log(project);
+      //console.log(project);
       $('#projectModal').modal({})
     })
   }
@@ -122,7 +122,7 @@ export class Index {
       return Math.floor(Math.random() * Math.floor(max))
     }
 
-    console.log(ids)
+    //console.log(ids)
     $('#filteredProjects')
       .find('.card')
       .toArray()
@@ -146,8 +146,10 @@ export class Index {
       }
       let tagList = '',
           userData = p.userData;
-      if (p.conceptTags.length > 0 && p.techStackTags.length > 0) {
-        tagList = buildTagList(p.conceptTags.concat(p.techStackTags))
+      if (p.conceptTags.length > 0 || p.techStackTags.length > 0) {
+        let cardTags = p.conceptTags.concat(p.techStackTags)
+        //console.log(cardTags);
+        tagList = buildTagList(cardTags)
       }
       let html = `<div class="card" data-userId=${userData._id} data-projectId=${p._id}>
          <div class="card__container">
@@ -293,9 +295,9 @@ export class Index {
 
       if (foundTag) {
         $(foundTag).remove()
-        console.log('removed', tagDataValue)
+        //console.log('removed', tagDataValue)
       } else {
-        console.log('current filter tags:', currentFilterTags)
+        //console.log('current filter tags:', currentFilterTags)
         let filterTag = $(tag.outerHTML)
         filterTag.removeClass('selected-tag')
         $('#filterTags')

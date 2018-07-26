@@ -9,7 +9,7 @@ export class Account {
     this.getUserProjects().then(d => {
       console.log(d)
     })
-    console.log(this)
+    console.log(this.tagMaster)
   }
   getUserProjects() {
     return new Promise((resolve, reject) => {
@@ -173,8 +173,7 @@ export class Account {
       $('#projectSection').append(newProjectHtml)
       $('#conceptTags' + that.currProjectCount).append(conceptTagHtml)
       $('#techStackTags' + that.currProjectCount).append(techStackTagHtml)
-      that.tagMaster.addHandles(conceptTagDivId)
-      that.tagMaster.addHandles(techStackTagDivId)
+      that.tagMaster.addHandles()
     })
   }
 }

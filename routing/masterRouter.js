@@ -136,13 +136,24 @@ router.post('/updateUser', (req, res) => {
     }
   })
 })
-
+router.post('/createProject', (req, res) => {
+  return new Promise((resolve, reject) => {
+    project = req.body.formData
+    let newProject = new Project(project)
+    newProject.save(function(err, newProject) {
+      if (err) {
+        console.error('Error in create projects', err)
+        reject(err)
+      } else {
+        resolve(newProject._id)
+      }
+    })
+  })
+})
 router.post('/updateProject', (req, res) => {
   let projectId = req.body.projectId,
     projectData = req.body.formData
 
-  console.log(projectId)
-  console.log(projectData)
   Project.findById(projectId, function(err, project) {
     if (!err) {
       console.log('Update Project -- Found project: ', project)

@@ -43,10 +43,11 @@ export class Index {
       axios
         .post('/getAggregateUsersAndProjects')
         .then(res => {
-          if (res.statusText === 'OK') {
+          if (res.status === 200) {
             resolve(res.data)
           } else {
             console.log('FAILED', res)
+            resolve(res.data);
           }
         })
         .catch(err => {

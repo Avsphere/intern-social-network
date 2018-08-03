@@ -10,7 +10,7 @@ export class RequestRunner {
         password : 'na'
       })
       .then( (res) => {
-        if ( res.statusText === 'OK' ) {
+        if ( res.status === 200 ) {
           resolve(res.data);
         } else { console.log("FAILED", res); }
       })
@@ -24,7 +24,7 @@ export class RequestRunner {
     axios.post(url, {
       userId : userId
     }).then( (res) => {
-        if ( res.statusText === 'OK' ) {
+        if ( res.status === 200 ) {
           return res.data;
         }
     }).catch( (err) => {

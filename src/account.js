@@ -22,7 +22,7 @@ export class Account {
       axios
         .post('/getUserProjects', {userId: this.currUserId})
         .then(res => {
-          if (res.statusText === 'OK') {
+          if (res.status === 200) {
             resolve(res.data)
           } else {
             console.log('FAILED', res)
@@ -39,7 +39,7 @@ export class Account {
       axios
         .post('/getUserAndProjects', {userId: this.currUserId})
         .then(res => {
-          if (res.statusText === 'OK') {
+          if (res.status === 200) {
             resolve(res.data)
           } else {
             console.log('FAILED', res)
@@ -56,7 +56,7 @@ export class Account {
       axios
         .post('/getUserById', {userId: this.currUserId})
         .then(res => {
-          if (res.statusText === 'OK') {
+          if (res.status === 200) {
             resolve(res.data)
           } else {
             console.log('FAILED', res)
@@ -250,7 +250,7 @@ export class Account {
       axios
         .post('/updateUser', data)
         .then(res => {
-          if (res.statusText === 'OK') {
+          if (res.status === 200) {
             resolve(res.data)
           } else {
             console.log('FAILED', res)
@@ -273,7 +273,7 @@ export class Account {
       axios
         .post('/createProject', data)
         .then(res => {
-          if (res.statusText === 'OK') {
+          if (res.status === 200) {
             resolve(res.data)
           } else {
             console.log('FAILED', res)
@@ -295,7 +295,7 @@ export class Account {
       axios
         .post('/updateProject', data)
         .then(res => {
-          if (res.statusText === 'OK') {
+          if (res.status === 200) {
             resolve(res.data)
           } else {
             console.log('FAILED', res)

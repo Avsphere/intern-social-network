@@ -374,7 +374,7 @@ export class Account {
   }
   buildProfilePage() {
     let profileData = this.currUser;
-    //team and
+    if ( !profileData.org ) { profileData.org = 'Unknown org'}
     let html = `<form autocomplete="off">
                   <div class="form-group">
                     <label for="displayName">Display Name</label>

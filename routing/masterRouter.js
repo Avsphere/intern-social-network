@@ -23,7 +23,6 @@ if (process.env.NODE_ENV === 'production') {
 
   router.get('/account', checkAuthenticated, function(req, res) {
     let profileData = req.user.profile;
-    console.log("prof data", profileData)
     if (!profileData.team) {
       profileData.team = 'Enter Team Name'
     }
@@ -91,7 +90,6 @@ router.get('/token', passport.authenticate('azuread-openidconnect', {
           })
         } else {
           let p = utils.getThumbnail(req.user.accessToken).then( (picPath) => {
-            console.log("pic path", picPath)
             return utils.createNewUser({
               firstName: blanketScoped_userData.body.givenName,
               surname: blanketScoped_userData.body.surname,
@@ -105,7 +103,6 @@ router.get('/token', passport.authenticate('azuread-openidconnect', {
               projects : []
             })
           })
-          console.log("Returning p", p);
           return p;
         }
       })
@@ -140,9 +137,9 @@ router.post('/updateUser', (req, res) => {
 
   User.findById(userId, function(err, user) {
     if (!err) {
-      console.log('Update user Found user: ', user)
-      user.team = userData.team
-      user.org = userData.org
+      //console.log('Update user Found user: ', user)
+      user.team = userData.team;
+      user.org = userData.org;
       user.save(err => {
         res.send({
           success: true
@@ -181,7 +178,6 @@ router.post('/createProject', (req, res) => {
 router.post('/updateProject', (req, res) => {
   let projectId = req.body.projectId,
     projectData = req.body.formData
-    console.log('In update project', projectData);
   Project.findById(projectId, function(err, project) {
     if (!err) {
       project.title = projectData.title
@@ -189,8 +185,6 @@ router.post('/updateProject', (req, res) => {
       project.conceptTags = projectData.conceptTags
       project.techStackTags = projectData.techStackTags
       project.timeDistribution = projectData.timeDistribution
-      console.log('Update Project -- Found project: ', project, '\n This', projectData)
-
       project.save(err => {
         if (err) {
           console.log(err);

@@ -1,0 +1,26 @@
+/* .fade.in {
+  opacity: 1;
+}
+.modal.in .modal-dialog {
+  -webkit-transform: translate(0, 0);
+  -o-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+
+.modal-backdrop .fade .in {
+  opacity: 0.5 !important;
+}
+
+
+.modal-backdrop.fade {
+    opacity: 0.5 !important;
+} */
+
+.tagListWraper {
+  height: 80px;
+  max-height: 80px;
+  overflow-y: scroll;
+}
+.tabBorder{
+  border : 1px solid rgba(79, 83, 174, 0.26) !important;
+}

@@ -21,7 +21,8 @@ coverage
 
 #keys
 keys/
-
+#user photos
+public/media/thumbnails/
 # Dependency directories
 node_modules/
 jspm_packages/

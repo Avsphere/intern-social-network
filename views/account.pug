@@ -3,9 +3,9 @@ extends layout
 block content
   div.Account
     div.Account__title#titleHeader(data-account-id=user._id) Account Page
-    ul.nav.nav-tabs#tabsMenu
-      li.menuTab.active#profileTab
-        a(href="#") Profile Info
+    ul.nav.nav-tabs#tabsMenu(role="tablist")
+      li.nav-item.menuTab.active#profileTab
+        a.tabBorder.nav-link(href="#") Profile Info
 
     // Account information
     div.formWrapper( style="padding-top:3%")

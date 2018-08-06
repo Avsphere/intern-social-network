@@ -1,22 +1,6 @@
 extends layout
 
 block content
-  #projectModal.modal(tabindex='-1', role='dialog', aria-hidden='true')
-    .modal-dialog.modal-dialog-centered(role='document', style='max-width:800px')
-      .projectModal__content
-        .projectModal__header
-          .projectModal__title
-          button.close(type='button', data-dismiss='modal', aria-label='Close')
-            span(aria-hidden='true') ×
-        .projectModal__body
-          .projectModal__label Organization
-          .projectModal__orgName
-          .projectModal__label Description
-          .projectModal__description
-          .projectModal__label Tags
-          .projectModal__tagList
-          .projectModal__label Contact
-          .projectModal__footer
   div.Browse
     div.Browse__container
       div.Browse__msg
@@ -25,7 +9,7 @@ block content
       div.Browse__search
         // Search Bar
         div.Browse__searchbar
-          input.form-control(type='text', id="mainSearchBar" placeholder='Search by keyword...', aria-label='search')
+          input.form-control(type='text', id="mainSearchBar" placeholder='Type to filter the tags!', aria-label='search')
         // Concept Tags Filter
         div.Browse__tagFilter 
           div.Browse__tagFilter__title Filter by concepts

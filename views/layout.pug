@@ -10,11 +10,9 @@ html(lang='en')
 
     // Bootstrap core CSS
     link(href='lib/bootstrap/dist/css/bootstrap.min.css', rel='stylesheet')
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     // Stylesheets
     link(href='css/blogCss.css', rel='stylesheet')
+    link(href='css/extraStyles.css', rel='stylesheet')
 
     // Font APIs
     link(href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic', rel='stylesheet', type='text/css')
@@ -24,8 +22,34 @@ html(lang='en')
     link(href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet")
 
   body
+    #projectModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalCenterTitle', aria-hidden='true')
+      .modal-dialog.modal-dialog-centered(role='document', style="max-width:55%;")
+        .modal-content
+          .modal-header
+            h5#exampleModalLongTitle.modal-title.projectModal__title Modal title
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') ×
+          .modal-body.projectModal__body
+            .projectModal__label Organization
+            .projectModal__orgName
+            .projectModal__label Description
+            #projectDescription.projectModal__description
+            .projectModal__label Tags
+            .projectModal__tagList
+            .projectModal__label Project Time Distribution
+              #meetingTime.projectModal__description
+              #devTime.projectModal__description
+              #writingTime.projectModal__description
+              #designTime.projectModal__description
+              #emailTime.projectModal__description
+            .projectModal__label Contact Info
+              #name.projectModal__description
+              #upn.projectModal__description
+          .modal-footer
+            button.btn.btn-primary(type='button', data-dismiss='modal') Close
     include components/navbar.pug
     block content
     div.catchFooter
     include components/footer.pug
   script(src='js/main.js')
+  

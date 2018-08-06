@@ -1,6 +1,7 @@
 import $ from 'jquery';
+import 'popper.js';
 import 'bootstrap'
-import blogViewControl from './blogViewControl.js'
+
 import { Index } from './index.js'
 import { RequestRunner } from './requestRunner.js'
 import { Account } from './account.js'

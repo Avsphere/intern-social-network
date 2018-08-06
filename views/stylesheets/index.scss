@@ -19,7 +19,7 @@
   margin-bottom: 20px;
 
   padding-bottom: 12px;
-  background: $blueTheme; 
+  background: $blueTheme;
 }
 .Browse__msg {
   display: flex;
@@ -85,7 +85,7 @@
   border: 1px solid $whiteTheme;
   border-radius: 3px;
   color: $whiteTheme;
-  font-size: 1.2rem;
+  font-size: .7rem;
   height: 2rem;
   line-height: 1rem;
   letter-spacing: 1px;
@@ -97,8 +97,8 @@
 }
 .Browse__tagFilter__tagList li {
   margin-top: 0px;
-  margin-left: 0px;
-  margin-right: 6px;
+  margin-left: 3px;
+  margin-right: 3px;
   margin-bottom: 2px;
 }
 .Browse__tagFilter__tagList a:hover {
@@ -142,7 +142,7 @@
   border: 1px solid $whiteTheme;
   border-radius: 3px;
   color: $whiteTheme;
-  font-size: 1.2rem;
+  font-size: .7rem;
   height: 2rem;
   line-height: 1rem;
   letter-spacing: 1px;
@@ -286,14 +286,17 @@
   text-decoration: none;
 }
 .card__tagList li {
-  margin-left: 6px;
+  margin-top: 3px;
+  margin-bot: 3px;
+  margin-left: 3px;
+  margin-right: 3px;
   text-decoration: none;
 }
 .card__tagList a {
   border: 1px solid $blueTheme;
   border-radius: 3px;
   color: $blueTheme;
-  font-size: 1rem;
+  font-size: .7rem;
   height: 3rem;
   line-height: 1.5rem;
   letter-spacing: 1px;

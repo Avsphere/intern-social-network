@@ -5,62 +5,67 @@ const path = require('path')
 const utils = require('../utils/utils.js')
 const User = require('../models/user')
 const Project = require('../models/project')
+const checkAuthenticated = utils.checkAuthenticated;
 
-router.get('/', (req, res) => {
-  if (!req.isAuthenticated()) {
-    res.redirect('/login')
-  } else {
-    let profileData = req.user.profile
-    res.render('index', {
+/* Auth routes, these depend on whether prod or dev */
+if (process.env.NODE_ENV === 'production') {
+
+  router.get('/', (req, res) => {
+    if (!req.isAuthenticated()) {
+      res.redirect('/login')
+    } else {
+      let profileData = req.user.profile
+      res.render('index', {
+        user: profileData,
+      })
+    }
+  })
+
+  router.get('/account', checkAuthenticated, function(req, res) {
+    let profileData = req.user.profile;
+    console.log("prof data", profileData)
+    if (!profileData.team) {
+      profileData.team = 'Enter Team Name'
+    }
+    if (!profileData.org) {
+      profileData.org = 'Enter Org Name'
+    }
+    res.render('account', {
       user: profileData,
     })
-  }
-})
+  })
 
-function getDummyUser() {
-  //this id is a real user id
-  return {
-    _id: '5b57b107f2ade61c10c4f0f8',
-    displayName: 'Aaron',
-    firstName: 'aa',
-    surname: 'perr',
-    upn: 'woahAaron@gmail.com',
-    team: 'Bea',
-    org: 'uty',
-    department: 'cloud',
-    jobTitle: 'awesomeJob',
-    projects: [],
-  }
+} else {
+  router.get('/', (req, res) => {
+    res.render('index', {
+      user: utils.getDummyUser()
+    })
+  })
+  router.get('/account', function(req, res) {
+    let profileData = utils.getDummyUser()
+    if (!profileData.team) {
+      profileData.team = 'Enter Team Name'
+    }
+    if (!profileData.org) {
+      profileData.org = 'Enter Org Name'
+    }
+    res.render('account', {
+      user: profileData,
+    })
+  })
+
 }
 
-// router.get('/', (req, res) => {
-//   res.render('index', {user: getDummyUser()})
-// })
-router.get('/account', function(req, res) {
-  let profileData = req.user.profile;
-  // let profileData = getDummyUser()
-  if (!profileData.team) {
-    profileData.team = 'Enter Team Name'
-  }
-  if (!profileData.org) {
-    profileData.org = 'Enter Org Name'
-  }
-  res.render('account', {
-    user: profileData,
-  })
-})
+
+
+
+
 
 router.get('/about', function(req, res) {
   res.render('about')
 })
 
-router.get('/blogTest', function(req, res) {
-  res.render('blogTest')
-})
-
-router.get(
-  '/login',
-  passport.authenticate('azuread-openidconnect', {
+router.get('/login', passport.authenticate('azuread-openidconnect', {
     failureRedirect: '/',
   }),
   (req, res) => {
@@ -68,13 +73,11 @@ router.get(
   },
 )
 
-router.get(
-  '/token',
-  passport.authenticate('azuread-openidconnect', {
+router.get('/token', passport.authenticate('azuread-openidconnect', {
     failureRedirect: '/',
   }),
   (req, res) => {
-    let blanketScoped_userData
+    let blanketScoped_userData;
     utils
       .getUserData(req.user.accessToken)
       .then(userData => {
@@ -87,17 +90,27 @@ router.get(
             resolve(foundUser)
           })
         } else {
-          return utils.createNewUser({
-            firstName: blanketScoped_userData.body.givenName,
-            surname: blanketScoped_userData.body.surname,
-            displayName: blanketScoped_userData.body.displayName,
-            department: blanketScoped_userData.body.department,
-            jobTitle: blanketScoped_userData.body.jobTitle,
-            upn: blanketScoped_userData.body.onPremisesUserPrincipalName,
+          let p = utils.getThumbnail(req.user.accessToken).then( (picPath) => {
+            console.log("pic path", picPath)
+            return utils.createNewUser({
+              firstName: blanketScoped_userData.body.givenName,
+              surname: blanketScoped_userData.body.surname,
+              displayName: blanketScoped_userData.body.displayName,
+              department: blanketScoped_userData.body.department,
+              jobTitle: blanketScoped_userData.body.jobTitle,
+              upn: blanketScoped_userData.body.onPremisesUserPrincipalName,
+              profilePicPath : picPath,
+              team : 'Unknown Team',
+              org : 'Unknown Org',
+              projects : []
+            })
           })
+          console.log("Returning p", p);
+          return p;
         }
       })
       .then(mongoUser => {
+        console.log("Got mongo user", mongoUser)
         req.user.profile = mongoUser
         res.render('index', {
           user: req.user.profile,
@@ -131,24 +144,32 @@ router.post('/updateUser', (req, res) => {
       user.team = userData.team
       user.org = userData.org
       user.save(err => {
-        res.send({success: true})
+        res.send({
+          success: true
+        })
       })
     }
   })
 })
 
-router.post('/createProject', (req,res) => {
+router.post('/createProject', (req, res) => {
   let newProject = new Project(req.body.formData),
-      ownedBy = req.body.formData.ownedBy;
+    ownedBy = req.body.formData.ownedBy;
 
   newProject.save(function(err, newProj) {
-    if (err) { console.error('Error in create projects', err); }
-    else {
+    if (err) {
+      console.error('Error in create projects', err);
+    } else {
       User.findById(ownedBy, function(err, user) {
-        if (err) { console.error('Error in create projects find user', err); }
-        else {
+        if (err) {
+          console.error('Error in create projects find user', err);
+        } else {
           user.projects.push(newProj._id);
-          user.save( (err,saved) => { if(err){ console.log("Error in create projects save user", err)} })
+          user.save((err, saved) => {
+            if (err) {
+              console.log("Error in create projects save user", err)
+            }
+          })
           res.send(newProj);
         }
       })
@@ -157,35 +178,26 @@ router.post('/createProject', (req,res) => {
 })
 
 
-// router.post('/createProject', (req, res) => {
-//   return new Promise((resolve, reject) => {
-//     project = req.body.formData
-//     let newProject = new Project(project)
-//     newProject.save(function(err, newProject) {
-//       if (err) {
-//         console.error('Error in create projects', err)
-//         reject(err)
-//       } else {
-//         resolve(newProject._id)
-//       }
-//     })
-//   })
-// })
 router.post('/updateProject', (req, res) => {
   let projectId = req.body.projectId,
     projectData = req.body.formData
-
+    console.log('In update project', projectData);
   Project.findById(projectId, function(err, project) {
     if (!err) {
-      console.log('Update Project -- Found project: ', project)
       project.title = projectData.title
       project.description = projectData.description
       project.conceptTags = projectData.conceptTags
       project.techStackTags = projectData.techStackTags
       project.timeDistribution = projectData.timeDistribution
+      console.log('Update Project -- Found project: ', project, '\n This', projectData)
+
       project.save(err => {
-        if ( err ) { console.log(err); }
-        res.send({success: true})
+        if (err) {
+          console.log(err);
+        }
+        res.send({
+          success: true
+        })
       })
     }
   })
@@ -206,8 +218,7 @@ router.post('/getUserProjects', (req, res) => {
   let userId = req.body.userId
   User.findById(userId, function(err, user) {
     if (!err) {
-      Project.find(
-        {
+      Project.find({
           _id: {
             $in: user.projects,
           },
@@ -228,14 +239,16 @@ router.post('/getUserAndProjects', (req, res) => {
   User.findById(userId, function(err, user) {
     if (!err) {
       foundUser = user
-      Project.find(
-        {
+      Project.find({
           _id: {
             $in: user.projects,
           },
         },
         function(err, projects) {
-          res.send({projects: projects, user: foundUser})
+          res.send({
+            projects: projects,
+            user: foundUser
+          })
         },
       )
     } else {
@@ -249,8 +262,7 @@ router.post('/getAggregateUsersAndProjects', (req, res) => {
     let users = usersDocs.map(d => d.toObject())
     let promises = users.map(u => {
       return new Promise((resolve, reject) => {
-        Project.find(
-          {
+        Project.find({
             _id: {
               $in: u.projects,
             },

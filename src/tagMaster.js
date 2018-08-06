@@ -29,7 +29,10 @@ export class TagMaster {
       'cloud',
       'image recognition',
       'productivity'
-    ]
+    ].sort( (a,b) => {
+      if ( a < b ) { return -1; }
+      else { return 1; }
+    })
     this.techStackList = [
       'unity',
       'javascript',
@@ -81,7 +84,10 @@ export class TagMaster {
       'microsoft excel',
       'microsoft powerpoint',
       'balsamiq',
-    ]
+    ].sort( (a,b) => {
+      if ( a < b ) { return -1; }
+      else { return 1; }
+    })
     this.selectedConceptTags = []
     this.selectedTechStackTags = []
     this.populatedDivs = []
@@ -181,6 +187,16 @@ export class TagMaster {
       .find('ul li.searchBadge')
       .toArray()
     return tags
+  }
+
+  selectTags( tagList ) {
+    if ( tagList.length > 0 ) {
+      this.getAllTags().forEach( (t) => {
+        if ( tagList.includes( $(t).attr('data-value') ) ){
+          $(t).click();
+        }
+      })
+    }
   }
 
   addHandles() {

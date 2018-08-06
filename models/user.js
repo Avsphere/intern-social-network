@@ -8,7 +8,8 @@ const userSchema = mongoose.Schema({
   org : { type : String, required : false },
   department : { type : String, required : true },
   jobTitle : { type : String, required: true },
-  projects : [{ type: mongoose.Schema.Types.ObjectId, required: true }]
+  projects : [{ type: mongoose.Schema.Types.ObjectId, required: true }],
+  profilePicPath : { type : String, required : false }
 })
 
 const dummyData = {

@@ -7,9 +7,10 @@ export class Account {
     this.currUserId = $('#titleHeader').attr('data-account-id')
 
     this.getUserAndProjects().then(data => {
-      this.currUser = data.user
-      this.projectList = data.projects
-      //console.log('Project and user', this.projectList, this.currUser)
+      this.currUser = data.user;
+      this.projectList = data.projects;
+      console.log('Project list', this.projectList)
+      console.log("Curr user", this.currUser);
       this.buildTabs()
       $('.formWrapper').html(this.buildProfilePage())
       this.initHandlers()
@@ -115,16 +116,16 @@ export class Account {
       conceptTags = selectedTags.selectedConceptTags,
       techStackTags = selectedTags.selectedTechStackTags;
     let formData = {
-      title: $('#projectName').val(),
-      description: $('#projectDescription').val(),
+      title: $('#new_projectName').val(),
+      description: $('#new_projectDescription').val(),
       conceptTags: conceptTags,
       techStackTags: techStackTags,
       timeDistribution: {
-        meetingTime: $('#meetingTime').val(),
-        devTime: $('#devTime').val(),
-        designTime: $('#designTime').val(),
-        emailTime: $('#emailTime').val(),
-        writingTime: $('#writingTime').val(),
+        meetingTime: $('#new_meetingTime').val(),
+        devTime: $('#new_devTime').val(),
+        designTime: $('#new_designTime').val(),
+        emailTime: $('#new_emailTime').val(),
+        writingTime: $('#new_writingTime').val(),
       },
       ownedBy: this.currUserId,
     }
@@ -150,38 +151,13 @@ export class Account {
       .forEach(t => {
         if ($(t).hasClass('active')) {
           $(t).removeClass('active')
+          $(t).find('a').removeClass('tabBorder');
         }
       })
     tabClicked.addClass('active')
+    tabClicked.find('a').addClass('tabBorder');
   }
-  fillProjectData(rawProjectData) {
-    let rPD = rawProjectData,
-      TD =
-        rPD.timeDistribution != 'undefined'
-          ? {
-              meetingTime: 0,
-              devTime: 0,
-              designTime: 0,
-              emailTime: 0,
-              writingTime: 0,
-            }
-          : {
-              meetingTime: rPD.timeDistribution.meetingTime,
-              devTime: rPD.timeDistribution.devTime,
-              designTime: rPD.timeDistribution.designTime,
-              emailTime: rPD.timeDistribution.emailTime,
-              writingTime: rPD.timeDistribution.writingTime,
-            },
-      PD = {
-        _id: rPD._id ? rPD._id : '',
-        title: rPD.title ? rPD.title : 'Add project name here',
-        description: rPD.description ? rPD.description : 'Add description here',
-        timeDistribution: TD,
-        ownedBy: this.currUserId,
-      }
 
-    return PD
-  }
   buildTabs() {
     let newProject = {
       title: 'Add New Project',
@@ -194,15 +170,11 @@ export class Account {
         tabItem = ''
       if (p.newTab) {
         tabItem = $(
-          `<li class="menuTab" id='newTab' data-id=${
-            p._id
-          }><a href="#">${projectTitle}</a></li>`,
+          `<li class="nav-item menuTab" id='newTab' data-id=${p._id}><a class="nav-link" href="#">${projectTitle}</a></li>`,
         )
       } else {
         tabItem = $(
-          `<li class="menuTab" data-id=${
-            p._id
-          }><a href="#">${projectTitle}</a></li>`,
+          `<li class="nav-item menuTab" data-id=${p._id}><a class="nav-link" href="#">${projectTitle}</a></li>`,
         )
       }
       $('#tabsMenu').append(tabItem)
@@ -210,33 +182,34 @@ export class Account {
         el.preventDefault()
         let tabClicked = $(el.target).closest('li'),
           projectId = tabClicked.attr('data-id')
-        // if (projectId) {
-        let projectData = this.findProjectById(projectId)
-        this.highlightClickedTab(tabClicked)
-        projectData = this.fillProjectData(projectData)
-        let projectHtml = this.buildProjectHtml(projectData)
-        $('.formWrapper').html(projectHtml)
-        let conceptTagContainerId =
-            'projectConceptTags' + this.currProjectCount,
-          conceptTagHtml = this.tagMaster.buildTags(
-            conceptTagContainerId,
-            'concept',
-          )
-        let techStackTagContainerId =
-            'projectTechStackTags' + this.currProjectCount,
-          techStackTagHtml = this.tagMaster.buildTags(
-            techStackTagContainerId,
-            'techStack',
-          )
-        this.currProjectCount++
-        //console.log('Tag html', conceptTagHtml)
-        $('#' + conceptTagContainerId).append(conceptTagHtml)
-        $('#' + techStackTagContainerId).append(techStackTagHtml)
-        //These are the mandatory handles that add selected tags to array
-        this.tagMaster.addHandles()
-        // } else {
-        //   $('.formWrapper').html(this.buildNewProjectHtml())
-        // }
+        if (projectId) {
+          let projectData = this.findProjectById(projectId);
+          this.highlightClickedTab(tabClicked)
+          let projectHtml = this.buildProjectHtml(projectData);
+          console.log("Project data", projectData);
+          $('.formWrapper').html(projectHtml)
+          let conceptTagContainerId = 'projectConceptTags' + this.currProjectCount,
+              conceptTagHtml = this.tagMaster.buildTags( conceptTagContainerId, 'concept');
+          let techStackTagContainerId = 'projectTechStackTags' + this.currProjectCount,
+              techStackTagHtml = this.tagMaster.buildTags(techStackTagContainerId, 'techStack');
+          this.currProjectCount++
+          $('#' + conceptTagContainerId).append(conceptTagHtml)
+          $('#' + techStackTagContainerId).append(techStackTagHtml)
+          //These are the mandatory handles that add selected tags to array
+          this.tagMaster.addHandles()
+          this.tagMaster.selectTags( projectData.conceptTags.concat( projectData.techStackTags ) );
+        } else {
+          this.highlightClickedTab(tabClicked)
+          $('.formWrapper').html(this.buildNewProjectHtml())
+          let conceptTagContainerId = 'projectConceptTags' + this.currProjectCount,
+              conceptTagHtml = this.tagMaster.buildTags( conceptTagContainerId, 'concept');
+          let techStackTagContainerId = 'projectTechStackTags' + this.currProjectCount,
+              techStackTagHtml = this.tagMaster.buildTags(techStackTagContainerId, 'techStack');
+          this.currProjectCount++
+          $('#' + conceptTagContainerId).append(conceptTagHtml)
+          $('#' + techStackTagContainerId).append(techStackTagHtml)
+          this.tagMaster.addHandles()
+        }
       })
     })
   }
@@ -252,6 +225,7 @@ export class Account {
         .then(res => {
           if (res.status === 200) {
             resolve(res.data)
+            window.location.href = "/account";
           } else {
             console.log('FAILED', res)
           }
@@ -262,7 +236,6 @@ export class Account {
         })
     })
   }
-  // TODO: For Some reason, creatProject() hangs
   createProject() {
     return new Promise((resolve, reject) => {
       let formDataAndId = this.grabProjectFormData()
@@ -270,6 +243,7 @@ export class Account {
         projectId: formDataAndId.projectId,
         formData: formDataAndId.formData,
       }
+      console.log("Posting project data", data)
       axios
         .post('/createProject', data)
         .then(res => {
@@ -292,6 +266,8 @@ export class Account {
         projectId: formDataAndId.projectId,
         formData: formDataAndId.formData,
       }
+      console.log("Posting data to update project", data);
+
       axios
         .post('/updateProject', data)
         .then(res => {
@@ -315,13 +291,13 @@ export class Account {
               projectData._id
             } >
               <label for="projectName"> Project Name </label>
-              <input class="form-control" id="projectName" type="text" value="${
+              <input class="form-control" id="new_projectName" type="text" value="${
                 projectData.title
               }">
             </div>
             <div class="form-group">
               <label for="projectDescription"> Project Description </label>
-              <input class="form-control" id="projectDescription" type="text" value="${
+              <input class="form-control" id="new_projectDescription" type="text" value="${
                 projectData.description
               }">
             </div>
@@ -334,25 +310,25 @@ export class Account {
           <div id="projectTechStackTags${this.currProjectCount}"></div>
         </div>
         <div class="form-group">
-          <div class="Account__newProject__timeTitle">Time spent during avg. week on...</div>
+          <div class="Account__newProject__timeTitle">Percentage of time spent on:</div>
           <label for="meetingTime"> Meetings </label>
-          <input class="form-control" id="meetingTime" type="text" value="${
+          <input class="form-control" id="new_meetingTime" type="text" value="${
             projectData.timeDistribution.meetingTime
           }">
             <label for="devTime"> Dev Work </label>
-            <input class="form-control" id="devTime" type="text" value="${
+            <input class="form-control" id="new_devTime" type="text" value="${
               projectData.timeDistribution.devTime
             }">
               <label for="designTime"> Design Work </label>
-              <input class="form-control" id="designTime" type="text" value="${
+              <input class="form-control" id="new_designTime" type="text" value="${
                 projectData.timeDistribution.designTime
               }">
                 <label for="emailTime"> Emails </label>
-                <input class="form-control" id="emailTime" type="text" value="${
+                <input class="form-control" id="new_emailTime" type="text" value="${
                   projectData.timeDistribution.emailTime
                 }">
                   <label for="writingTime"> Writing/Specing </label>
-                  <input class="form-control" id="writingTime" type="text" value="${
+                  <input class="form-control" id="new_writingTime" type="text" value="${
                     projectData.timeDistribution.writingTime
                   }">
             </div>
@@ -361,44 +337,44 @@ export class Account {
     return html
   }
   buildNewProjectHtml() {
-    //add so that auto populates if already there are projects
     let html = `
-
-        <form autocomplete="off">
-          <div class="form-group">
-            <label for="projectName"> Project Name </label>
-            <input class="form-control" id="projectName" type="text" placeholder="Enter Project Name">
+          <form autocomplete="off">
+            <div class="form-group" id="projectData">
+              <label for="projectName"> Project Name </label>
+              <input class="form-control" id="new_projectName" type="text">
+            </div>
+            <div class="form-group">
+              <label for="projectDescription"> Project Description </label>
+              <input class="form-control" id="new_projectDescription" type="text" >
+            </div>
+            <label for="projectDescription"> Concept Tags </label>
+            <div class="Account__tagFilter__tagList">
+          <div id="projectConceptTags${this.currProjectCount}"></div>
           </div>
-          <div class="form-group">
-            <label for="projectDescription"> Project Description </label>
-            <input class="form-control" id="projectDescription" type="text" placeholder="Enter Project Description">
-          </div>
-          <div class="Account__tagFilter__tagList">
-            <div id="conceptTags${this.currProjectCount}"></div>
-          </div>
-          <div class="Account__tagFilter__tagList">
-            <div id="techStackTags${this.currProjectCount}"></div>
-          </div>
-          <div class="form-group">
-            <div class="Account__newProject__timeTitle">Time spent during avg. week on...</div>
-            <label for="meetingTime"> Meetings </label>
-            <input class="form-control" id="meetingTime" type="text" placeholder="x fraction">
+            <label for="projectDescription"> Stack Tags </label>
+        <div class="Account__tagFilter__tagList">
+          <div id="projectTechStackTags${this.currProjectCount}"></div>
+        </div>
+        <div class="form-group">
+          <div class="Account__newProject__timeTitle">Percentage of time spent on:</div>
+          <label for="meetingTime"> Meetings </label>
+          <input class="form-control" id="new_meetingTime" type="text" placeholder="All things meetings">
             <label for="devTime"> Dev Work </label>
-            <input class="form-control" id="devTime" type="text" placeholder="x hrs">
-            <label for="designTime"> Design Work </label>
-            <input class="form-control" id="designTime" type="text" placeholder="x hrs">
-            <label for="emailTime"> Emails </label>
-            <input class="form-control" id="emailTime" type="text" placeholder="x hrs">
-            <label for="writingTime"> Writing/Specing </label>
-            <input class="form-control" id="writingTime" type="text" placeholder="x hrs">
-          </div>
-        </form>
-`
+            <input class="form-control" id="new_devTime" type="text" placeholder="All things dev">
+              <label for="designTime"> Design Work </label>
+              <input class="form-control" id="new_designTime" type="text" placeholder="Anything design related,">
+                <label for="emailTime"> Emails </label>
+                <input class="form-control" id="new_emailTime" type="text" placeholder="Crafting emails, talking emails, thinking about emails...">
+                <label for="writingTime"> Writing/Specing </label>
+                <input class="form-control" id="new_writingTime" type="text" placeholder="PowerPoint / Excel / Articulation work would fall in this category">
+            </div>
+          </form>
+                `
     return html
   }
-
   buildProfilePage() {
-    let profileData = this.currUser
+    let profileData = this.currUser;
+    //team and
     let html = `<form autocomplete="off">
                   <div class="form-group">
                     <label for="displayName">Display Name</label>
@@ -439,7 +415,6 @@ export class Account {
                 </form>`
     return html
   }
-
   initHandlers() {
     let that = this
     $('#submitForm').on('click', el => {
@@ -454,7 +429,9 @@ export class Account {
           }).catch( (e) => { console.log("Error when creating new project", e); });
 
         } else {
-          that.updateProject()
+          that.updateProject().then( (updatedProject) => {
+            console.log( "Updated project", updatedProject );
+          })
         }
       }
     })
@@ -466,21 +443,5 @@ export class Account {
       $('.formWrapper').html(that.buildProfilePage())
     })
 
-    $('#addProject').on('click', e => {
-      e.preventDefault()
-      let conceptTagDivId = 'conceptTagDiv' + that.currProjectCount,
-        techStackTagDivId = 'techStackDiv' + that.currProjectCount,
-        newProjectHtml = that.buildNewProjectHtml()
-
-      let conceptTagHtml = that.tagMaster.buildTags(conceptTagDivId, 'concept'),
-        techStackTagHtml = that.tagMaster.buildTags(
-          techStackTagDivId,
-          'techStack',
-        )
-      $('#projectSection').append(newProjectHtml)
-      $('#conceptTags' + that.currProjectCount).append(conceptTagHtml)
-      $('#techStackTags' + that.currProjectCount).append(techStackTagHtml)
-      that.tagMaster.addHandles()
-    })
   }
 }

@@ -182,6 +182,7 @@ router.post('/updateProject', (req, res) => {
     if (!err) {
       project.title = projectData.title
       project.description = projectData.description
+      project.likesAndDislikes = projectData.likesAndDislikes
       project.conceptTags = projectData.conceptTags
       project.techStackTags = projectData.techStackTags
       project.timeDistribution = projectData.timeDistribution

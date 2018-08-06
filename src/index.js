@@ -110,10 +110,11 @@ export class Index {
       project.techStackTags.forEach(t => {
         tagList += `<li><a href="#">${t}</a></li>`
       })
-
+      if ( !project.likesAndDislikes ) { project.likesAndDislikes = "None"; }
       modal.find('.projectModal__title').text(project.title)
       modal.find('.projectModal__orgName').text(user.department)
       modal.find('#projectDescription').text(project.description)
+      modal.find('#likesAndDislikes').text(project.likesAndDislikes)
       modal.find('.projectModal__tagList').html(`<ul id='cardTagList' class="card__tagList">` + tagList +
         `</ul>`)
       modal.find('#name').text('Name: ' + user.displayName);
@@ -210,7 +211,7 @@ export class Index {
         userData._id
         } data-projectId=${p._id}>
          <div class="card__container">
-            <div class="card__orgName">${userData.department}</div>
+            <div class="card__orgName">Department: ${userData.department}</div>
             <div class="card__projectTitle"><a href="#">${p.title}</a></div>
             <div class="card__projectDescrip">${p.description}</div>
             <div class="tagListWraper">

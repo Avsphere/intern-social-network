@@ -118,6 +118,7 @@ export class Account {
     let formData = {
       title: $('#new_projectName').val(),
       description: $('#new_projectDescription').val(),
+      likesAndDislikes : $('#new_projectLikesAndDislikes').val(),
       conceptTags: conceptTags,
       techStackTags: techStackTags,
       timeDistribution: {
@@ -285,6 +286,7 @@ export class Account {
   }
 
   buildProjectHtml(projectData) {
+    let projectLikesAndDislikes = projectData.likesAndDislikes || "No likes or dislikes";
     let html = `
           <form autocomplete="off">
             <div class="form-group" id="projectData" data-projectId=${
@@ -297,10 +299,10 @@ export class Account {
             </div>
             <div class="form-group">
               <label for="projectDescription"> Project Description </label>
-              <input class="form-control" id="new_projectDescription" type="text" value="${
-                projectData.description
-              }">
+              <textArea class="form-control" id="new_projectDescription" type="text" style="min-height:6rem">${projectData.description}</textArea>
             </div>
+              <label for="projectLikes"> Project Likes and Dislikes </label>
+              <textArea class="form-control" id="new_projectLikesAndDislikes" type="text" style="min-height:6rem">${projectLikesAndDislikes}</textArea>
             <label for="projectDescription"> Concept Tags </label>
             <div class="Account__tagFilter__tagList">
           <div id="projectConceptTags${this.currProjectCount}"></div>

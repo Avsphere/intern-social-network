@@ -14,7 +14,6 @@ const logger = require('./utils/logger');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-
 if ( !process.env.NODE_ENV ) {
   logger.log({ level : 'info', message : 'No NODE_ENV supplied, setting to development' })
   process.env.NODE_ENV = 'development'

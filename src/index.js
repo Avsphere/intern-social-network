@@ -33,6 +33,7 @@ export class Index {
           department: u.department,
           displayName: u.displayName,
           jobTitle: u.jobTitle,
+          profilePicPath : u.profilePicPath
         }
         this.projectList.push(p)
 
@@ -198,7 +199,8 @@ export class Index {
         return html
       }
       let tagList = '',
-        userData = p.userData;
+          userData = p.userData;
+      console.log(userData);
       if (p.conceptTags.length > 0 || p.techStackTags.length > 0) {
         let cardTags = p.conceptTags.concat(p.techStackTags)
         //console.log(cardTags);

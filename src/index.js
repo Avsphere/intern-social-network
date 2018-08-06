@@ -217,7 +217,7 @@ export class Index {
             </ul>
             </div>
             <div class="card__footer">
-               <img class="card__authorImage" src="media/soAnonymous.png">
+               <img class="card__authorImage" src="${userData.profilePicPath}">
                <div class="card__authorName">${userData.displayName}, ${
         userData.jobTitle
         }</div>

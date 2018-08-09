@@ -274,10 +274,6 @@ export class Index {
     })
 
   }
-
-
-
-
   handles() {
     //If a tag is clicked and it does not exist in the filterTags area then I recreate it there
     let that = this

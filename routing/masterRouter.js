@@ -9,7 +9,6 @@ const checkAuthenticated = utils.checkAuthenticated;
 
 /* Auth routes, these depend on whether prod or dev */
 if (process.env.NODE_ENV === 'production') {
-
   router.get('/', (req, res) => {
     if (!req.isAuthenticated()) {
       res.redirect('/login')
@@ -20,7 +19,6 @@ if (process.env.NODE_ENV === 'production') {
       })
     }
   })
-
   router.get('/account', checkAuthenticated, function(req, res) {
     let profileData = req.user.profile;
     if (!profileData.team) {
@@ -33,7 +31,6 @@ if (process.env.NODE_ENV === 'production') {
       user: profileData,
     })
   })
-
 } else {
   router.get('/', (req, res) => {
     res.render('index', {
@@ -52,13 +49,7 @@ if (process.env.NODE_ENV === 'production') {
       user: profileData,
     })
   })
-
 }
-
-
-
-
-
 
 router.get('/about', function(req, res) {
   res.render('about')
@@ -71,7 +62,6 @@ router.get('/login', passport.authenticate('azuread-openidconnect', {
     res.redirect('/')
   },
 )
-
 router.get('/token', passport.authenticate('azuread-openidconnect', {
     failureRedirect: '/',
   }),
@@ -121,7 +111,6 @@ router.get('/token', passport.authenticate('azuread-openidconnect', {
       })
   },
 )
-
 router.get('/disconnect', (req, res) => {
   req.session.destroy(() => {
     req.logOut()
@@ -130,11 +119,9 @@ router.get('/disconnect', (req, res) => {
     res.redirect('/')
   })
 })
-
 router.post('/updateUser', (req, res) => {
   let userId = req.body.userId,
     userData = req.body.formData
-
   User.findById(userId, function(err, user) {
     if (!err) {
       //console.log('Update user Found user: ', user)
@@ -148,7 +135,6 @@ router.post('/updateUser', (req, res) => {
     }
   })
 })
-
 router.post('/createProject', (req, res) => {
   let newProject = new Project(req.body.formData),
     ownedBy = req.body.formData.ownedBy;
@@ -173,8 +159,6 @@ router.post('/createProject', (req, res) => {
     }
   })
 })
-
-
 router.post('/updateProject', (req, res) => {
   let projectId = req.body.projectId,
     projectData = req.body.formData
@@ -197,7 +181,6 @@ router.post('/updateProject', (req, res) => {
     }
   })
 })
-
 router.post('/getUserById', (req, res) => {
   let userId = req.body.userId
   User.findById(userId, function(err, user) {
@@ -208,7 +191,6 @@ router.post('/getUserById', (req, res) => {
     }
   })
 })
-
 router.post('/getUserProjects', (req, res) => {
   let userId = req.body.userId
   User.findById(userId, function(err, user) {
@@ -227,7 +209,6 @@ router.post('/getUserProjects', (req, res) => {
     }
   })
 })
-
 router.post('/getUserAndProjects', (req, res) => {
   let userId = req.body.userId
   let foundUser = {}
@@ -251,7 +232,6 @@ router.post('/getUserAndProjects', (req, res) => {
     }
   })
 })
-
 router.post('/getAggregateUsersAndProjects', (req, res) => {
   User.find({}, function(err, usersDocs) {
     let users = usersDocs.map(d => d.toObject())
@@ -274,7 +254,6 @@ router.post('/getAggregateUsersAndProjects', (req, res) => {
     })
   })
 })
-
 router.post('/getAllProjects', (req, res) => {
   Project.find({}, function(err, projects) {
     res.send(projects)

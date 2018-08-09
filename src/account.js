@@ -103,7 +103,6 @@ export class Account {
       ],
     }
   }
-
   grabAccountFormData() {
     let formData = {
       team: $('#team').val(),
@@ -137,7 +136,6 @@ export class Account {
       formData: formData,
     }
   }
-
   findProjectById(id) {
     return this.projectList.find(p => {
       if (p._id === id) {
@@ -158,7 +156,6 @@ export class Account {
     tabClicked.addClass('active')
     tabClicked.find('a').addClass('tabBorder');
   }
-
   buildTabs() {
     let newProject = {
       title: 'Add New Project',
@@ -214,7 +211,6 @@ export class Account {
       })
     })
   }
-
   updateAccount() {
     return new Promise((resolve, reject) => {
       let data = {
@@ -284,7 +280,6 @@ export class Account {
         })
     })
   }
-
   buildProjectHtml(projectData) {
     let projectLikesAndDislikes = projectData.likesAndDislikes || "No likes or dislikes";
     let html = `
